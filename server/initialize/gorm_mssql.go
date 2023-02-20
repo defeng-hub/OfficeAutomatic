@@ -9,9 +9,9 @@
 package initialize
 
 import (
-	"github.com/flipped-aurora/gin-vue-admin/server/config"
-	"github.com/flipped-aurora/gin-vue-admin/server/global"
-	"github.com/flipped-aurora/gin-vue-admin/server/initialize/internal"
+	"github.com/defeng-hub/ByOfficeAutomatic/server/config"
+	"github.com/defeng-hub/ByOfficeAutomatic/server/global"
+	"github.com/defeng-hub/ByOfficeAutomatic/server/initialize/internal"
 	"gorm.io/driver/sqlserver"
 	"gorm.io/gorm"
 )
@@ -44,8 +44,8 @@ func GormMssqlByConfig(m config.Mssql) *gorm.DB {
 		return nil
 	}
 	mssqlConfig := sqlserver.Config{
-		DSN:                       m.Dsn(), // DSN data source name
-		DefaultStringSize:         191,     // string 类型字段的默认长度
+		DSN:               m.Dsn(), // DSN data source name
+		DefaultStringSize: 191,     // string 类型字段的默认长度
 	}
 	if db, err := gorm.Open(sqlserver.New(mssqlConfig), internal.Gorm.Config(m.Prefix, m.Singular)); err != nil {
 		panic(err)

@@ -1,7 +1,7 @@
 package router
 
 import (
-	"github.com/flipped-aurora/gin-vue-admin/server/plugin/{{ .Snake}}/api"
+	"github.com/defeng-hub/ByOfficeAutomatic/server/plugin/{{ .Snake}}/api"
 	"github.com/gin-gonic/gin"
 )
 

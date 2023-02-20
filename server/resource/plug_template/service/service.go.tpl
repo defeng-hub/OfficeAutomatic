@@ -2,7 +2,7 @@ package service
 
  {{- if .NeedModel }}
 import (
-   "github.com/flipped-aurora/gin-vue-admin/server/plugin/{{ .Snake}}/model"
+   "github.com/defeng-hub/ByOfficeAutomatic/server/plugin/{{ .Snake}}/model"
 )
 {{ end }}
 

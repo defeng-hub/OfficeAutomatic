@@ -1,7 +1,7 @@
 package system
 
 import (
-	"github.com/flipped-aurora/gin-vue-admin/server/config"
+	"github.com/defeng-hub/ByOfficeAutomatic/server/config"
 )
 
 // 配置文件结构体

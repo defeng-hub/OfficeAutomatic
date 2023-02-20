@@ -1,4 +1,4 @@
-module github.com/flipped-aurora/gin-vue-admin/server
+module github.com/defeng-hub/ByOfficeAutomatic/server
 
 go 1.18
 
@@ -31,6 +31,8 @@ require (
 	github.com/stretchr/testify v1.7.1
 	github.com/swaggo/gin-swagger v1.3.0
 	github.com/swaggo/swag v1.7.0
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.598
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/sms v1.0.598
 	github.com/tencentyun/cos-go-sdk-v5 v0.7.19
 	github.com/unrolled/secure v1.0.7
 	go.uber.org/zap v1.16.0

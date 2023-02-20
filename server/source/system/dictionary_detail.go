@@ -3,8 +3,8 @@ package system
 import (
 	"context"
 	"fmt"
-	sysModel "github.com/flipped-aurora/gin-vue-admin/server/model/system"
-	"github.com/flipped-aurora/gin-vue-admin/server/service/system"
+	sysModel "github.com/defeng-hub/ByOfficeAutomatic/server/model/system"
+	"github.com/defeng-hub/ByOfficeAutomatic/server/service/system"
 	"github.com/pkg/errors"
 	"gorm.io/gorm"
 )

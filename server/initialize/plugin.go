@@ -2,11 +2,12 @@ package initialize
 
 import (
 	"fmt"
+	sms "github.com/defeng-hub/ByOfficeAutomatic/server/plugin/sms/tencent_sms"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/global"
-	"github.com/flipped-aurora/gin-vue-admin/server/middleware"
-	"github.com/flipped-aurora/gin-vue-admin/server/plugin/email"
-	"github.com/flipped-aurora/gin-vue-admin/server/utils/plugin"
+	"github.com/defeng-hub/ByOfficeAutomatic/server/global"
+	"github.com/defeng-hub/ByOfficeAutomatic/server/middleware"
+	"github.com/defeng-hub/ByOfficeAutomatic/server/plugin/email"
+	"github.com/defeng-hub/ByOfficeAutomatic/server/utils/plugin"
 	"github.com/gin-gonic/gin"
 )
 
@@ -33,4 +34,5 @@ func InstallPlugin(Router *gin.Engine) {
 		global.GVA_CONFIG.Email.Port,
 		global.GVA_CONFIG.Email.IsSSL,
 	))
+	PluginInit(PublicGroup, sms.CreateTencentSmsPlug("短信的SecretId", "短信的SecretKey", "短信的 SdkAppId", "短信的 SignName"))
 }

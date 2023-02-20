@@ -29,7 +29,7 @@ aws-s3:
   secret-id: your-secret-id
   secret-key: your-secret-key
   base-url: https://gin.vue.admin
-  path-prefix: github.com/flipped-aurora/gin-vue-admin/server
+  path-prefix: github.com/defeng-hub/ByOfficeAutomatic/server
 captcha:
   key-long: 6
   img-width: 240
@@ -176,7 +176,7 @@ tencent-cos:
   secret-id: your-secret-id
   secret-key: your-secret-key
   base-url: https://gin.vue.admin
-  path-prefix: github.com/flipped-aurora/gin-vue-admin/server
+  path-prefix: github.com/defeng-hub/ByOfficeAutomatic/server
 timer:
   start: false
   spec: '@daily'
@@ -190,7 +190,7 @@ timer:
     interval: 168h
 zap:
   level: info
-  prefix: '[github.com/flipped-aurora/gin-vue-admin/server]'
+  prefix: '[github.com/defeng-hub/ByOfficeAutomatic/server]'
   format: console
   director: log
   encode-level: LowercaseColorLevelEncoder

@@ -511,6 +511,10 @@ github.com/swaggo/gin-swagger v1.3.0/go.mod h1:oy1BRA6WvgtCp848lhxce7BnWH4C8Bxa0
 github.com/swaggo/swag v1.5.1/go.mod h1:1Bl9F/ZBpVWh22nY0zmYyASPO1lI/zIwRDrpZU+tv8Y=
 github.com/swaggo/swag v1.7.0 h1:5bCA/MTLQoIqDXXyHfOpMeDvL9j68OY/udlK4pQoo4E=
 github.com/swaggo/swag v1.7.0/go.mod h1:BdPIL73gvS9NBsdi7M1JOxLvlbfvNRaBP8m6WT6Aajo=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.598 h1:OXQxhHhjw/kmDLKNTuIyIV+YplxRG32aZErVy8AcIpI=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.598/go.mod h1:7sCQWVkxcsR38nffDW057DRGk8mUjK1Ing/EFOK8s8Y=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/sms v1.0.598 h1:d+Vna7ugFAD76u+XVdB5d16GWwy4D4wj6XKkOx8K3uU=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/sms v1.0.598/go.mod h1:XVPP7TXhtWB97HlBbt3FCKsG6iKJgApcteN+0QE6syA=
 github.com/tencentyun/cos-go-sdk-v5 v0.7.19 h1:janAfTO4MglOrUFuKGTQJBuMc66+F7TgtEIt1wPsJ+k=
 github.com/tencentyun/cos-go-sdk-v5 v0.7.19/go.mod h1:wQBO5HdAkLjj2q6XQiIfDSP8DXDNrppDRw2Kp/1BODA=
 github.com/tklauser/go-sysconf v0.3.10 h1:IJ1AZGZRWbY8T5Vfk04D9WOA5WSejdflXxP03OUqALw=

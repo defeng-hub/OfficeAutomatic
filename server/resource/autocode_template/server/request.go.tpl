@@ -1,8 +1,8 @@
 package request
 
 import (
-	"github.com/flipped-aurora/gin-vue-admin/server/model/{{.Package}}"
-	"github.com/flipped-aurora/gin-vue-admin/server/model/common/request"
+	"github.com/defeng-hub/ByOfficeAutomatic/server/model/{{.Package}}"
+	"github.com/defeng-hub/ByOfficeAutomatic/server/model/common/request"
 	"time"
 )
 
