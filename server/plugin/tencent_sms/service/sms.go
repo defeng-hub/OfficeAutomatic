@@ -1,7 +1,7 @@
 package service
 
 import (
-	"github.com/defeng-hub/ByOfficeAutomatic/server/plugin/sms/tencent_sms/global"
+	"github.com/defeng-hub/ByOfficeAutomatic/server/plugin/tencent_sms/global"
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/profile"
 	sms "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/sms/v20210111"

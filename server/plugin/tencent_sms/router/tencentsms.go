@@ -1,7 +1,7 @@
 package router
 
 import (
-	"github.com/defeng-hub/ByOfficeAutomatic/server/plugin/sms/tencent_sms/api"
+	"github.com/defeng-hub/ByOfficeAutomatic/server/plugin/tencent_sms/api"
 	"github.com/gin-gonic/gin"
 )
 

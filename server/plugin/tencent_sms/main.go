@@ -1,8 +1,8 @@
-package sms
+package tencent_sms
 
 import (
-	"github.com/defeng-hub/ByOfficeAutomatic/server/plugin/sms/tencent_sms/global"
-	"github.com/defeng-hub/ByOfficeAutomatic/server/plugin/sms/tencent_sms/router"
+	"github.com/defeng-hub/ByOfficeAutomatic/server/plugin/tencent_sms/global"
+	"github.com/defeng-hub/ByOfficeAutomatic/server/plugin/tencent_sms/router"
 	"github.com/gin-gonic/gin"
 )
 
