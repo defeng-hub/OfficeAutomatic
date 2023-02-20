@@ -7,7 +7,7 @@ aliyun-oss:
   base-path: yourBasePath
 autocode:
   transfer-restart: true
-  root: C:\Users\Administrator\GolandProjects\gin-vue-admin
+  root: C:\Users\Administrator\GolandProjects\ByOfficeAutomatic
   server: /server
   server-api: /api/v1/%s
   server-plug: /plugin/%s
@@ -190,7 +190,7 @@ timer:
     interval: 168h
 zap:
   level: info
-  prefix: '[github.com/defeng-hub/ByOfficeAutomatic/server]'
+  prefix: '[ByOfficeAutomatic/server]'
   format: console
   director: log
   encode-level: LowercaseColorLevelEncoder
