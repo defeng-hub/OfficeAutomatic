@@ -1,3 +1,2 @@
 swag:
 	swag init
-
