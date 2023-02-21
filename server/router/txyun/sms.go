@@ -1,4 +1,4 @@
-package sms
+package txyun
 
 import (
 	v1 "github.com/defeng-hub/ByOfficeAutomatic/server/api/v1"
@@ -17,6 +17,7 @@ func (e *TxSmsRouter) InitTxYunRouter(Router *gin.RouterGroup) {
 	TxSmsApi := v1.ApiGroupApp.TxyunApiGroup.SmsHandler
 	{
 		txSmsRouter.POST("UpdateTemplates", TxSmsApi.UpdateTemplatesApi)
+		txSmsRouter.GET("GetSmsList", TxSmsApi.GetSmsList)
 	}
 
 	//	oss模块

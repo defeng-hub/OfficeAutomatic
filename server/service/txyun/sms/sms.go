@@ -3,6 +3,7 @@ package sms
 import (
 	"fmt"
 	"github.com/defeng-hub/ByOfficeAutomatic/server/global"
+	"github.com/defeng-hub/ByOfficeAutomatic/server/model/common/request"
 	smsmodel "github.com/defeng-hub/ByOfficeAutomatic/server/model/txyun/sms"
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/errors"
@@ -91,4 +92,20 @@ func (e *TencentSmsService) UpdateTemplates() error {
 	global.GVA_DB.Model(&smsmodel.SmsTemplate{}).Create(&smsSet)
 
 	return nil
+}
+
+// GetSmsInfoList 分页获取腾讯云信息列表
+func (e *TencentSmsService) GetSmsInfoList(info request.PageInfo) (list interface{}, total int64, err error) {
+	limit := info.PageSize
+	offset := info.PageSize * (info.Page - 1)
+	db := global.GVA_DB.Model(smsmodel.SmsTemplate{})
+
+	var List []smsmodel.SmsTemplate
+	err = db.Count(&total).Error
+	if err != nil {
+		return List, total, err
+	} else {
+		err = db.Limit(limit).Offset(offset).Find(&List).Error
+	}
+	return List, total, err
 }

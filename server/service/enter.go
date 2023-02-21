@@ -12,4 +12,5 @@ type ServiceGroup struct {
 	TxyunServiceGroup   txyun.ServiceGroup
 }
 
+// ServiceGroupApp 向外提供服务
 var ServiceGroupApp = new(ServiceGroup)

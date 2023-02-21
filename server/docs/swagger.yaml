@@ -3909,6 +3909,56 @@ paths:
       summary: 发送（腾讯）短信
       tags:
       - System
+  /txyun/sms/GetSmsList:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 关键字
+        in: query
+        name: keyword
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 每页大小
+        in: query
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 分页获取权限客户列表,返回包括列表,总数,页码,每页数量
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.PageResult'
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 分页获取短信模板列表
+      tags:
+      - Txyun
+  /txyun/sms/UpdateTemplates:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      security:
+      - ApiKeyAuth: []
+      summary: 更新短信模板列表
+      tags:
+      - Txyun
   /user/SetSelfInfo:
     put:
       consumes:

@@ -5,7 +5,6 @@ import (
 	"github.com/defeng-hub/ByOfficeAutomatic/server/global"
 	"github.com/defeng-hub/ByOfficeAutomatic/server/middleware"
 	"github.com/defeng-hub/ByOfficeAutomatic/server/plugin/email"
-	"github.com/defeng-hub/ByOfficeAutomatic/server/plugin/tencent_sms"
 	"github.com/defeng-hub/ByOfficeAutomatic/server/utils/plugin"
 	"github.com/gin-gonic/gin"
 )
@@ -37,6 +36,5 @@ func InstallPlugin(Router *gin.Engine) {
 	))
 
 	// 腾讯云 发送信息组件
-	PluginInit(PrivateGroup, tencent_sms.CreateTencentSmsPlug("短信的SecretId", "短信的SecretKey", "短信的 SdkAppId", "短信的 SignName"))
-
+	//PluginInit(PrivateGroup, tencent_sms.CreateTencentSmsPlug("短信的SecretId", "短信的SecretKey", "短信的 SdkAppId", "短信的 SignName"))
 }
