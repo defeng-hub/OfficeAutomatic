@@ -11,7 +11,7 @@ import (
 type TencentSmsService struct{}
 
 // SendSms 发送短信
-func (e *TencentSmsService) SendSms(tplId string, phoneNumbers, tplParams []string) error {
+func (e *TencentSmsService) SendSms(tplId string, phoneNumbers []string, tplParams []string) error {
 	credential := common.NewCredential(
 		global.GlobalConfig.SecretId,
 		global.GlobalConfig.SecretKey,
