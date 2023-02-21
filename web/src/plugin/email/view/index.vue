@@ -14,7 +14,7 @@
         </el-form-item>
         <el-form-item>
           <el-button @click="sendTestEmail">发送测试邮件</el-button>
-          <el-button @click="sendEmail">发送邮件</el-button>
+          <el-button @click="sendEmail1">发送邮件</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -30,7 +30,7 @@ export default {
 
 <script setup>
 import WarningBar from '@/components/warningBar/warningBar.vue'
-import { emailTest } from '@/plugin/email/api/email.js'
+import { emailTest,sendEmail } from '@/plugin/email/api/email.js'
 import { ElMessage } from 'element-plus'
 import { reactive, ref } from 'vue'
 const emailForm = ref(null)
@@ -46,8 +46,8 @@ const sendTestEmail = async() => {
   }
 }
 
-const sendEmail = async() => {
-  const res = await emailTest()
+const sendEmail1 = async() => {
+  const res = await sendEmail(form)
   if (res.code === 0) {
     ElMessage.success('发送成功,请查收')
   }
