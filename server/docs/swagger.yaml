@@ -1043,6 +1043,17 @@ definitions:
       user:
         $ref: '#/definitions/system.SysUser'
     type: object
+  sms.SendSmsRequest:
+    properties:
+      template_id:
+        type: string
+      tpl_params:
+        items:
+          type: string
+        type: array
+      tpl_phones:
+        type: string
+    type: object
   system.AutoCodeStruct:
     properties:
       abbreviation:
@@ -3943,6 +3954,36 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: 分页获取短信模板列表
+      tags:
+      - Txyun
+  /txyun/sms/SendSms:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 模板ID, 手机号列表, 模板
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/sms.SendSmsRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 发送短信
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  type: object
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 发送短信
       tags:
       - Txyun
   /txyun/sms/UpdateTemplates:

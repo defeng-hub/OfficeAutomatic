@@ -52,3 +52,16 @@
 | `--timer` | timer | 定时器接口封装 |
 | `--upload`      | oss                  | oss接口封装        |
 
+# swagger 
+
+code：数字，如400
+
+message：信息，如“参数填写错误”
+
+response：抛出异常的类
+paramTpye：指定参数放在哪些地方（header/query/path/body/form)
+name：参数名
+dataTpye：参数类型
+required：是否必输（true/false）
+value：说明参数的意思
+defaultValue：参数默认值

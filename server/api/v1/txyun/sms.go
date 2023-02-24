@@ -4,9 +4,11 @@ import (
 	"github.com/defeng-hub/ByOfficeAutomatic/server/global"
 	"github.com/defeng-hub/ByOfficeAutomatic/server/model/common/request"
 	"github.com/defeng-hub/ByOfficeAutomatic/server/model/common/response"
+	smsmodel "github.com/defeng-hub/ByOfficeAutomatic/server/model/txyun/sms"
 	"github.com/defeng-hub/ByOfficeAutomatic/server/utils"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
+	"strings"
 )
 
 type SmsHandler struct{}
@@ -62,5 +64,43 @@ func (e *SmsHandler) GetSmsList(c *gin.Context) {
 		Page:     pageInfo.Page,
 		PageSize: pageInfo.PageSize,
 	}, "获取成功", c)
+
+}
+
+// SendSms
+// @Tags      Txyun
+// @Summary   发送短信
+// @Security  ApiKeyAuth
+// @accept    application/json
+// @Produce   application/json
+// @Param     data  body     smsmodel.SendSmsRequest  true  "模板ID, 手机号列表, 模板"
+// @Success   200   {object}  response.Response{data=object,msg=string}  "发送短信"
+// @Router    /txyun/sms/SendSms [post]
+func (e *SmsHandler) SendSms(c *gin.Context) {
+	req := smsmodel.SendSmsRequest{}
+	err := c.Bind(&req)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+
+	// 去除不满足手机号格式的
+	split := strings.Split(req.TplPhones, "\n")
+	var phones []string
+	var errorphones []string
+	for _, v := range split {
+		if utils.CheckMobile(v) {
+			phones = append(phones, v)
+		} else {
+			errorphones = append(errorphones, v)
+		}
+	}
+
+	err = TxyunService.SendSms(req.TemplateId, phones, req.TplParams)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	response.OkWithMessage("发送成功", c)
 
 }

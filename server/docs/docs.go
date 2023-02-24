@@ -4226,6 +4226,59 @@ var doc = `{
                 }
             }
         },
+        "/txyun/sms/SendSms": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Txyun"
+                ],
+                "summary": "发送短信",
+                "parameters": [
+                    {
+                        "description": "模板ID, 手机号列表, 模板",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/sms.SendSmsRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "发送短信",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/txyun/sms/UpdateTemplates": {
             "post": {
                 "security": [
@@ -6240,6 +6293,23 @@ var doc = `{
             "properties": {
                 "user": {
                     "$ref": "#/definitions/system.SysUser"
+                }
+            }
+        },
+        "sms.SendSmsRequest": {
+            "type": "object",
+            "properties": {
+                "template_id": {
+                    "type": "string"
+                },
+                "tpl_params": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "tpl_phones": {
+                    "type": "string"
                 }
             }
         },

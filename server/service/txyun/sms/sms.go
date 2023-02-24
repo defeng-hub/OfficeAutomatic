@@ -2,44 +2,43 @@ package sms
 
 import (
 	"fmt"
-	"github.com/defeng-hub/ByOfficeAutomatic/server/global"
-	"github.com/defeng-hub/ByOfficeAutomatic/server/model/common/request"
-	smsmodel "github.com/defeng-hub/ByOfficeAutomatic/server/model/txyun/sms"
+	"strconv"
+
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/errors"
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/profile"
 	sms "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/sms/v20210111"
 	"go.uber.org/zap"
-)
 
-var credential *common.Credential
+	"github.com/defeng-hub/ByOfficeAutomatic/server/global"
+	"github.com/defeng-hub/ByOfficeAutomatic/server/model/common/request"
+	smsmodel "github.com/defeng-hub/ByOfficeAutomatic/server/model/txyun/sms"
+
+	. "github.com/defeng-hub/ByOfficeAutomatic/server/service/txyun"
+)
 
 type TencentSmsService struct{}
 
-func init() {
-	credential = common.NewCredential(
-		"AKIDMZX0C8nBI8hz0lEQL0OVLuCDxQcXBYha",
-		"e29zYpqa3FAn9E2ZpoWw5xYP1MPBgvsY",
-	)
-}
-
 // SendSms 发送短信
-func (e *TencentSmsService) SendSms(tplId string, phoneNumbers []string, tplParams []string) error {
+func (e *TencentSmsService) SendSms(tplId int, phoneNumbers []string, tplParams []string) error {
 
 	cpf := profile.NewClientProfile()
 	cpf.HttpProfile.Endpoint = "sms.tencentcloudapi.com"
-	client, _ := sms.NewClient(credential, "ap-nanjing", cpf)
+	client, _ := sms.NewClient(Credential, "ap-beijing", cpf)
 	request := sms.NewSendSmsRequest()
 
 	request.PhoneNumberSet = common.StringPtrs(phoneNumbers)
 
 	//app id
-	request.SmsSdkAppId = common.StringPtr("SdkAppId")
-	// 签名
-	request.SignName = common.StringPtr("SignName")
+	request.SmsSdkAppId = common.StringPtr("1400640189")
 
+	// 签名
+	request.SignName = common.StringPtr("高能博远君")
+
+	strId := strconv.Itoa(tplId)
 	//模板id
-	request.TemplateId = common.StringPtr(tplId)
+	request.TemplateId = common.StringPtr(strId)
+
 	//模板参数
 	request.TemplateParamSet = common.StringPtrs(tplParams)
 	response, err := client.SendSms(request)
@@ -56,7 +55,7 @@ func (e *TencentSmsService) UpdateTemplates() error {
 	cpf := profile.NewClientProfile()
 	cpf.HttpProfile.Endpoint = "sms.tencentcloudapi.com"
 	// 实例化要请求产品的client对象,clientProfile是可选的
-	client, _ := sms.NewClient(credential, "ap-beijing", cpf)
+	client, _ := sms.NewClient(Credential, "ap-beijing", cpf)
 	// 实例化一个请求对象,每个接口都会对应一个request对象
 	request := sms.NewDescribeSmsTemplateListRequest()
 	international := uint64(0)
