@@ -133,7 +133,7 @@ func (e *SmsHandler) GetAllSmsProject(c *gin.Context) {
 // @accept    application/json
 // @Produce   application/json
 // @Param     data  body     smsmodel.AddSmsProjectReq  true  "项目名, 备注, 模板ID"
-// @Success   200   {object}  response.Response{data=object,msg=string}  "获取全部sms项目"
+// @Success   200   {object}  response.Response{data=object,msg=string}  "获取sms项目"
 // @Router    /txyun/sms/AddSmsProject [post]
 func (e *SmsHandler) AddSmsProject(c *gin.Context) {
 	var req smsmodel.AddSmsProjectReq
@@ -148,4 +148,28 @@ func (e *SmsHandler) AddSmsProject(c *gin.Context) {
 		return
 	}
 	response.OkWithDetailed(project, "新增短信项目成功", c)
+}
+
+// DelSmsProject
+// @Tags      Txyun
+// @Summary   删除sms项目
+// @Security  ApiKeyAuth
+// @accept    application/json
+// @Produce   application/json
+// @Param     data  body     smsmodel.DelSmsProjectReq  true  "模板ID"
+// @Success   200   {object}  response.Response{data=object,msg=string}  "获取sms项目"
+// @Router    /txyun/sms/DelSmsProject [post]
+func (e *SmsHandler) DelSmsProject(c *gin.Context) {
+	var req smsmodel.SmsProjectIdReq
+	err := c.Bind(&req)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	project, err := TxyunService.DelSmsProject(&req)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	response.OkWithDetailed(project, "删除短信项目成功", c)
 }

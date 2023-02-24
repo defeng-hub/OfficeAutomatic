@@ -72,7 +72,7 @@ func (e *TencentSmsService) UpdateTemplates() error {
 	}
 
 	// 删除全部表
-	global.GVA_DB.Where("1 = 1").Delete(&smsmodel.SmsTemplate{})
+	global.GVA_DB.Unscoped().Where("1 = 1").Delete(&smsmodel.SmsTemplate{})
 	var smsSet []smsmodel.SmsTemplate
 	for _, obj := range response.Response.DescribeTemplateStatusSet {
 		sm := smsmodel.SmsTemplate{

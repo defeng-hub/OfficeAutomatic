@@ -126,7 +126,6 @@ const refreshData = async () => {
 			duration: 3000,
 		})
 	}
-	this.getTableData()
 }
 
 // 删

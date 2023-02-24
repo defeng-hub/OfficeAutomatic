@@ -46,6 +46,8 @@ func (e SmsTemplate) GetParamsNum() int {
 	}
 }
 
+//  SMS项目---SMS项目---SMS项目
+
 // SmsProject SMS项目
 type SmsProject struct {
 	global.GVA_MODEL
@@ -64,7 +66,8 @@ func (SmsProject) TableName() string {
 }
 
 type SmsProjectRow struct {
-	SmsProjectID uint       `json:"sms_project_id,omitempty"`
+	global.GVA_MODEL
+	SmsProjectID uint       `json:"sms_project_id"`
 	SmsProject   SmsProject `json:"sms_project" gorm:"foreignKey:SmsProjectID"`
 	Phone        string     `json:"phone"`
 	Param1       string     `json:"param1"`

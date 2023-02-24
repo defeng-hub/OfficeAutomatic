@@ -48,3 +48,54 @@ export const SendSms = (data) => {
     data
   })
 }
+
+// AddSmsProject
+// @Tags      Txyun
+// @Summary   添加sms项目
+// @Security  ApiKeyAuth
+// @accept    application/json
+// @Produce   application/json
+// @Param     data  body     smsmodel.AddSmsProjectReq  true  "项目名, 备注, 模板ID"
+// @Success   200   {object}  response.Response{data=object,msg=string}  "获取全部sms项目"
+// @Router    /txyun/sms/AddSmsProject [post]
+export const AddSmsProject = (data) => {
+  return service({
+    url: '/txyun/sms/AddSmsProject',
+    method: 'post',
+    data
+  })
+}
+
+// GetAllSmsProject
+// @Tags      Txyun
+// @Summary   获取全部sms项目
+// @Security  ApiKeyAuth
+// @accept    application/json
+// @Produce   application/json
+// @Success   200   {object}  response.Response{data=object,msg=string}  "获取全部sms项目"
+// @Router    /txyun/sms/GetAllSmsProject [post]
+export const GetAllSmsProject = (data) => {
+  return service({
+    url: '/txyun/sms/GetAllSmsProject',
+    method: 'post',
+    data
+  })
+}
+
+
+// DelSmsProject
+// @Tags      Txyun
+// @Summary   删除sms项目
+// @Security  ApiKeyAuth
+// @accept    application/json
+// @Produce   application/json
+// @Param     data  body     smsmodel.DelSmsProjectReq  true  "模板ID"
+// @Success   200   {object}  response.Response{data=object,msg=string}  "获取sms项目"
+// @Router    /txyun/sms/DelSmsProject [post]
+export const DelSmsProject = (data) => {
+  return service({
+    url: '/txyun/sms/DelSmsProject',
+    method: 'post',
+    data
+  })
+}

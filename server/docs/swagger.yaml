@@ -1052,6 +1052,11 @@ definitions:
       template_id:
         type: integer
     type: object
+  sms.DelSmsProjectReq:
+    properties:
+      template_id:
+        type: integer
+    type: object
   sms.SendSmsRequest:
     properties:
       template_id:
@@ -3944,7 +3949,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: 获取全部sms项目
+          description: 获取sms项目
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
@@ -3957,6 +3962,36 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: 添加sms项目
+      tags:
+      - Txyun
+  /txyun/sms/DelSmsProject:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 模板ID
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/sms.DelSmsProjectReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取sms项目
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  type: object
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 删除sms项目
       tags:
       - Txyun
   /txyun/sms/GetAllSmsProject:

@@ -4194,7 +4194,60 @@ var doc = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "获取全部sms项目",
+                        "description": "获取sms项目",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/txyun/sms/DelSmsProject": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Txyun"
+                ],
+                "summary": "删除sms项目",
+                "parameters": [
+                    {
+                        "description": "模板ID",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/sms.DelSmsProjectReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取sms项目",
                         "schema": {
                             "allOf": [
                                 {
@@ -6400,6 +6453,14 @@ var doc = `{
                 "project_name": {
                     "type": "string"
                 },
+                "template_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "sms.DelSmsProjectReq": {
+            "type": "object",
+            "properties": {
                 "template_id": {
                     "type": "integer"
                 }
