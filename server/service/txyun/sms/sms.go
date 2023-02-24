@@ -13,8 +13,7 @@ import (
 	"github.com/defeng-hub/ByOfficeAutomatic/server/global"
 	"github.com/defeng-hub/ByOfficeAutomatic/server/model/common/request"
 	smsmodel "github.com/defeng-hub/ByOfficeAutomatic/server/model/txyun/sms"
-
-	. "github.com/defeng-hub/ByOfficeAutomatic/server/service/txyun"
+	//txyun "github.com/defeng-hub/ByOfficeAutomatic/server/service/txyun"
 )
 
 type TencentSmsService struct{}
@@ -24,7 +23,7 @@ func (e *TencentSmsService) SendSms(tplId int, phoneNumbers []string, tplParams 
 
 	cpf := profile.NewClientProfile()
 	cpf.HttpProfile.Endpoint = "sms.tencentcloudapi.com"
-	client, _ := sms.NewClient(Credential, "ap-beijing", cpf)
+	client, _ := sms.NewClient(credential, "ap-beijing", cpf)
 	request := sms.NewSendSmsRequest()
 
 	request.PhoneNumberSet = common.StringPtrs(phoneNumbers)
@@ -55,7 +54,7 @@ func (e *TencentSmsService) UpdateTemplates() error {
 	cpf := profile.NewClientProfile()
 	cpf.HttpProfile.Endpoint = "sms.tencentcloudapi.com"
 	// 实例化要请求产品的client对象,clientProfile是可选的
-	client, _ := sms.NewClient(Credential, "ap-beijing", cpf)
+	client, _ := sms.NewClient(credential, "ap-beijing", cpf)
 	// 实例化一个请求对象,每个接口都会对应一个request对象
 	request := sms.NewDescribeSmsTemplateListRequest()
 	international := uint64(0)
