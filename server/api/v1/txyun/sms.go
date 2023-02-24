@@ -104,3 +104,48 @@ func (e *SmsHandler) SendSms(c *gin.Context) {
 	response.OkWithMessage("发送成功", c)
 
 }
+
+// GetAllSmsProject
+// @Tags      Txyun
+// @Summary   获取全部sms项目
+// @Security  ApiKeyAuth
+// @accept    application/json
+// @Produce   application/json
+// @Success   200   {object}  response.Response{data=object,msg=string}  "获取全部sms项目"
+// @Router    /txyun/sms/GetAllSmsProject [post]
+func (e *SmsHandler) GetAllSmsProject(c *gin.Context) {
+	List, total, err := TxyunService.AllSmsProject()
+	if err != nil {
+		global.GVA_LOG.Error("获取失败!", zap.Error(err))
+		response.FailWithMessage("获取失败"+err.Error(), c)
+		return
+	}
+	response.OkWithDetailed(gin.H{
+		"list":  List,
+		"total": total,
+	}, "获取成功", c)
+}
+
+// AddSmsProject
+// @Tags      Txyun
+// @Summary   添加sms项目
+// @Security  ApiKeyAuth
+// @accept    application/json
+// @Produce   application/json
+// @Param     data  body     smsmodel.AddSmsProjectReq  true  "项目名, 备注, 模板ID"
+// @Success   200   {object}  response.Response{data=object,msg=string}  "获取全部sms项目"
+// @Router    /txyun/sms/AddSmsProject [post]
+func (e *SmsHandler) AddSmsProject(c *gin.Context) {
+	var req smsmodel.AddSmsProjectReq
+	err := c.Bind(&req)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	project, err := TxyunService.AddSmsProject(&req)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	response.OkWithDetailed(project, "新增短信项目成功", c)
+}

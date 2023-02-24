@@ -1043,10 +1043,19 @@ definitions:
       user:
         $ref: '#/definitions/system.SysUser'
     type: object
+  sms.AddSmsProjectReq:
+    properties:
+      comment:
+        type: string
+      project_name:
+        type: string
+      template_id:
+        type: integer
+    type: object
   sms.SendSmsRequest:
     properties:
       template_id:
-        type: string
+        type: integer
       tpl_params:
         items:
           type: string
@@ -3920,6 +3929,59 @@ paths:
       summary: 发送（腾讯）短信
       tags:
       - System
+  /txyun/sms/AddSmsProject:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 项目名, 备注, 模板ID
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/sms.AddSmsProjectReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取全部sms项目
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  type: object
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 添加sms项目
+      tags:
+      - Txyun
+  /txyun/sms/GetAllSmsProject:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取全部sms项目
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  type: object
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 获取全部sms项目
+      tags:
+      - Txyun
   /txyun/sms/GetSmsList:
     post:
       consumes:

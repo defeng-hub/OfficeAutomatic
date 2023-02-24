@@ -4164,6 +4164,101 @@ var doc = `{
                 }
             }
         },
+        "/txyun/sms/AddSmsProject": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Txyun"
+                ],
+                "summary": "添加sms项目",
+                "parameters": [
+                    {
+                        "description": "项目名, 备注, 模板ID",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/sms.AddSmsProjectReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取全部sms项目",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/txyun/sms/GetAllSmsProject": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Txyun"
+                ],
+                "summary": "获取全部sms项目",
+                "responses": {
+                    "200": {
+                        "description": "获取全部sms项目",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/txyun/sms/GetSmsList": {
             "post": {
                 "security": [
@@ -6296,11 +6391,25 @@ var doc = `{
                 }
             }
         },
+        "sms.AddSmsProjectReq": {
+            "type": "object",
+            "properties": {
+                "comment": {
+                    "type": "string"
+                },
+                "project_name": {
+                    "type": "string"
+                },
+                "template_id": {
+                    "type": "integer"
+                }
+            }
+        },
         "sms.SendSmsRequest": {
             "type": "object",
             "properties": {
                 "template_id": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "tpl_params": {
                     "type": "array",
