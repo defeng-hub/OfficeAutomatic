@@ -68,19 +68,30 @@ func (e *TencentSmsService) DelSmsProject(req *smsmodel.SmsProjectIdReq) (*smsmo
 // SmsProjectRows 通过项目ID拿到项目的全部行数据
 func (e *TencentSmsService) SmsProjectRows(req *smsmodel.SmsProjectIdReq) (
 	[]*smsmodel.SmsProjectRow, error) {
+	var rows []*smsmodel.SmsProjectRow
+	db := global.GVA_DB.Model(smsmodel.SmsProjectRow{})
 
-	return nil, nil
+	db.Find(&rows, "sms_project_id = ?", req.Id)
+	return rows, nil
 }
 
 func (e *TencentSmsService) DelSmsProjectRow(req *smsmodel.SmsProjectRowIdReq) (
 	*smsmodel.SmsProjectRow, error) {
-	return nil, nil
+	row := smsmodel.SmsProjectRow{}
+	row.ID = req.Id
+
+	db := global.GVA_DB.Model(smsmodel.SmsProjectRow{})
+	tx := db.Unscoped().Delete(&row)
+	if tx.Error != nil && tx.RowsAffected != 0 {
+		return &row, nil
+	}
+	return nil, fmt.Errorf("删除失败")
 }
 
 func (e *TencentSmsService) AddSmsProjectRow(req *smsmodel.AddSmsProjectRowReq) (
 	*smsmodel.SmsProjectRow, error) {
 	row := smsmodel.SmsProjectRow{
-		SmsProjectID: req.SmsProjectID,
+		SmsProjectId: req.SmsProjectId,
 		Phone:        req.Phone,
 		Param1:       req.Param1,
 		Param2:       req.Param2,

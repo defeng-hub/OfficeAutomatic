@@ -21,7 +21,7 @@ type SmsProjectRowIdReq struct {
 	Id uint `json:"id"`
 }
 type AddSmsProjectRowReq struct {
-	SmsProjectID uint   `json:"sms_project_id"`
+	SmsProjectId uint   `json:"sms_project_id"`
 	Phone        string `json:"phone"`
 	Param1       string `json:"param1"`
 	Param2       string `json:"param2"`

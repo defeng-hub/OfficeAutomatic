@@ -67,8 +67,8 @@ func (SmsProject) TableName() string {
 
 type SmsProjectRow struct {
 	global.GVA_MODEL
-	SmsProjectID uint       `json:"sms_project_id"`
-	SmsProject   SmsProject `json:"sms_project" gorm:"foreignKey:SmsProjectID"`
+	SmsProjectId uint       `json:"sms_project_id"`
+	SmsProject   SmsProject `json:"sms_project" gorm:"foreignKey:SmsProjectId"`
 	Phone        string     `json:"phone"`
 	Param1       string     `json:"param1"`
 	Param2       string     `json:"param2"`

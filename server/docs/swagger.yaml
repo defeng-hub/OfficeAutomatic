@@ -1052,9 +1052,29 @@ definitions:
       template_id:
         type: integer
     type: object
-  sms.DelSmsProjectReq:
+  sms.AddSmsProjectRowReq:
     properties:
-      template_id:
+      param1:
+        type: string
+      param2:
+        type: string
+      param3:
+        type: string
+      param4:
+        type: string
+      param5:
+        type: string
+      param6:
+        type: string
+      param7:
+        type: string
+      param8:
+        type: string
+      param9:
+        type: string
+      phone:
+        type: string
+      sms_project_id:
         type: integer
     type: object
   sms.SendSmsRequest:
@@ -1067,6 +1087,16 @@ definitions:
         type: array
       tpl_phones:
         type: string
+    type: object
+  sms.SmsProjectIdReq:
+    properties:
+      id:
+        type: integer
+    type: object
+  sms.SmsProjectRowIdReq:
+    properties:
+      id:
+        type: integer
     type: object
   system.AutoCodeStruct:
     properties:
@@ -3964,6 +3994,36 @@ paths:
       summary: 添加sms项目
       tags:
       - Txyun
+  /txyun/sms/AddSmsProjectRow:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 请求参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/sms.AddSmsProjectRowReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 添加sms项目成员
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  type: object
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 添加sms项目成员
+      tags:
+      - Txyun
   /txyun/sms/DelSmsProject:
     post:
       consumes:
@@ -3974,7 +4034,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/sms.DelSmsProjectReq'
+          $ref: '#/definitions/sms.SmsProjectIdReq'
       produces:
       - application/json
       responses:
@@ -3992,6 +4052,36 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: 删除sms项目
+      tags:
+      - Txyun
+  /txyun/sms/DelSmsProjectRow:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 请求参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/sms.SmsProjectRowIdReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 删除sms项目成员
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  type: object
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 删除sms项目成员
       tags:
       - Txyun
   /txyun/sms/GetAllSmsProject:
@@ -4081,6 +4171,36 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: 发送短信
+      tags:
+      - Txyun
+  /txyun/sms/SmsProjectRows:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 请求参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/sms.SmsProjectIdReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 通过sms项目Id获取全部数据
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  type: object
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 通过sms项目获取全部数据
       tags:
       - Txyun
   /txyun/sms/UpdateTemplates:

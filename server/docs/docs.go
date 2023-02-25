@@ -4217,6 +4217,59 @@ var doc = `{
                 }
             }
         },
+        "/txyun/sms/AddSmsProjectRow": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Txyun"
+                ],
+                "summary": "添加sms项目成员",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/sms.AddSmsProjectRowReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "添加sms项目成员",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/txyun/sms/DelSmsProject": {
             "post": {
                 "security": [
@@ -4241,13 +4294,66 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/sms.DelSmsProjectReq"
+                            "$ref": "#/definitions/sms.SmsProjectIdReq"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "获取sms项目",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/txyun/sms/DelSmsProjectRow": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Txyun"
+                ],
+                "summary": "删除sms项目成员",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/sms.SmsProjectRowIdReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除sms项目成员",
                         "schema": {
                             "allOf": [
                                 {
@@ -4405,6 +4511,59 @@ var doc = `{
                 "responses": {
                     "200": {
                         "description": "发送短信",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/txyun/sms/SmsProjectRows": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Txyun"
+                ],
+                "summary": "通过sms项目获取全部数据",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/sms.SmsProjectIdReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "通过sms项目Id获取全部数据",
                         "schema": {
                             "allOf": [
                                 {
@@ -6458,10 +6617,40 @@ var doc = `{
                 }
             }
         },
-        "sms.DelSmsProjectReq": {
+        "sms.AddSmsProjectRowReq": {
             "type": "object",
             "properties": {
-                "template_id": {
+                "param1": {
+                    "type": "string"
+                },
+                "param2": {
+                    "type": "string"
+                },
+                "param3": {
+                    "type": "string"
+                },
+                "param4": {
+                    "type": "string"
+                },
+                "param5": {
+                    "type": "string"
+                },
+                "param6": {
+                    "type": "string"
+                },
+                "param7": {
+                    "type": "string"
+                },
+                "param8": {
+                    "type": "string"
+                },
+                "param9": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "sms_project_id": {
                     "type": "integer"
                 }
             }
@@ -6480,6 +6669,22 @@ var doc = `{
                 },
                 "tpl_phones": {
                     "type": "string"
+                }
+            }
+        },
+        "sms.SmsProjectIdReq": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "sms.SmsProjectRowIdReq": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
                 }
             }
         },
