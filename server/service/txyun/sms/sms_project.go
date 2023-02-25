@@ -3,6 +3,7 @@ package sms
 import (
 	"fmt"
 	"github.com/defeng-hub/ByOfficeAutomatic/server/global"
+	"github.com/defeng-hub/ByOfficeAutomatic/server/model/common/request"
 	smsmodel "github.com/defeng-hub/ByOfficeAutomatic/server/model/txyun/sms"
 )
 
@@ -49,15 +50,15 @@ func (e *TencentSmsService) AddSmsProject(req *smsmodel.AddSmsProjectReq) (*smsm
 	}
 }
 
-func (e *TencentSmsService) DelSmsProject(req *smsmodel.SmsProjectIdReq) (*smsmodel.SmsProject, error) {
+func (e *TencentSmsService) DelSmsProject(req *request.GetById) (*smsmodel.SmsProject, error) {
 	db := global.GVA_DB.Model(smsmodel.SmsProject{})
 	project := smsmodel.SmsProject{}
-	tx := db.Where("id = ?", req.Id).Find(&project)
+	tx := db.Where("id = ?", req.ID).Find(&project)
 	if tx.RowsAffected == 0 {
 		return nil, fmt.Errorf("模板ID不存在")
 	}
 
-	tx = db.Where("id = ?", req.Id).Delete(&smsmodel.SmsProject{})
+	tx = db.Where("id = ?", req.ID).Delete(&smsmodel.SmsProject{})
 	if tx.Error != nil {
 		return nil, tx.Error
 	}
@@ -66,19 +67,27 @@ func (e *TencentSmsService) DelSmsProject(req *smsmodel.SmsProjectIdReq) (*smsmo
 
 // SmsProjectRows 下边是project row 的service
 // SmsProjectRows 通过项目ID拿到项目的全部行数据
-func (e *TencentSmsService) SmsProjectRows(req *smsmodel.SmsProjectIdReq) (
-	[]*smsmodel.SmsProjectRow, error) {
-	var rows []*smsmodel.SmsProjectRow
+func (e *TencentSmsService) SmsProjectRows(info *smsmodel.SmsProjectRowsPageReq) (
+	list interface{}, total int64, err error) {
+
+	limit := info.PageSize
+	offset := info.PageSize * (info.Page - 1)
 	db := global.GVA_DB.Model(smsmodel.SmsProjectRow{})
 
-	db.Find(&rows, "sms_project_id = ?", req.Id)
-	return rows, nil
+	var List []smsmodel.SmsProjectRow
+	err = db.Count(&total).Error
+	if err != nil {
+		return List, total, err
+	} else {
+		err = db.Where("sms_project_id = ?", info.ID).Where("phone LIKE ?", "%"+info.Keyword+"%").Limit(limit).Offset(offset).Find(&List).Error
+	}
+	return List, total, err
 }
 
-func (e *TencentSmsService) DelSmsProjectRow(req *smsmodel.SmsProjectRowIdReq) (
+func (e *TencentSmsService) DelSmsProjectRow(req *request.GetById) (
 	*smsmodel.SmsProjectRow, error) {
 	row := smsmodel.SmsProjectRow{}
-	row.ID = req.Id
+	row.ID = uint(req.ID)
 
 	db := global.GVA_DB.Model(smsmodel.SmsProjectRow{})
 	tx := db.Unscoped().Delete(&row)

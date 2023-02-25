@@ -16,6 +16,13 @@ type SmsProjectIdReq struct {
 	Id uint `json:"id"`
 }
 
+type SmsProjectRowsPageReq struct {
+	ID       uint   `json:"id"`
+	Page     int    `json:"page" form:"page"`          // 页码
+	PageSize int    `json:"page_size" form:"pageSize"` // 每页大小
+	Keyword  string `json:"keyword" form:"keyword"`    //关键字
+}
+
 //SMS Project Row
 type SmsProjectRowIdReq struct {
 	Id uint `json:"id"`

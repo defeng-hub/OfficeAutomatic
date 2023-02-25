@@ -1909,7 +1909,7 @@ var doc = `{
                     {
                         "type": "integer",
                         "description": "每页大小",
-                        "name": "pageSize",
+                        "name": "page_size",
                         "in": "query"
                     }
                 ],
@@ -3115,7 +3115,7 @@ var doc = `{
                     {
                         "type": "integer",
                         "description": "每页大小",
-                        "name": "pageSize",
+                        "name": "page_size",
                         "in": "query"
                     },
                     {
@@ -3456,7 +3456,7 @@ var doc = `{
                     {
                         "type": "integer",
                         "description": "每页大小",
-                        "name": "pageSize",
+                        "name": "page_size",
                         "in": "query"
                     },
                     {
@@ -3919,7 +3919,7 @@ var doc = `{
                     {
                         "type": "integer",
                         "description": "每页大小",
-                        "name": "pageSize",
+                        "name": "page_size",
                         "in": "query"
                     },
                     {
@@ -4294,7 +4294,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/sms.SmsProjectIdReq"
+                            "$ref": "#/definitions/request.GetById"
                         }
                     }
                 ],
@@ -4347,7 +4347,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/sms.SmsProjectRowIdReq"
+                            "$ref": "#/definitions/request.GetById"
                         }
                     }
                 ],
@@ -4451,7 +4451,7 @@ var doc = `{
                     {
                         "type": "integer",
                         "description": "每页大小",
-                        "name": "pageSize",
+                        "name": "page_size",
                         "in": "query"
                     }
                 ],
@@ -4557,7 +4557,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/sms.SmsProjectIdReq"
+                            "$ref": "#/definitions/sms.SmsProjectRowsPageReq"
                         }
                     }
                 ],
@@ -6214,7 +6214,7 @@ var doc = `{
                     "description": "页码",
                     "type": "integer"
                 },
-                "pageSize": {
+                "page_size": {
                     "description": "每页大小",
                     "type": "integer"
                 }
@@ -6313,7 +6313,7 @@ var doc = `{
                     "description": "页码",
                     "type": "integer"
                 },
-                "pageSize": {
+                "page_size": {
                     "description": "每页大小",
                     "type": "integer"
                 },
@@ -6379,7 +6379,7 @@ var doc = `{
                     "description": "页码",
                     "type": "integer"
                 },
-                "pageSize": {
+                "page_size": {
                     "description": "每页大小",
                     "type": "integer"
                 }
@@ -6672,18 +6672,22 @@ var doc = `{
                 }
             }
         },
-        "sms.SmsProjectIdReq": {
+        "sms.SmsProjectRowsPageReq": {
             "type": "object",
             "properties": {
                 "id": {
                     "type": "integer"
-                }
-            }
-        },
-        "sms.SmsProjectRowIdReq": {
-            "type": "object",
-            "properties": {
-                "id": {
+                },
+                "keyword": {
+                    "description": "关键字",
+                    "type": "string"
+                },
+                "page": {
+                    "description": "页码",
+                    "type": "integer"
+                },
+                "page_size": {
+                    "description": "每页大小",
                     "type": "integer"
                 }
             }

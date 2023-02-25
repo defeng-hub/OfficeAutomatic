@@ -156,11 +156,11 @@ func (e *SmsHandler) AddSmsProject(c *gin.Context) {
 // @Security  ApiKeyAuth
 // @accept    application/json
 // @Produce   application/json
-// @Param     data  body     smsmodel.SmsProjectIdReq  true  "模板ID"
+// @Param     data  body     request.GetById  true  "模板ID"
 // @Success   200   {object}  response.Response{data=object,msg=string}  "获取sms项目"
 // @Router    /txyun/sms/DelSmsProject [post]
 func (e *SmsHandler) DelSmsProject(c *gin.Context) {
-	var req smsmodel.SmsProjectIdReq
+	var req request.GetById
 	err := c.Bind(&req)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
@@ -180,22 +180,28 @@ func (e *SmsHandler) DelSmsProject(c *gin.Context) {
 // @Security  ApiKeyAuth
 // @accept    application/json
 // @Produce   application/json
-// @Param     data  body     smsmodel.SmsProjectIdReq  true  "请求参数"
+// @Param     data  body     smsmodel.SmsProjectRowsPageReq  true  "请求参数"
 // @Success   200   {object}  response.Response{data=object,msg=string}  "通过sms项目Id获取全部数据"
 // @Router    /txyun/sms/SmsProjectRows [post]
 func (e *SmsHandler) SmsProjectRows(c *gin.Context) {
-	var req smsmodel.SmsProjectIdReq
+	var req smsmodel.SmsProjectRowsPageReq
 	err := c.Bind(&req)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	rows, err := TxyunService.SmsProjectRows(&req)
+	rows, total, err := TxyunService.SmsProjectRows(&req)
+	if err != nil {
+		return
+	}
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	response.OkWithDetailed(rows, "获取成功", c)
+	response.OkWithDetailed(gin.H{
+		"list":  rows,
+		"total": total,
+	}, "获取成功", c)
 }
 
 // DelSmsProjectRow
@@ -204,11 +210,11 @@ func (e *SmsHandler) SmsProjectRows(c *gin.Context) {
 // @Security  ApiKeyAuth
 // @accept    application/json
 // @Produce   application/json
-// @Param     data  body     smsmodel.SmsProjectRowIdReq  true  "请求参数"
+// @Param     data  body     request.GetById  true  "请求参数"
 // @Success   200   {object}  response.Response{data=object,msg=string}  "删除sms项目成员"
 // @Router    /txyun/sms/DelSmsProjectRow [post]
 func (e *SmsHandler) DelSmsProjectRow(c *gin.Context) {
-	var req smsmodel.SmsProjectRowIdReq
+	var req request.GetById
 	err := c.Bind(&req)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)

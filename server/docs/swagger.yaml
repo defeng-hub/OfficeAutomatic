@@ -782,7 +782,7 @@ definitions:
       page:
         description: 页码
         type: integer
-      pageSize:
+      page_size:
         description: 每页大小
         type: integer
     type: object
@@ -854,7 +854,7 @@ definitions:
       page:
         description: 页码
         type: integer
-      pageSize:
+      page_size:
         description: 每页大小
         type: integer
       path:
@@ -899,7 +899,7 @@ definitions:
       page:
         description: 页码
         type: integer
-      pageSize:
+      page_size:
         description: 每页大小
         type: integer
     type: object
@@ -1088,14 +1088,18 @@ definitions:
       tpl_phones:
         type: string
     type: object
-  sms.SmsProjectIdReq:
+  sms.SmsProjectRowsPageReq:
     properties:
       id:
         type: integer
-    type: object
-  sms.SmsProjectRowIdReq:
-    properties:
-      id:
+      keyword:
+        description: 关键字
+        type: string
+      page:
+        description: 页码
+        type: integer
+      page_size:
+        description: 每页大小
         type: integer
     type: object
   system.AutoCodeStruct:
@@ -2655,7 +2659,7 @@ paths:
         type: integer
       - description: 每页大小
         in: query
-        name: pageSize
+        name: page_size
         type: integer
       produces:
       - application/json
@@ -3343,7 +3347,7 @@ paths:
         type: integer
       - description: 每页大小
         in: query
-        name: pageSize
+        name: page_size
         type: integer
       - description: 状态
         in: query
@@ -3544,7 +3548,7 @@ paths:
         type: integer
       - description: 每页大小
         in: query
-        name: pageSize
+        name: page_size
         type: integer
       - description: 排序标记
         in: query
@@ -3821,7 +3825,7 @@ paths:
         type: integer
       - description: 每页大小
         in: query
-        name: pageSize
+        name: page_size
         type: integer
       - description: 请求路径
         in: query
@@ -4034,7 +4038,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/sms.SmsProjectIdReq'
+          $ref: '#/definitions/request.GetById'
       produces:
       - application/json
       responses:
@@ -4064,7 +4068,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/sms.SmsProjectRowIdReq'
+          $ref: '#/definitions/request.GetById'
       produces:
       - application/json
       responses:
@@ -4122,7 +4126,7 @@ paths:
         type: integer
       - description: 每页大小
         in: query
-        name: pageSize
+        name: page_size
         type: integer
       produces:
       - application/json
@@ -4183,7 +4187,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/sms.SmsProjectIdReq'
+          $ref: '#/definitions/sms.SmsProjectRowsPageReq'
       produces:
       - application/json
       responses:
