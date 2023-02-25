@@ -27,6 +27,7 @@ yarn-error.log*
 /server/gva
 /server/latest_log
 /server/server.exe
+/server/*.exe
 /server/service/txyun/sms/secretkey.go
 
 *.iml
