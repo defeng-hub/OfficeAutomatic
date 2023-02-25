@@ -36,9 +36,9 @@
             <CustomPic pic-type="file" :pic-src="scope.row.url" />
           </template>
         </el-table-column>
-        <el-table-column align="left" label="日期" prop="UpdatedAt" width="180">
+        <el-table-column align="left" label="日期" prop="updated_at" width="180">
           <template #default="scope">
-            <div>{{ formatDate(scope.row.UpdatedAt) }}</div>
+            <div>{{ formatDate(scope.row.updated_at) }}</div>
           </template>
         </el-table-column>
         <el-table-column align="left" label="文件名/备注" prop="name" width="180">

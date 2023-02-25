@@ -53,6 +53,8 @@
 .gva-pagination {
     display: flex;
     justify-content: flex-end;
+    align-content: center;
+    align-items:center;
     .el-pagination__editor {
         .el-input__inner {
             height: 32px;

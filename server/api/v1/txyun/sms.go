@@ -198,9 +198,11 @@ func (e *SmsHandler) SmsProjectRows(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	response.OkWithDetailed(gin.H{
-		"list":  rows,
-		"total": total,
+	response.OkWithDetailed(response.PageResult{
+		List:     rows,
+		Total:    total,
+		Page:     req.Page,
+		PageSize: req.PageSize,
 	}, "获取成功", c)
 }
 
@@ -238,16 +240,37 @@ func (e *SmsHandler) DelSmsProjectRow(c *gin.Context) {
 // @Success   200   {object}  response.Response{data=object,msg=string}  "添加sms项目成员"
 // @Router    /txyun/sms/AddSmsProjectRow [post]
 func (e *SmsHandler) AddSmsProjectRow(c *gin.Context) {
-	var req smsmodel.AddSmsProjectRowReq
+	var req smsmodel.AddSmsProjectRowsReq
 	err := c.Bind(&req)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	rows, err := TxyunService.AddSmsProjectRow(&req)
+	split := strings.Split(req.TplPhones, "\n")
+	var rows []*smsmodel.SmsProjectRow
+	for _, v := range split {
+		if utils.CheckMobile(v) {
+			mod := smsmodel.SmsProjectRow{
+				SmsProjectId: req.SmsProjectId,
+				Phone:        v,
+				Param1:       req.Param1,
+				Param2:       req.Param2,
+				Param3:       req.Param3,
+				Param4:       req.Param4,
+				Param5:       req.Param5,
+				Param6:       req.Param6,
+				Param7:       req.Param7,
+				Param8:       req.Param8,
+				Param9:       req.Param9,
+			}
+			rows = append(rows, &mod)
+		}
+	}
+
+	row, err := TxyunService.AddSmsProjectRow(rows)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	response.OkWithDetailed(rows, "添加成功", c)
+	response.OkWithDetailed(row, "添加成功", c)
 }

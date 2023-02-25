@@ -75,10 +75,11 @@ func (e *TencentSmsService) SmsProjectRows(info *smsmodel.SmsProjectRowsPageReq)
 	db := global.GVA_DB.Model(smsmodel.SmsProjectRow{})
 
 	var List []smsmodel.SmsProjectRow
-	err = db.Count(&total).Error
+	err = db.Where("sms_project_id = ?", info.ID).Count(&total).Error
 	if err != nil {
 		return List, total, err
 	} else {
+		//err = db.Where("sms_project_id = ?", info.ID).Limit(limit).Offset(offset).Find(&List).Error
 		err = db.Where("sms_project_id = ?", info.ID).Where("phone LIKE ?", "%"+info.Keyword+"%").Limit(limit).Offset(offset).Find(&List).Error
 	}
 	return List, total, err
@@ -97,27 +98,15 @@ func (e *TencentSmsService) DelSmsProjectRow(req *request.GetById) (
 	return nil, fmt.Errorf("删除失败")
 }
 
-func (e *TencentSmsService) AddSmsProjectRow(req *smsmodel.AddSmsProjectRowReq) (
+func (e *TencentSmsService) AddSmsProjectRow(req []*smsmodel.SmsProjectRow) (
 	*smsmodel.SmsProjectRow, error) {
-	row := smsmodel.SmsProjectRow{
-		SmsProjectId: req.SmsProjectId,
-		Phone:        req.Phone,
-		Param1:       req.Param1,
-		Param2:       req.Param2,
-		Param3:       req.Param3,
-		Param4:       req.Param4,
-		Param5:       req.Param5,
-		Param6:       req.Param6,
-		Param7:       req.Param7,
-		Param8:       req.Param8,
-		Param9:       req.Param9,
-	}
+
 	db := global.GVA_DB.Model(smsmodel.SmsProjectRow{})
-	tx := db.Create(&row)
+	tx := db.Create(&req)
 	if tx.Error != nil && tx.RowsAffected != 0 {
 		return nil, tx.Error
 	}
-	return &row, nil
+	return nil, nil
 }
 
 func (e *TencentSmsService) UpdateSmsProjectRow(req *smsmodel.SmsProjectRow) (

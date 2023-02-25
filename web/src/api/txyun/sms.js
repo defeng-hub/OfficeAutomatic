@@ -99,3 +99,20 @@ export const DelSmsProject = (data) => {
     data
   })
 }
+
+
+export const SmsProjectRows = (data) => {
+  return service({
+    url: '/txyun/sms/SmsProjectRows',
+    method: 'post',
+    data
+  })
+}
+
+export const AddSmsProjectRow = (data) => {
+  return service({
+    url: '/txyun/sms/AddSmsProjectRow',
+    method: 'post',
+    data
+  })
+}
