@@ -84,3 +84,17 @@ type SmsProjectRow struct {
 func (SmsProjectRow) TableName() string {
 	return "txyun_sms_project_row"
 }
+
+type ExportSmsProjectRow struct {
+	ID     uint   `json:"ID"`
+	Phone  string `json:"phone"`
+	Param1 string `json:"param1"`
+	Param2 string `json:"param2"`
+	Param3 string `json:"param3"`
+	Param4 string `json:"param4"`
+	Param5 string `json:"param5"`
+	Param6 string `json:"param6"`
+	Param7 string `json:"param7"`
+	Param8 string `json:"param8"`
+	Param9 string `json:"param9"`
+}

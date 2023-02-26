@@ -92,6 +92,7 @@ jwt:
 local:
   path: uploads/file
   store-path: uploads/file
+  excel-path: uploads/excel
 mssql:
   path: ""
   port: ""
@@ -170,6 +171,7 @@ system:
   iplimit-count: 15000
   iplimit-time: 3600
   router-prefix: ""
+  base-url: "http://127.0.0.1:8888"
 tencent-cos:
   bucket: xxxxx-10005608
   region: ap-shanghai

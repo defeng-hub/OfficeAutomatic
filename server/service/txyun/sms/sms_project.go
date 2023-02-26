@@ -92,10 +92,21 @@ func (e *TencentSmsService) DelSmsProjectRow(req *request.GetById) (
 
 	db := global.GVA_DB.Model(smsmodel.SmsProjectRow{})
 	tx := db.Unscoped().Delete(&row)
-	if tx.Error != nil && tx.RowsAffected != 0 {
-		return &row, nil
+	if tx.Error != nil || tx.RowsAffected == 0 {
+		return nil, fmt.Errorf("删除失败")
 	}
-	return nil, fmt.Errorf("删除失败")
+	return &row, nil
+}
+
+func (e *TencentSmsService) DelSmsProjectRows(req *request.IdsReq) error {
+
+	db := global.GVA_DB.Model([]*smsmodel.SmsProjectRow{})
+	tx := db.Unscoped().Delete([]*smsmodel.SmsProjectRow{}, req.Ids)
+	if tx.Error != nil || tx.RowsAffected == 0 {
+		return fmt.Errorf("删除失败")
+	} else {
+		return nil
+	}
 }
 
 func (e *TencentSmsService) AddSmsProjectRow(req []*smsmodel.SmsProjectRow) (
@@ -112,4 +123,50 @@ func (e *TencentSmsService) AddSmsProjectRow(req []*smsmodel.SmsProjectRow) (
 func (e *TencentSmsService) UpdateSmsProjectRow(req *smsmodel.SmsProjectRow) (
 	*smsmodel.SmsProjectRow, error) {
 	return nil, nil
+}
+
+func (e *TencentSmsService) SendSmsByRows(req *request.IdsReq) error {
+	var rows []*smsmodel.SmsProjectRow
+	//	传入ids,project_id
+	db := global.GVA_DB.Model(rows)
+
+	tx := db.Preload("SmsProject").Find(&rows, req.Ids)
+	if tx.Error != nil {
+		return tx.Error
+	}
+	for _, row := range rows {
+		var params []string
+		if row.Param1 != "" {
+			params = append(params, row.Param1)
+		}
+		if row.Param2 != "" {
+			params = append(params, row.Param2)
+		}
+		if row.Param3 != "" {
+			params = append(params, row.Param3)
+		}
+		if row.Param4 != "" {
+			params = append(params, row.Param4)
+		}
+		if row.Param5 != "" {
+			params = append(params, row.Param5)
+		}
+		if row.Param6 != "" {
+			params = append(params, row.Param6)
+		}
+		if row.Param7 != "" {
+			params = append(params, row.Param7)
+		}
+		if row.Param8 != "" {
+			params = append(params, row.Param8)
+		}
+		if row.Param9 != "" {
+			params = append(params, row.Param9)
+		}
+		err := e.SendSms(int(row.SmsProject.TemplateId), []string{row.Phone}, params)
+		if err != nil {
+			global.GVA_LOG.Error("批量发送短信err:" + err.Error())
+		}
+	}
+	return nil
 }

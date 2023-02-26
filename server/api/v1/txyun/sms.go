@@ -8,7 +8,11 @@ import (
 	"github.com/defeng-hub/ByOfficeAutomatic/server/utils"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
+	"os"
+	"path"
+	"strconv"
 	"strings"
+	"time"
 )
 
 type SmsHandler struct{}
@@ -230,6 +234,30 @@ func (e *SmsHandler) DelSmsProjectRow(c *gin.Context) {
 	response.OkWithDetailed(rows, "删除成功", c)
 }
 
+// DelSmsProjectRows
+// @Tags      Txyun
+// @Summary   批量删除sms项目成员
+// @Security  ApiKeyAuth
+// @accept    application/json
+// @Produce   application/json
+// @Param     data  body     request.IdsReq  true  "请求参数"
+// @Success   200   {object}  response.Response{data=object,msg=string}  "响应内容"
+// @Router    /txyun/sms/DelSmsProjectRow [post]
+func (e *SmsHandler) DelSmsProjectRows(c *gin.Context) {
+	var req request.IdsReq
+	err := c.Bind(&req)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	err = TxyunService.DelSmsProjectRows(&req)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	response.OkWithDetailed(nil, "删除成功", c)
+}
+
 // AddSmsProjectRow
 // @Tags      Txyun
 // @Summary   添加sms项目成员
@@ -248,6 +276,7 @@ func (e *SmsHandler) AddSmsProjectRow(c *gin.Context) {
 	}
 	split := strings.Split(req.TplPhones, "\n")
 	var rows []*smsmodel.SmsProjectRow
+	var errorphones []string
 	for _, v := range split {
 		if utils.CheckMobile(v) {
 			mod := smsmodel.SmsProjectRow{
@@ -264,6 +293,8 @@ func (e *SmsHandler) AddSmsProjectRow(c *gin.Context) {
 				Param9:       req.Param9,
 			}
 			rows = append(rows, &mod)
+		} else {
+			errorphones = append(errorphones, v)
 		}
 	}
 
@@ -272,5 +303,65 @@ func (e *SmsHandler) AddSmsProjectRow(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	response.OkWithDetailed(row, "添加成功", c)
+	response.OkWithDetailed(gin.H{
+		"rows":  row,
+		"error": errorphones,
+	}, "添加成功", c)
+}
+
+// SendSmsByRows
+// @Tags      Txyun
+// @Summary   批量发送信息
+// @Security  ApiKeyAuth
+// @accept    application/json
+// @Produce   application/json
+// @Param     data  body     request.IdsReq  true  "请求参数"
+// @Success   200   {object}  response.Response{data=object,msg=string}  "响应内容"
+// @Router    /txyun/sms/SendSmsByRows [post]
+func (e *SmsHandler) SendSmsByRows(c *gin.Context) {
+	var req request.IdsReq
+	err := c.Bind(&req)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	err = TxyunService.SendSmsByRows(&req)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	response.OkWithDetailed(nil, "发送成功", c)
+}
+
+// ExportExcelSmsRows
+// @Tags      Txyun
+// @Summary   导出excel信息
+// @Security  ApiKeyAuth
+// @accept    application/json
+// @Produce   application/json
+// @Param     data  body     request.IdsReq  true  "请求参数"
+// @Success   200   {object}  response.Response{data=object,msg=string}  "响应内容"
+// @Router    /txyun/sms/ExportExcelSmsRows [post]
+func (e *SmsHandler) ExportExcelSmsRows(c *gin.Context) {
+	var req request.IdsReq
+	err := c.Bind(&req)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	var obj smsmodel.ExportSmsProjectRow
+	var rows []smsmodel.ExportSmsProjectRow
+	db := global.GVA_DB.Model(smsmodel.SmsProjectRow{})
+	tx := db.Find(&rows, req.Ids)
+	if tx.Error != nil || tx.RowsAffected == 0 {
+		response.FailWithMessage("请选择至少一项", c)
+		return
+	}
+	day := time.Now().Format("20060102")
+	os.MkdirAll("./uploads/excel/"+day, os.ModePerm)
+	filepath := path.Join("./uploads/excel/"+day, strconv.Itoa(int(time.Now().Unix()))+"-"+"export.xlsx")
+	utils.ExportDefaultExcel(obj, rows, filepath)
+	response.OkWithDetailed(gin.H{
+		"url": global.GVA_CONFIG.System.BaseUrl + "/" + filepath,
+	}, "发送成功", c)
 }

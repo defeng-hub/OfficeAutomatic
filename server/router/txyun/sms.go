@@ -24,7 +24,11 @@ func (e *TxSmsRouter) InitTxYunRouter(Router *gin.RouterGroup) {
 		txSmsRouter.POST("DelSmsProject", TxSmsApi.DelSmsProject)
 		txSmsRouter.POST("SmsProjectRows", TxSmsApi.SmsProjectRows)
 		txSmsRouter.POST("DelSmsProjectRow", TxSmsApi.DelSmsProjectRow)
+		txSmsRouter.POST("DelSmsProjectRows", TxSmsApi.DelSmsProjectRows)
 		txSmsRouter.POST("AddSmsProjectRow", TxSmsApi.AddSmsProjectRow)
+		txSmsRouter.POST("SendSmsByRows", TxSmsApi.SendSmsByRows)
+		txSmsRouter.POST("ExportExcelSmsRows", TxSmsApi.ExportExcelSmsRows)
+
 	}
 
 	//	oss模块
