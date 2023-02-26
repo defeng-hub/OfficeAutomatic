@@ -22,7 +22,7 @@
       >
         <el-tab-pane
           :label="obj.project_name"
-          :name="obj.id"
+          :name="obj.ID"
           v-for="obj in project_list"
         >
           <div>
@@ -55,28 +55,30 @@
               style="width: 100%;margin-top: 20px;"
               tooltip-effect="dark"
               row-key="ID"
+              @selection-change="handleSelectionChange"
             >
               <el-table-column
                 type="selection"
                 width="55"
+                align="center"
               />
               <el-table-column
-                align="left"
+                align="center"
                 label="添加日期"
-                width="180"
+                width="170"
               >
                 <template #default="scope">
                   <span>{{ formatDate(scope.row.created_at) }}</span>
                 </template>
               </el-table-column>
               <el-table-column
-                align="left"
+                align="center"
                 label="手机号"
                 prop="phone"
                 width="120"
               />
               <el-table-column
-                align="left"
+                align="center"
                 :label="'参数'+num"
                 :prop="`param${num}`"
                 width="120"
@@ -84,7 +86,7 @@
               />
 
               <el-table-column
-                align="left"
+                align="center"
                 label="按钮组"
                 min-width="160"
                 fixed="right"
@@ -110,7 +112,7 @@
                       >取消</el-button>
                       <el-button
                         type="primary"
-                        @click="deleteCustomer(scope.row)"
+                        @click="DelRow(scope.row.ID)"
                       >确定</el-button>
                     </div>
                     <template #reference>
@@ -138,8 +140,21 @@
                   type="primary"
                   icon="delete"
                   size="default"
-                  @click=""
+                  @click="DelRows"
                 >删除</el-button>
+
+                <el-button
+                  type="primary"
+                  icon="printer"
+                  size="default"
+                  @click="exportExcel"
+                >导出excel</el-button>
+                <el-button
+                  type="warning"
+                  icon="message"
+                  size="default"
+                  @click="send"
+                >批量发送信息</el-button>
               </div>
               
               <div>
@@ -272,6 +287,7 @@ export default {
   data() {
     return {
       activeName:"", // tabs 选中
+      multipleSelection:[], // 下方表格中 选中的row 元素
       rowCommit:{
         tpl_params:["","","","","","","","",""],// 输入参数列表
         tpl_phones:"",
@@ -282,7 +298,7 @@ export default {
       tableData2: [], //模板列表, 用于选则模板ID
       pageSetting: {
         page: 1,
-        pageSize: 100,
+        pageSize: 10,
         total:0,
       },
       dialogFormVisible:false,
@@ -311,9 +327,12 @@ export default {
   methods: {
     async addrow(){
       // console.log(this.rowCommit)
+      if(this.rowCommit.tpl_phones==""){
+        return
+      }
       let req = {
         tpl_phones:this.rowCommit.tpl_phones,
-        sms_project_id: parseInt(this.win.project.id),
+        sms_project_id: parseInt(this.win.project.ID),
         param1:this.rowCommit.tpl_params[0],
         param2:this.rowCommit.tpl_params[1],
         param3:this.rowCommit.tpl_params[2],
@@ -326,26 +345,94 @@ export default {
       }
       let res = await AddSmsProjectRow(req);
       // console.log(res)
-      if(code == 0){
+      if(res.code === 0){
         ElMessage({ type: 'success', message: '添加成功' })
         this.rowCommit = {
         tpl_params:["","","","","","","","",""],// 输入参数列表
         tpl_phones:"",
         sms_project_id:""}
+        this.dialogFormVisible2 = false;
+
+        this.getProjectRows()
       }
+    },
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
+      // console.log(val)
     },
     handleSizeChange(val){
       this.pageSetting.pageSize = val
+      this.getProjectRows()
     },
     handleCurrentChange(val){
       this.pageSetting.page = val
+      this.getProjectRows()
+    },
+    async exportExcel(){
+      let ids = []
+      for (let i = 0; i < this.multipleSelection.length; i++) {
+        ids.push(this.multipleSelection[i].ID);
+      }
+      if(ids.length == 0){
+        ElMessage({ type: 'warning', message: '请至少选择一项' })
+        return 
+      }
+      let res = await ExportExcelSmsRows({ids:ids});
+      if(res.code === 0){
+        // console.log("excel",res.data.url)
+        window.open(res.data.url)
+        ElMessage({ type: 'success', message: '导出成功' })
+      }
+    },
+    async send(){
+
+      let ids = []
+      for (let i = 0; i < this.multipleSelection.length; i++) {
+        ids.push(this.multipleSelection[i].ID);
+      }
+      if(ids.length == 0){
+        ElMessage({ type: 'warning', message: '请至少选择一项' })
+        return 
+      }
+      let res = await SendSmsByRows({ids:ids});
+      if(res.code === 0){
+        ElNotification({
+          title: '发信成功',
+          message: '批量发送信息成功',
+          duration: 5000,
+        })
+        // ElMessage({ type: 'success', message: '批量发信成功' })
+      }
+    },
+    async DelRow(id){
+      // console.log(id)
+      let res = await DelSmsProjectRow({id:id});
+      // console.log("DelRow",res)
+      if(res.code === 0){
+        ElMessage({ type: 'success', message: '删除成功' })
+        this.getProjectRows()
+      }
+    },
+    async DelRows(){
+        let ids = []
+				for (let i = 0; i < this.multipleSelection.length; i++) {
+          ids.push(this.multipleSelection[i].ID);
+        }
+        if(ids.length == 0){
+          return 
+        }
+        let res = await DelSmsProjectRows({ids:ids});
+        if(res.code === 0){
+          ElMessage({ type: 'success', message: '批量删除成功' })
+          this.getProjectRows()
+        }
     },
     async changeTab(tab){
       this.win.selectTab = tab.index;
       this.win.project = this.project_list[tab.index];
       this.win.temeplate = this.win.project.sms_template;
 
-      this.getProjectRows()
+      await this.getProjectRows()
     },
     async GetTemplateList() {
       const res = await GetSmsList({page: 1,pageSize: 1000})
@@ -354,9 +441,10 @@ export default {
     async getProjects(){
       let table = await GetAllSmsProject()
       if (table.code === 0) {
-        this.project_list = table.data.list
+        this.project_list = table.data.list;
+        // console.log(this.project_list)
         if (table.data.list.length != 0) {
-          this.activeName = table.data.list[0].id;
+          this.activeName = table.data.list[0].ID;
           this.changeTab({ index: '0' })
         }
       }
@@ -388,9 +476,7 @@ export default {
       }
     },
     async getProjectRows(){
-
-
-      let res = await SmsProjectRows({id:this.win.project.id})
+      let res = await SmsProjectRows({id:this.win.project.ID, ...this.pageSetting})
       // console.log(res)
       if(res.code === 0){
         this.rows = []
@@ -398,7 +484,7 @@ export default {
         this.pageSetting.total = res.data.total;
         this.pageSetting.page = res.data.page;
         this.pageSetting.pageSize = res.data.pageSize;
-        console.log(this.rows)
+        // console.log("res.data",res.data)
       }
 
     },
@@ -417,11 +503,15 @@ export default {
 
 
 <script setup>
-import { AddSmsProject, GetAllSmsProject, DelSmsProject,SmsProjectRows,AddSmsProjectRow } from '@/api/txyun/sms.js'
+import { AddSmsProject, GetAllSmsProject, DelSmsProject,
+  SmsProjectRows,AddSmsProjectRow,DelSmsProjectRow,
+  DelSmsProjectRows,SendSmsByRows,ExportExcelSmsRows } from '@/api/txyun/sms.js'
 import WarningBar from '@/components/warningBar/warningBar.vue'
 import { ref } from 'vue'
-import { ElMessage } from 'element-plus'
+//  ElNotification->通知
+import { ElMessage,ElNotification } from 'element-plus'
 import { formatDate } from '@/utils/format'
+
 
 const tableData = ref([])
 

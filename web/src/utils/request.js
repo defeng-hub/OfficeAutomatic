@@ -1,5 +1,5 @@
 import axios from 'axios' // 引入axios
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessage, ElMessageBox,ElNotification } from 'element-plus'
 import { useUserStore } from '@/pinia/modules/user'
 import { emitter } from '@/utils/bus.js'
 import router from '@/router/index'
@@ -77,6 +77,11 @@ service.interceptors.response.use(
         showClose: true,
         message: response.data.msg || decodeURI(response.headers.msg),
         type: 'error'
+      })
+      ElNotification({
+        title: '后端接口提醒',
+        message: response.data.msg || decodeURI(response.headers.msg),
+        duration: 8000,
       })
       if (response.data.data && response.data.data.reload) {
         userStore.token = ''

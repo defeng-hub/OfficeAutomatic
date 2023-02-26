@@ -116,3 +116,35 @@ export const AddSmsProjectRow = (data) => {
     data
   })
 }
+
+export const DelSmsProjectRow = (data) => {
+  return service({
+    url: '/txyun/sms/DelSmsProjectRow',
+    method: 'post',
+    data
+  })
+}
+
+export const DelSmsProjectRows = (data) => {
+  return service({
+    url: '/txyun/sms/DelSmsProjectRows',
+    method: 'post',
+    data
+  })
+}
+
+export const SendSmsByRows = (data) => {
+  return service({
+    url: '/txyun/sms/SendSmsByRows',
+    method: 'post',
+    data
+  })
+}
+
+export const ExportExcelSmsRows = (data) => {
+  return service({
+    url: '/txyun/sms/ExportExcelSmsRows',
+    method: 'post',
+    data
+  })
+}
