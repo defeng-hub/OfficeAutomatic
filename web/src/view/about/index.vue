@@ -4,78 +4,41 @@
       <el-col :span="12">
         <el-card>
           <template #header>
-            <el-divider>gin-vue-admin</el-divider>
+            博远天合教育
           </template>
           <div>
             <el-row>
               <el-col :span="8" :offset="8">
-                <a href="https://github.com/flipped-aurora/gin-vue-admin">
                   <img
                     class="org-img dom-center"
-                    src="@/assets/logo.png"
+                    src="@/assets/bylogo.png"
                     alt="gin-vue-admin"
                   >
-                </a>
-              </el-col>
-            </el-row>
-            <el-row :gutter="10">
-              <el-col :span="8">
-                <a href="https://github.com/flipped-aurora/gin-vue-admin">
-                  <img
-                    class="dom-center"
-                    src="https://img.shields.io/github/watchers/flipped-aurora/gin-vue-admin.svg?label=Watch"
-                    alt=""
-                  >
-                </a>
-              </el-col>
-              <el-col :span="8">
-                <a href="https://github.com/flipped-aurora/gin-vue-admin">
-                  <img
-                    class="dom-center"
-                    src="https://img.shields.io/github/stars/flipped-aurora/gin-vue-admin.svg?style=social"
-                    alt=""
-                  >
-                </a>
-              </el-col>
-              <el-col :span="8">
-                <a href="https://github.com/flipped-aurora/gin-vue-admin">
-                  <img
-                    class="dom-center"
-                    src="https://img.shields.io/github/forks/flipped-aurora/gin-vue-admin.svg?label=Fork"
-                    alt=""
-                  >
-                </a>
               </el-col>
             </el-row>
           </div>
         </el-card>
+
+        <!-- byIT团队 -->
         <el-card style="margin-top: 20px">
           <template #header>
-            <div>flipped-aurora团队</div>
+            <div>ByIT团队</div>
           </template>
           <div>
             <el-row>
               <el-col :span="8" :offset="8">
-                <a href="https://github.com/flipped-aurora">
                   <img
                     class="org-img dom-center"
-                    src="@/assets/flipped-aurora.png"
+                    src="@/assets/bylogo.png"
                     alt="flipped-aurora"
                   >
-                </a>
-              </el-col>
-            </el-row>
-            <el-row style="margin-left: 40px" :gutter="20">
-              <el-col v-for="(item, index) in members" :key="index" :span="8">
-                <a :href="item.html_url">
-                  <img class="avatar-img" :src="item.avatar_url">
-                  <a class="author-name" style="">{{ item.login }}</a>
-                </a>
               </el-col>
             </el-row>
           </div>
         </el-card>
       </el-col>
+      
+      <!-- 提交记录 -->
       <el-col :span="12">
         <el-card>
           <template #header>
@@ -90,18 +53,12 @@
                 placement="top"
               >
                 <el-card>
-                  <h4>{{ item.title }}</h4>
-                  <p>{{ item.message }}</p>
+                  <p>{{ item.title }}: {{ item.message }}</p>
                 </el-card>
               </el-timeline-item>
             </el-timeline>
           </div>
-          <el-button
-            class="load-more"
-            type="primary"
-            link
-            @click="loadMore"
-          >Load more</el-button>
+
         </el-card>
       </el-col>
     </el-row>
@@ -116,14 +73,9 @@ export default {
 
 <script setup>
 import { ref } from 'vue'
-import { Commits, Members } from '@/api/github'
+import { Commits} from '@/api/github'
 import { formatTimeToStr } from '@/utils/date'
 const page = ref(0)
-
-const loadMore = () => {
-  page.value++
-  loadCommits()
-}
 
 const dataTimeline = ref([])
 const loadCommits = () => {
@@ -140,17 +92,7 @@ const loadCommits = () => {
     })
   })
 }
-
-const members = ref([])
-const loadMembers = () => {
-  Members().then(({ data }) => {
-    members.value = data
-    members.value.sort()
-  })
-}
-
 loadCommits()
-loadMembers()
 
 </script>
 

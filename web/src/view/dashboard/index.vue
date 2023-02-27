@@ -3,7 +3,7 @@
     <div class="gva-card-box">
       <div class="gva-card gva-top-card">
         <div class="gva-top-card-left">
-          <div class="gva-top-card-left-title">早安，管理员，请开始一天的工作吧</div>
+          <div class="gva-top-card-left-title">早安，又是元气满满的一天，请开始一天的工作吧</div>
           <div class="gva-top-card-left-dot">{{ weatherInfo }}</div>
           <div class="gva-top-card-left-rows">
             <el-row>
@@ -35,20 +35,20 @@
           </div>
           <div>
             <div class="gva-top-card-left-item">
-              使用教学：
+              问卷后台：
               <a
                 style="color:#409EFF"
                 target="view_window"
-                href="https://www.bilibili.com/video/BV1Rg411u7xH/"
-              >https://www.bilibili.com/video/BV1Rg411u7xH</a>
+                href="https://wenjuan.bythedu.com"
+              >https://wenjuan.bythedu.com</a>
             </div>
             <div class="gva-top-card-left-item">
-              插件仓库：
+              APP后台：
               <a
                 style="color:#409EFF"
                 target="view_window"
-                href="https://plugin.gin-vue-admin.com/#/layout/home"
-              >https://plugin.gin-vue-admin.com</a>
+                href="https://byapp.bythedu.com"
+              >https://byapp.bythedu.com</a>
             </div>
           </div>
         </div>
