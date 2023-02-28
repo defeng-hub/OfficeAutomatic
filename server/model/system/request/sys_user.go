@@ -15,6 +15,17 @@ type Register struct {
 	AuthorityIds []uint `json:"authorityIds" swaggertype:"string" example:"[]uint 角色id"`
 	Phone        string `json:"phone" example:"电话号码"`
 	Email        string `json:"email" example:"电子邮箱"`
+	// 自主添加的
+	Sex                 int    `json:"sex" example:"性别 0未选择 1男 2女"`
+	Address             string `json:"address" example:"通信地址"`
+	Wno                 string `json:"wno" example:"职工号"`
+	UserTeachingGradeID uint   `json:"userTeachingGradeID" example:"教学等级ID"`
+	JoinCompanyTime     string `json:"joinCompanyTime" example:"加入公司时间"`
+	JoinWorkTime        string `json:"joinWorkTime" example:"参加工作时间"`
+	Desc0               string `json:"desc0" example:"本职工作单位/职务"`
+	Resume              string `json:"resume" example:"个人简历"`
+	Desc1               string `json:"desc1" example:"教师技能等级/职务变动情况记录"`
+	Desc2               string `json:"desc2" example:"本职工作变动情况记录"`
 }
 
 // User login structure
@@ -53,4 +64,16 @@ type ChangeUserInfo struct {
 	SideMode     string                `json:"sideMode"  gorm:"comment:用户侧边主题"`                                                      // 用户侧边主题
 	Enable       int                   `json:"enable" gorm:"comment:冻结用户"`                                                           //冻结用户
 	Authorities  []system.SysAuthority `json:"-" gorm:"many2many:sys_user_authority;"`
+
+	// 自主添加的
+	Sex                 int    `json:"sex" example:"性别 0未选择 1男 2女"`
+	Address             string `json:"address" example:"通信地址"`
+	Wno                 string `json:"wno" example:"职工号"`
+	UserTeachingGradeID uint   `json:"userTeachingGradeID" example:"教学等级ID"`
+	JoinCompanyTime     string `json:"joinCompanyTime" example:"加入公司时间"`
+	JoinWorkTime        string `json:"joinWorkTime" example:"参加工作时间"`
+	Desc0               string `json:"desc0" example:"本职工作单位/职务"`
+	Resume              string `json:"resume" example:"个人简历"`
+	Desc1               string `json:"desc1" example:"教师技能等级/职务变动情况记录"`
+	Desc2               string `json:"desc2" example:"本职工作变动情况记录"`
 }

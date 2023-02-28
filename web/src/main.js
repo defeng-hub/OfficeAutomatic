@@ -10,6 +10,8 @@ import { store } from '@/pinia'
 import App from './App.vue'
 import { initDom } from './utils/positionToCode'
 import 'element-plus/theme-chalk/src/message.scss'
+import 'element-plus/dist/index.css'
+
 import './style/element_visiable.scss'
 
 initDom()

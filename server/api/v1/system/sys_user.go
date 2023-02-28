@@ -157,7 +157,27 @@ func (b *BaseApi) Register(c *gin.Context) {
 			AuthorityId: v,
 		})
 	}
-	user := &system.SysUser{Username: r.Username, NickName: r.NickName, Password: r.Password, HeaderImg: r.HeaderImg, AuthorityId: r.AuthorityId, Authorities: authorities, Enable: r.Enable, Phone: r.Phone, Email: r.Email}
+
+	//	Sex             int    `json:"sex" example:"性别 0未选择 1男 2女"`
+	//	Address         string `json:"address" example:"通信地址"`
+	//	Wno             string `json:"wno" example:"职工号"`
+	//	TeachingGrade   string `json:"teachingGrade" example:"教学等级"`
+	//	JoinCompanyTime string `json:"joinCompanyTime" example:"加入公司时间"`
+	//	JoinWorkTime    string `json:"joinWorkTime" example:"参加工作时间"`
+	//	Desc0           string `json:"desc0" example:"本职工作单位/职务"`
+	//	Resume          string `json:"resume" example:"个人简历"`
+	//	Desc1           string `json:"desc1" example:"教师技能等级/职务变动情况记录"`
+	//	Desc2           string `json:"desc2" example:"本职工作变动情况记录"`
+	//sex, err := strconv.Atoi(r.Sex)
+	user := &system.SysUser{
+		Username: r.Username, NickName: r.NickName, Password: r.Password,
+		HeaderImg: r.HeaderImg, AuthorityId: r.AuthorityId, Authorities: authorities,
+		Enable: r.Enable, Phone: r.Phone, Email: r.Email,
+		// 自主添加
+		Sex: r.Sex, Address: r.Address, Wno: r.Wno, UserTeachingGradeID: r.UserTeachingGradeID,
+		JoinWorkTime: r.JoinWorkTime, JoinCompanyTime: r.JoinCompanyTime,
+		Desc0: r.Desc0, Resume: r.Resume, Desc1: r.Desc1, Desc2: r.Desc2,
+	}
 	userReturn, err := userService.Register(*user)
 	if err != nil {
 		global.GVA_LOG.Error("注册失败!", zap.Error(err))
@@ -363,6 +383,7 @@ func (b *BaseApi) SetUserInfo(c *gin.Context) {
 			return
 		}
 	}
+
 	err = userService.SetUserInfo(system.SysUser{
 		GVA_MODEL: global.GVA_MODEL{
 			ID: user.ID,
@@ -373,6 +394,17 @@ func (b *BaseApi) SetUserInfo(c *gin.Context) {
 		Email:     user.Email,
 		SideMode:  user.SideMode,
 		Enable:    user.Enable,
+		// 自主添加
+		Sex:                 user.Sex,
+		Address:             user.Address,
+		Wno:                 user.Wno,
+		UserTeachingGradeID: user.UserTeachingGradeID,
+		JoinCompanyTime:     user.JoinCompanyTime,
+		JoinWorkTime:        user.JoinWorkTime,
+		Desc0:               user.Desc0,
+		Resume:              user.Resume,
+		Desc1:               user.Desc1,
+		Desc2:               user.Desc2,
 	})
 	if err != nil {
 		global.GVA_LOG.Error("设置失败!", zap.Error(err))

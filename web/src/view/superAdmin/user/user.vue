@@ -14,7 +14,7 @@
             <CustomPic style="margin-top:8px" :pic-src="scope.row.headerImg" />
           </template>
         </el-table-column>
-        <el-table-column align="left" label="ID" min-width="50" prop="ID" />
+        <!-- <el-table-column align="left" label="ID" min-width="50" prop="ID" /> -->
         <el-table-column align="left" label="用户名" min-width="150" prop="userName" />
         <el-table-column align="left" label="昵称" min-width="150" prop="nickName" />
         <el-table-column align="left" label="手机号" min-width="180" prop="phone" />
@@ -33,7 +33,7 @@
             />
           </template>
         </el-table-column>
-        <el-table-column align="left" label="启用" min-width="150">
+        <!-- <el-table-column align="left" label="启用" min-width="150">
           <template #default="scope">
             <el-switch
               v-model="scope.row.enable"
@@ -43,10 +43,12 @@
               @change="()=>{switchEnable(scope.row)}"
             />
           </template>
-        </el-table-column>
+        </el-table-column> -->
 
-        <el-table-column label="操作" min-width="250" fixed="right">
+        <el-table-column label="操作" min-width="150" fixed="right">
           <template #default="scope">
+            <el-button type="primary" link icon="edit" @click="openEdit(scope.row)">编辑</el-button>
+
             <el-popover v-model="scope.row.visible" placement="top" width="160">
               <p>确定要删除此用户吗</p>
               <div style="text-align: right; margin-top: 8px;">
@@ -57,8 +59,6 @@
                 <el-button type="primary" link icon="delete">删除</el-button>
               </template>
             </el-popover>
-            <el-button type="primary" link icon="edit" @click="openEdit(scope.row)">编辑</el-button>
-            <el-button type="primary" link icon="magic-stick" @click="resetPasswordFunc(scope.row)">重置密码</el-button>
           </template>
         </el-table-column>
 
@@ -75,6 +75,8 @@
         />
       </div>
     </div>
+
+    <!-- 用户信息弹框 -->
     <el-dialog
       v-model="addUserDialog"
       custom-class="user-dialog"
@@ -82,25 +84,79 @@
       :show-close="false"
       :close-on-press-escape="false"
       :close-on-click-modal="false"
+      width="50%"
+      draggable
     >
-      <div style="height:60vh;overflow:auto;padding:0 12px;">
-        <el-form ref="userForm" :rules="rules" :model="userInfo" label-width="80px">
+      <div style="height:60vh;overflow:auto;padding:0 0px;">
+        <el-form ref="userForm" :rules="rules" :model="userInfo" 
+        label-width="160px" :label-position="'top'">
           <el-form-item v-if="dialogFlag === 'add'" label="用户名" prop="userName">
             <el-input v-model="userInfo.userName" />
           </el-form-item>
           <el-form-item v-if="dialogFlag === 'add'" label="密码" prop="password">
             <el-input v-model="userInfo.password" />
           </el-form-item>
+
           <el-form-item label="昵称" prop="nickName">
             <el-input v-model="userInfo.nickName" />
           </el-form-item>
           <el-form-item label="手机号" prop="phone">
             <el-input v-model="userInfo.phone" />
           </el-form-item>
+
           <el-form-item label="邮箱" prop="email">
             <el-input v-model="userInfo.email" />
           </el-form-item>
-          <el-form-item label="用户角色" prop="authorityId">
+          <el-form-item label="性别" prop="sex">
+            <!-- <el-input v-model="userInfo.sex" /> -->
+            <el-select v-model="userInfo.sex" class="m-2" placeholder="Select">
+              <el-option
+                v-for="item in sexoptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="通信地址" prop="address">
+            <el-input v-model="userInfo.address" />
+          </el-form-item>
+          <el-form-item label="职工号" prop="wno">
+            <el-input v-model="userInfo.wno" />
+          </el-form-item>
+          <el-form-item label="教学等级" prop="userTeachingGradeID">
+            <el-select v-model="userInfo.userTeachingGradeID" class="m-2" placeholder="Select">
+              <el-option
+                v-for="item in teachingoptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="加入公司时间" prop="joinCompanyTime">
+            <el-input v-model="userInfo.joinCompanyTime" />
+          </el-form-item>
+          <el-form-item label="参加工作时间" prop="joinWorkTime">
+            <el-input v-model="userInfo.joinWorkTime" />
+          </el-form-item>
+          <el-form-item label="本职工作单位/职务" prop="desc0">
+            <el-input v-model="userInfo.desc0" />
+          </el-form-item>
+          <el-form-item label="个人简历" prop="resume">
+            <el-input v-model="userInfo.resume" :autosize="{ minRows: 5, maxRows: 15 }"
+            type="textarea" placeholder="无" />
+          </el-form-item>
+          <el-form-item label="教师技能等级/职务变动情况记录" prop="desc1">
+            <el-input v-model="userInfo.desc1" :autosize="{ minRows: 5, maxRows: 15 }"
+            type="textarea" placeholder="无" />
+          </el-form-item>
+          <el-form-item label="本职工作变动情况记录" prop="desc2">
+            <el-input v-model="userInfo.desc2" :autosize="{ minRows: 5, maxRows: 15 }"
+            type="textarea" placeholder="无" />
+          </el-form-item>
+
+          <el-form-item label="角色" prop="authorityId">
             <el-cascader
               v-model="userInfo.authorityIds"
               style="width:100%"
@@ -118,7 +174,7 @@
               :inactive-value="2"
             />
           </el-form-item>
-          <el-form-item label="头像" label-width="80px">
+          <el-form-item label="头像" label-width="80px" >
             <div style="display:inline-block" @click="openHeaderChange">
               <img v-if="userInfo.headerImg" alt="头像" class="header-img-box" :src="(userInfo.headerImg && userInfo.headerImg.slice(0, 4) !== 'http')?path+userInfo.headerImg:userInfo.headerImg">
               <div v-else class="header-img-box">从媒体库选择</div>
@@ -131,6 +187,8 @@
 
       <template #footer>
         <div class="dialog-footer">
+          <el-button type="primary" v-if="dialogFlag === 'edit'" link icon="magic-stick" @click="resetPasswordFunc(userInfo)">重置密码</el-button>
+
           <el-button @click="closeAddUserDialog">取 消</el-button>
           <el-button type="primary" @click="enterAddUserDialog">确 定</el-button>
         </div>
@@ -190,6 +248,16 @@ const page = ref(1)
 const total = ref(0)
 const pageSize = ref(10)
 const tableData = ref([])
+const sexoptions = ref([
+  {value: 0,label: '未选择',},
+  {value: 1,label: '男',},
+  {value: 2,label: '女',},
+])
+const teachingoptions = ref([
+  {value: 1,label: '等级1',},
+  {value: 2,label: '等级2',},
+  {value: 3,label: '等级3',},
+])
 // 分页
 const handleSizeChange = (val) => {
   pageSize.value = val
@@ -205,6 +273,7 @@ const handleCurrentChange = (val) => {
 const getTableData = async() => {
   const table = await getUserList({ page: page.value, pageSize: pageSize.value })
   if (table.code === 0) {
+    console.log("userlist",table)
     tableData.value = table.data.list
     total.value = table.data.total
     page.value = table.data.page
@@ -270,17 +339,28 @@ const setOptions = (authData) => {
 }
 
 const deleteUserFunc = async(row) => {
-  const res = await deleteUser({ id: row.ID })
-  if (res.code === 0) {
-    ElMessage.success('删除成功')
-    row.visible = false
-    await getTableData()
-  }
+  ElMessageBox.confirm(
+    '是否将此用户删除！！',
+    '警告',
+    {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning',
+    }
+  ).then(async() => {
+    const res = await deleteUser({ id: row.ID })
+    if (res.code === 0) {
+      ElMessage.success('删除成功')
+      row.visible = false
+      await getTableData()
+    }
+  })
+
 }
 
 // 弹窗相关
 const userInfo = ref({
-  username: '',
+  userName: '',
   password: '',
   nickName: '',
   headerImg: '',
@@ -319,6 +399,8 @@ const enterAddUserDialog = async() => {
       const req = {
         ...userInfo.value
       }
+      console.log(req)
+      // return 
       if (dialogFlag.value === 'add') {
         const res = await register(req)
         if (res.code === 0) {
@@ -405,14 +487,14 @@ const switchEnable = async(row) => {
 <style lang="scss">
 .user-dialog {
   .header-img-box {
-  width: 200px;
-  height: 200px;
-  border: 1px dashed #ccc;
-  border-radius: 20px;
-  text-align: center;
-  line-height: 200px;
-  cursor: pointer;
-}
+    width: 150px;
+    height: 150px;
+    border: 1px dashed #ccc;
+    border-radius: 20px;
+    text-align: center;
+    line-height: 200px;
+    cursor: pointer;
+  }
   .avatar-uploader .el-upload:hover {
     border-color: #409eff;
   }

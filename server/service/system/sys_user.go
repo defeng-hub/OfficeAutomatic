@@ -165,7 +165,7 @@ func (userService *UserService) DeleteUser(id int) (err error) {
 
 func (userService *UserService) SetUserInfo(req system.SysUser) error {
 	return global.GVA_DB.Model(&system.SysUser{}).
-		Select("updated_at", "nick_name", "header_img", "phone", "email", "sideMode", "enable").
+		//Select("updated_at", "nick_name", "header_img", "phone", "email", "sideMode", "enable").
 		Where("id=?", req.ID).
 		Updates(map[string]interface{}{
 			"updated_at": time.Now(),
@@ -175,6 +175,17 @@ func (userService *UserService) SetUserInfo(req system.SysUser) error {
 			"email":      req.Email,
 			"side_mode":  req.SideMode,
 			"enable":     req.Enable,
+			// 自主添加
+			"sex":                    req.Sex,
+			"address":                req.Address,
+			"wno":                    req.Wno,
+			"user_teaching_grade_id": req.UserTeachingGradeID,
+			"join_company_time":      req.JoinCompanyTime,
+			"join_work_time":         req.JoinWorkTime,
+			"desc0":                  req.Desc0,
+			"resume":                 req.Resume,
+			"desc1":                  req.Desc1,
+			"desc2":                  req.Desc2,
 		}).Error
 }
 
@@ -199,7 +210,7 @@ func (userService *UserService) SetSelfInfo(req system.SysUser) error {
 
 func (userService *UserService) GetUserInfo(uuid uuid.UUID) (user system.SysUser, err error) {
 	var reqUser system.SysUser
-	err = global.GVA_DB.Preload("Authorities").Preload("Authority").First(&reqUser, "uuid = ?", uuid).Error
+	err = global.GVA_DB.Preload("Authorities").Preload("Authority").Preload("UserTeachingGrade").First(&reqUser, "uuid = ?", uuid).Error
 	if err != nil {
 		return reqUser, err
 	}

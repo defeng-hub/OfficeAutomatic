@@ -36,6 +36,7 @@ func RegisterTables(db *gorm.DB) {
 		// 系统模块表
 		system.SysApi{},
 		system.SysUser{},
+		system.UserTeachingGrade{}, //教学等级表
 		system.SysBaseMenu{},
 		system.JwtBlacklist{},
 		system.SysAuthority{},

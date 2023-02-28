@@ -47,38 +47,43 @@
                   <el-icon>
                     <user />
                   </el-icon>
-                  {{ userStore.userInfo.nickName }}
+                  用户名：{{ userStore.userInfo.userName }}
                 </li>
-                <el-tooltip
-                  class="item"
-                  effect="light"
-                  content="北京反转极光科技有限公司-技术部-前端事业群"
-                  placement="top"
-                >
+                <el-tooltip class="item" effect="light" 
+                  :content="'教学等级：'+userStore.userInfo.userTeachingGrade.title" placement="top">
                   <li>
                     <el-icon>
                       <data-analysis />
                     </el-icon>
-                    北京反转极光科技有限公司-技术部-前端事业群
+                    教学等级：{{ userStore.userInfo.userTeachingGrade.title }}
                   </li>
                 </el-tooltip>
-                <li>
-                  <el-icon>
-                    <video-camera />
-                  </el-icon>
-                  中国·北京市·朝阳区
-                </li>
+
                 <el-tooltip
                   class="item"
                   effect="light"
-                  content="GoLang/JavaScript/Vue/Gorm"
+                  :content="'进入公司：'+userStore.userInfo.joinCompanyTime"
                   placement="top"
                 >
                   <li>
                     <el-icon>
                       <medal />
                     </el-icon>
-                    GoLang/JavaScript/Vue/Gorm
+                    进入公司：{{ userStore.userInfo.joinCompanyTime }}
+                  </li>
+                </el-tooltip>
+
+                <el-tooltip
+                  class="item"
+                  effect="light"
+                  :content="'参加工作时间：'+userStore.userInfo.joinWorkTime"
+                  placement="top"
+                >
+                  <li>
+                    <el-icon>
+                      <medal />
+                    </el-icon>
+                    参加工作时间：{{ userStore.userInfo.joinWorkTime }}
                   </li>
                 </el-tooltip>
               </ul>
@@ -265,6 +270,7 @@ const rules = reactive({
 })
 
 const userStore = useUserStore()
+console.log("userStore",userStore)
 const modifyPwdForm = ref(null)
 const showPassword = ref(false)
 const pwdModify = ref({})
@@ -436,7 +442,7 @@ const changeEmail = async() => {
 }
 .avatar-box {
   box-shadow: -2px 0 20px -16px;
-  width: 80%;
+  width: 97%;
   height: 100%;
   .user-card {
     min-height: calc(90vh - 200px);

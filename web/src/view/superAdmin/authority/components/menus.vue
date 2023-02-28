@@ -17,6 +17,7 @@
         :filter-node-method="filterNode"
         @check="nodeChange"
       >
+      
         <template #default="{ node , data }">
           <span class="custom-tree-node">
             <span>{{ node.label }}</span>
@@ -45,6 +46,7 @@
           </span>
         </template>
       </el-tree>
+      <div style="height: 100px;"></div>
     </div>
     <el-dialog v-model="btnVisible" title="分配按钮" destroy-on-close>
       <el-table
