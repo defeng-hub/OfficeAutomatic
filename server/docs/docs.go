@@ -1665,9 +1665,15 @@ var doc = `{
                 "summary": "获取单一客户信息",
                 "parameters": [
                     {
+                        "type": "integer",
+                        "description": "主键ID",
+                        "name": "ID",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "创建时间",
-                        "name": "createdAt",
+                        "name": "created_at",
                         "in": "query"
                     },
                     {
@@ -1680,12 +1686,6 @@ var doc = `{
                         "type": "string",
                         "description": "客户手机号",
                         "name": "customerPhoneData",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "主键ID",
-                        "name": "id",
                         "in": "query"
                     },
                     {
@@ -1703,7 +1703,7 @@ var doc = `{
                     {
                         "type": "string",
                         "description": "更新时间",
-                        "name": "updatedAt",
+                        "name": "updated_at",
                         "in": "query"
                     }
                 ],
@@ -1909,7 +1909,7 @@ var doc = `{
                     {
                         "type": "integer",
                         "description": "每页大小",
-                        "name": "page_size",
+                        "name": "pageSize",
                         "in": "query"
                     }
                 ],
@@ -2990,21 +2990,21 @@ var doc = `{
                 "summary": "用id查询SysDictionary",
                 "parameters": [
                     {
+                        "type": "integer",
+                        "description": "主键ID",
+                        "name": "ID",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "创建时间",
-                        "name": "createdAt",
+                        "name": "created_at",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "描述",
                         "name": "desc",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "主键ID",
-                        "name": "id",
                         "in": "query"
                     },
                     {
@@ -3028,7 +3028,7 @@ var doc = `{
                     {
                         "type": "string",
                         "description": "更新时间",
-                        "name": "updatedAt",
+                        "name": "updated_at",
                         "in": "query"
                     }
                 ],
@@ -3077,21 +3077,21 @@ var doc = `{
                 "summary": "分页获取SysDictionary列表",
                 "parameters": [
                     {
+                        "type": "integer",
+                        "description": "主键ID",
+                        "name": "ID",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "创建时间",
-                        "name": "createdAt",
+                        "name": "created_at",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "描述",
                         "name": "desc",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "主键ID",
-                        "name": "id",
                         "in": "query"
                     },
                     {
@@ -3115,7 +3115,7 @@ var doc = `{
                     {
                         "type": "integer",
                         "description": "每页大小",
-                        "name": "page_size",
+                        "name": "pageSize",
                         "in": "query"
                     },
                     {
@@ -3133,7 +3133,7 @@ var doc = `{
                     {
                         "type": "string",
                         "description": "更新时间",
-                        "name": "updatedAt",
+                        "name": "updated_at",
                         "in": "query"
                     }
                 ],
@@ -3331,15 +3331,15 @@ var doc = `{
                 "summary": "用id查询SysDictionaryDetail",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "创建时间",
-                        "name": "createdAt",
+                        "type": "integer",
+                        "description": "主键ID",
+                        "name": "ID",
                         "in": "query"
                     },
                     {
-                        "type": "integer",
-                        "description": "主键ID",
-                        "name": "id",
+                        "type": "string",
+                        "description": "创建时间",
+                        "name": "created_at",
                         "in": "query"
                     },
                     {
@@ -3369,7 +3369,7 @@ var doc = `{
                     {
                         "type": "string",
                         "description": "更新时间",
-                        "name": "updatedAt",
+                        "name": "updated_at",
                         "in": "query"
                     },
                     {
@@ -3424,15 +3424,15 @@ var doc = `{
                 "summary": "分页获取SysDictionaryDetail列表",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "创建时间",
-                        "name": "createdAt",
+                        "type": "integer",
+                        "description": "主键ID",
+                        "name": "ID",
                         "in": "query"
                     },
                     {
-                        "type": "integer",
-                        "description": "主键ID",
-                        "name": "id",
+                        "type": "string",
+                        "description": "创建时间",
+                        "name": "created_at",
                         "in": "query"
                     },
                     {
@@ -3456,7 +3456,7 @@ var doc = `{
                     {
                         "type": "integer",
                         "description": "每页大小",
-                        "name": "page_size",
+                        "name": "pageSize",
                         "in": "query"
                     },
                     {
@@ -3480,7 +3480,7 @@ var doc = `{
                     {
                         "type": "string",
                         "description": "更新时间",
-                        "name": "updatedAt",
+                        "name": "updated_at",
                         "in": "query"
                     },
                     {
@@ -3734,6 +3734,12 @@ var doc = `{
                 "summary": "用id查询SysOperationRecord",
                 "parameters": [
                     {
+                        "type": "integer",
+                        "description": "主键ID",
+                        "name": "ID",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "代理",
                         "name": "agent",
@@ -3748,19 +3754,13 @@ var doc = `{
                     {
                         "type": "string",
                         "description": "创建时间",
-                        "name": "createdAt",
+                        "name": "created_at",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "错误信息",
                         "name": "error_message",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "主键ID",
-                        "name": "id",
                         "in": "query"
                     },
                     {
@@ -3802,7 +3802,7 @@ var doc = `{
                     {
                         "type": "string",
                         "description": "更新时间",
-                        "name": "updatedAt",
+                        "name": "updated_at",
                         "in": "query"
                     },
                     {
@@ -3857,6 +3857,12 @@ var doc = `{
                 "summary": "分页获取SysOperationRecord列表",
                 "parameters": [
                     {
+                        "type": "integer",
+                        "description": "主键ID",
+                        "name": "ID",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "代理",
                         "name": "agent",
@@ -3871,19 +3877,13 @@ var doc = `{
                     {
                         "type": "string",
                         "description": "创建时间",
-                        "name": "createdAt",
+                        "name": "created_at",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "错误信息",
                         "name": "error_message",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "主键ID",
-                        "name": "id",
                         "in": "query"
                     },
                     {
@@ -3919,7 +3919,7 @@ var doc = `{
                     {
                         "type": "integer",
                         "description": "每页大小",
-                        "name": "page_size",
+                        "name": "pageSize",
                         "in": "query"
                     },
                     {
@@ -3943,7 +3943,7 @@ var doc = `{
                     {
                         "type": "string",
                         "description": "更新时间",
-                        "name": "updatedAt",
+                        "name": "updated_at",
                         "in": "query"
                     },
                     {
@@ -4339,7 +4339,7 @@ var doc = `{
                 "tags": [
                     "Txyun"
                 ],
-                "summary": "删除sms项目成员",
+                "summary": "批量删除sms项目成员",
                 "parameters": [
                     {
                         "description": "请求参数",
@@ -4347,13 +4347,66 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.GetById"
+                            "$ref": "#/definitions/request.IdsReq"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "删除sms项目成员",
+                        "description": "响应内容",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/txyun/sms/ExportExcelSmsRows": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Txyun"
+                ],
+                "summary": "导出excel信息",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.IdsReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "响应内容",
                         "schema": {
                             "allOf": [
                                 {
@@ -4451,7 +4504,7 @@ var doc = `{
                     {
                         "type": "integer",
                         "description": "每页大小",
-                        "name": "page_size",
+                        "name": "pageSize",
                         "in": "query"
                     }
                 ],
@@ -4511,6 +4564,59 @@ var doc = `{
                 "responses": {
                     "200": {
                         "description": "发送短信",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/txyun/sms/SendSmsByRows": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Txyun"
+                ],
+                "summary": "批量发送信息",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.IdsReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "响应内容",
                         "schema": {
                             "allOf": [
                                 {
@@ -5368,6 +5474,14 @@ var doc = `{
         "config.Local": {
             "type": "object",
             "properties": {
+                "excel-http-path": {
+                    "description": "本地文件存储路径",
+                    "type": "string"
+                },
+                "excel-path": {
+                    "description": "本地文件存储路径",
+                    "type": "string"
+                },
                 "path": {
                     "description": "本地文件访问路径",
                     "type": "string"
@@ -5809,6 +5923,9 @@ var doc = `{
                     "description": "端口值",
                     "type": "integer"
                 },
+                "base-url": {
+                    "type": "string"
+                },
                 "db-type": {
                     "description": "数据库类型:mysql(默认)|sqlite|sqlserver|postgresql",
                     "type": "string"
@@ -5930,7 +6047,11 @@ var doc = `{
         "example.ExaCustomer": {
             "type": "object",
             "properties": {
-                "createdAt": {
+                "ID": {
+                    "description": "主键ID",
+                    "type": "integer"
+                },
+                "created_at": {
                     "description": "创建时间",
                     "type": "string"
                 },
@@ -5941,10 +6062,6 @@ var doc = `{
                 "customerPhoneData": {
                     "description": "客户手机号",
                     "type": "string"
-                },
-                "id": {
-                    "description": "主键ID",
-                    "type": "integer"
                 },
                 "sysUser": {
                     "description": "管理详情",
@@ -5958,7 +6075,7 @@ var doc = `{
                     "description": "管理ID",
                     "type": "integer"
                 },
-                "updatedAt": {
+                "updated_at": {
                     "description": "更新时间",
                     "type": "string"
                 }
@@ -5967,10 +6084,14 @@ var doc = `{
         "example.ExaFile": {
             "type": "object",
             "properties": {
+                "ID": {
+                    "description": "主键ID",
+                    "type": "integer"
+                },
                 "chunkTotal": {
                     "type": "integer"
                 },
-                "createdAt": {
+                "created_at": {
                     "description": "创建时间",
                     "type": "string"
                 },
@@ -5989,14 +6110,10 @@ var doc = `{
                 "filePath": {
                     "type": "string"
                 },
-                "id": {
-                    "description": "主键ID",
-                    "type": "integer"
-                },
                 "isFinish": {
                     "type": "boolean"
                 },
-                "updatedAt": {
+                "updated_at": {
                     "description": "更新时间",
                     "type": "string"
                 }
@@ -6005,7 +6122,11 @@ var doc = `{
         "example.ExaFileChunk": {
             "type": "object",
             "properties": {
-                "createdAt": {
+                "ID": {
+                    "description": "主键ID",
+                    "type": "integer"
+                },
+                "created_at": {
                     "description": "创建时间",
                     "type": "string"
                 },
@@ -6018,11 +6139,7 @@ var doc = `{
                 "fileChunkPath": {
                     "type": "string"
                 },
-                "id": {
-                    "description": "主键ID",
-                    "type": "integer"
-                },
-                "updatedAt": {
+                "updated_at": {
                     "description": "更新时间",
                     "type": "string"
                 }
@@ -6031,13 +6148,13 @@ var doc = `{
         "example.ExaFileUploadAndDownload": {
             "type": "object",
             "properties": {
-                "createdAt": {
-                    "description": "创建时间",
-                    "type": "string"
-                },
-                "id": {
+                "ID": {
                     "description": "主键ID",
                     "type": "integer"
+                },
+                "created_at": {
+                    "description": "创建时间",
+                    "type": "string"
                 },
                 "key": {
                     "description": "编号",
@@ -6051,7 +6168,7 @@ var doc = `{
                     "description": "文件标签",
                     "type": "string"
                 },
-                "updatedAt": {
+                "updated_at": {
                     "description": "更新时间",
                     "type": "string"
                 },
@@ -6214,7 +6331,7 @@ var doc = `{
                     "description": "页码",
                     "type": "integer"
                 },
-                "page_size": {
+                "pageSize": {
                     "description": "每页大小",
                     "type": "integer"
                 }
@@ -6277,11 +6394,15 @@ var doc = `{
         "request.SearchApiParams": {
             "type": "object",
             "properties": {
+                "ID": {
+                    "description": "主键ID",
+                    "type": "integer"
+                },
                 "apiGroup": {
                     "description": "api组",
                     "type": "string"
                 },
-                "createdAt": {
+                "created_at": {
                     "description": "创建时间",
                     "type": "string"
                 },
@@ -6292,10 +6413,6 @@ var doc = `{
                 "description": {
                     "description": "api中文描述",
                     "type": "string"
-                },
-                "id": {
-                    "description": "主键ID",
-                    "type": "integer"
                 },
                 "keyword": {
                     "description": "关键字",
@@ -6313,7 +6430,7 @@ var doc = `{
                     "description": "页码",
                     "type": "integer"
                 },
-                "page_size": {
+                "pageSize": {
                     "description": "每页大小",
                     "type": "integer"
                 },
@@ -6321,7 +6438,7 @@ var doc = `{
                     "description": "api路径",
                     "type": "string"
                 },
-                "updatedAt": {
+                "updated_at": {
                     "description": "更新时间",
                     "type": "string"
                 }
@@ -6379,7 +6496,7 @@ var doc = `{
                     "description": "页码",
                     "type": "integer"
                 },
-                "page_size": {
+                "pageSize": {
                     "description": "每页大小",
                     "type": "integer"
                 }
@@ -6686,7 +6803,7 @@ var doc = `{
                     "description": "页码",
                     "type": "integer"
                 },
-                "page_size": {
+                "pageSize": {
                     "description": "每页大小",
                     "type": "integer"
                 }
@@ -6809,21 +6926,21 @@ var doc = `{
         "system.SysApi": {
             "type": "object",
             "properties": {
+                "ID": {
+                    "description": "主键ID",
+                    "type": "integer"
+                },
                 "apiGroup": {
                     "description": "api组",
                     "type": "string"
                 },
-                "createdAt": {
+                "created_at": {
                     "description": "创建时间",
                     "type": "string"
                 },
                 "description": {
                     "description": "api中文描述",
                     "type": "string"
-                },
-                "id": {
-                    "description": "主键ID",
-                    "type": "integer"
                 },
                 "method": {
                     "description": "方法:创建POST(默认)|查看GET|更新PUT|删除DELETE",
@@ -6833,7 +6950,7 @@ var doc = `{
                     "description": "api路径",
                     "type": "string"
                 },
-                "updatedAt": {
+                "updated_at": {
                     "description": "更新时间",
                     "type": "string"
                 }
@@ -6892,16 +7009,16 @@ var doc = `{
         "system.SysAutoCode": {
             "type": "object",
             "properties": {
-                "createdAt": {
+                "ID": {
+                    "description": "主键ID",
+                    "type": "integer"
+                },
+                "created_at": {
                     "description": "创建时间",
                     "type": "string"
                 },
                 "desc": {
                     "type": "string"
-                },
-                "id": {
-                    "description": "主键ID",
-                    "type": "integer"
                 },
                 "label": {
                     "type": "string"
@@ -6909,7 +7026,7 @@ var doc = `{
                 "packageName": {
                     "type": "string"
                 },
-                "updatedAt": {
+                "updated_at": {
                     "description": "更新时间",
                     "type": "string"
                 }
@@ -6918,6 +7035,10 @@ var doc = `{
         "system.SysBaseMenu": {
             "type": "object",
             "properties": {
+                "ID": {
+                    "description": "主键ID",
+                    "type": "integer"
+                },
                 "activeName": {
                     "type": "string"
                 },
@@ -6941,7 +7062,7 @@ var doc = `{
                     "description": "对应前端文件路径",
                     "type": "string"
                 },
-                "createdAt": {
+                "created_at": {
                     "description": "创建时间",
                     "type": "string"
                 },
@@ -6956,10 +7077,6 @@ var doc = `{
                 "icon": {
                     "description": "菜单图标",
                     "type": "string"
-                },
-                "id": {
-                    "description": "主键ID",
-                    "type": "integer"
                 },
                 "keepAlive": {
                     "description": "是否缓存",
@@ -6997,7 +7114,7 @@ var doc = `{
                     "description": "菜单名",
                     "type": "string"
                 },
-                "updatedAt": {
+                "updated_at": {
                     "description": "更新时间",
                     "type": "string"
                 }
@@ -7006,16 +7123,16 @@ var doc = `{
         "system.SysBaseMenuBtn": {
             "type": "object",
             "properties": {
-                "createdAt": {
+                "ID": {
+                    "description": "主键ID",
+                    "type": "integer"
+                },
+                "created_at": {
                     "description": "创建时间",
                     "type": "string"
                 },
                 "desc": {
                     "type": "string"
-                },
-                "id": {
-                    "description": "主键ID",
-                    "type": "integer"
                 },
                 "name": {
                     "type": "string"
@@ -7023,7 +7140,7 @@ var doc = `{
                 "sysBaseMenuID": {
                     "type": "integer"
                 },
-                "updatedAt": {
+                "updated_at": {
                     "description": "更新时间",
                     "type": "string"
                 }
@@ -7032,13 +7149,13 @@ var doc = `{
         "system.SysBaseMenuParameter": {
             "type": "object",
             "properties": {
-                "createdAt": {
-                    "description": "创建时间",
-                    "type": "string"
-                },
-                "id": {
+                "ID": {
                     "description": "主键ID",
                     "type": "integer"
+                },
+                "created_at": {
+                    "description": "创建时间",
+                    "type": "string"
                 },
                 "key": {
                     "description": "地址栏携带参数的key",
@@ -7051,7 +7168,7 @@ var doc = `{
                     "description": "地址栏携带参数为params还是query",
                     "type": "string"
                 },
-                "updatedAt": {
+                "updated_at": {
                     "description": "更新时间",
                     "type": "string"
                 },
@@ -7064,17 +7181,17 @@ var doc = `{
         "system.SysDictionary": {
             "type": "object",
             "properties": {
-                "createdAt": {
+                "ID": {
+                    "description": "主键ID",
+                    "type": "integer"
+                },
+                "created_at": {
                     "description": "创建时间",
                     "type": "string"
                 },
                 "desc": {
                     "description": "描述",
                     "type": "string"
-                },
-                "id": {
-                    "description": "主键ID",
-                    "type": "integer"
                 },
                 "name": {
                     "description": "字典名（中）",
@@ -7094,7 +7211,7 @@ var doc = `{
                     "description": "字典名（英）",
                     "type": "string"
                 },
-                "updatedAt": {
+                "updated_at": {
                     "description": "更新时间",
                     "type": "string"
                 }
@@ -7103,13 +7220,13 @@ var doc = `{
         "system.SysDictionaryDetail": {
             "type": "object",
             "properties": {
-                "createdAt": {
-                    "description": "创建时间",
-                    "type": "string"
-                },
-                "id": {
+                "ID": {
                     "description": "主键ID",
                     "type": "integer"
+                },
+                "created_at": {
+                    "description": "创建时间",
+                    "type": "string"
                 },
                 "label": {
                     "description": "展示值",
@@ -7127,7 +7244,7 @@ var doc = `{
                     "description": "关联标记",
                     "type": "integer"
                 },
-                "updatedAt": {
+                "updated_at": {
                     "description": "更新时间",
                     "type": "string"
                 },
@@ -7140,6 +7257,10 @@ var doc = `{
         "system.SysMenu": {
             "type": "object",
             "properties": {
+                "ID": {
+                    "description": "主键ID",
+                    "type": "integer"
+                },
                 "activeName": {
                     "type": "string"
                 },
@@ -7169,7 +7290,7 @@ var doc = `{
                     "description": "对应前端文件路径",
                     "type": "string"
                 },
-                "createdAt": {
+                "created_at": {
                     "description": "创建时间",
                     "type": "string"
                 },
@@ -7184,10 +7305,6 @@ var doc = `{
                 "icon": {
                     "description": "菜单图标",
                     "type": "string"
-                },
-                "id": {
-                    "description": "主键ID",
-                    "type": "integer"
                 },
                 "keepAlive": {
                     "description": "是否缓存",
@@ -7228,7 +7345,7 @@ var doc = `{
                     "description": "菜单名",
                     "type": "string"
                 },
-                "updatedAt": {
+                "updated_at": {
                     "description": "更新时间",
                     "type": "string"
                 }
@@ -7237,6 +7354,10 @@ var doc = `{
         "system.SysOperationRecord": {
             "type": "object",
             "properties": {
+                "ID": {
+                    "description": "主键ID",
+                    "type": "integer"
+                },
                 "agent": {
                     "description": "代理",
                     "type": "string"
@@ -7245,17 +7366,13 @@ var doc = `{
                     "description": "请求Body",
                     "type": "string"
                 },
-                "createdAt": {
+                "created_at": {
                     "description": "创建时间",
                     "type": "string"
                 },
                 "error_message": {
                     "description": "错误信息",
                     "type": "string"
-                },
-                "id": {
-                    "description": "主键ID",
-                    "type": "integer"
                 },
                 "ip": {
                     "description": "请求ip",
@@ -7281,7 +7398,7 @@ var doc = `{
                     "description": "请求状态",
                     "type": "integer"
                 },
-                "updatedAt": {
+                "updated_at": {
                     "description": "更新时间",
                     "type": "string"
                 },
@@ -7297,6 +7414,10 @@ var doc = `{
         "system.SysUser": {
             "type": "object",
             "properties": {
+                "ID": {
+                    "description": "主键ID",
+                    "type": "integer"
+                },
                 "activeColor": {
                     "description": "活跃颜色",
                     "type": "string"
@@ -7318,7 +7439,7 @@ var doc = `{
                     "description": "基础颜色",
                     "type": "string"
                 },
-                "createdAt": {
+                "created_at": {
                     "description": "创建时间",
                     "type": "string"
                 },
@@ -7334,10 +7455,6 @@ var doc = `{
                     "description": "用户头像",
                     "type": "string"
                 },
-                "id": {
-                    "description": "主键ID",
-                    "type": "integer"
-                },
                 "nickName": {
                     "description": "用户昵称",
                     "type": "string"
@@ -7350,7 +7467,7 @@ var doc = `{
                     "description": "用户侧边主题",
                     "type": "string"
                 },
-                "updatedAt": {
+                "updated_at": {
                     "description": "更新时间",
                     "type": "string"
                 },

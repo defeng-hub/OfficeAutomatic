@@ -1,7 +1,8 @@
 package config
 
 type Local struct {
-	Path      string `mapstructure:"path" json:"path" yaml:"path"`                   // 本地文件访问路径
-	StorePath string `mapstructure:"store-path" json:"store-path" yaml:"store-path"` // 本地文件存储路径
-	ExcelPath string `mapstructure:"excel-path" json:"excel-path" yaml:"excel-path"` // 本地文件存储路径
+	Path          string `mapstructure:"path" json:"path" yaml:"path"`                                  // 本地文件访问路径
+	StorePath     string `mapstructure:"store-path" json:"store-path" yaml:"store-path"`                // 本地文件存储路径
+	ExcelPath     string `mapstructure:"excel-path" json:"excel-path" yaml:"excel-path"`                // 本地文件存储路径
+	ExcelHttpPath string `mapstructure:"excel-http-path" json:"excel-http-path" yaml:"excel-http-path"` // 本地文件存储路径
 }

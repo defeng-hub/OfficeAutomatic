@@ -53,16 +53,16 @@
             </div>
           </el-form-item>
           <el-form-item>
-            <el-button
+            <!-- <el-button
               type="primary"
               style="width: 46%"
               size="large"
               @click="checkInit"
-            >前往初始化</el-button>
+            >前往初始化</el-button> -->
             <el-button
               type="primary"
               size="large"
-              style="width: 46%; margin-left: 8%"
+              style="width: 50%; margin-left: 25%"
               @click="submitForm"
             >登 录</el-button>
           </el-form-item>
@@ -146,8 +146,8 @@ loginVerify()
 const loginForm = ref(null)
 const picPath = ref('')
 const loginFormData = reactive({
-  username: 'admin',
-  password: '123456',
+  username: 'bytest',
+  password: 'bytest123',
   captcha: '',
   captchaId: '',
   openCaptcha: false,

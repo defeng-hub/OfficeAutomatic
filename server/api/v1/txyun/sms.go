@@ -362,6 +362,6 @@ func (e *SmsHandler) ExportExcelSmsRows(c *gin.Context) {
 	filepath := path.Join("./uploads/excel/"+day, strconv.Itoa(int(time.Now().Unix()))+"-"+"export.xlsx")
 	utils.ExportDefaultExcel(obj, rows, filepath)
 	response.OkWithDetailed(gin.H{
-		"url": global.GVA_CONFIG.System.BaseUrl + "/" + filepath,
+		"url": global.GVA_CONFIG.System.BaseUrl + global.GVA_CONFIG.System.RouterPrefix + "/" + filepath,
 	}, "发送成功", c)
 }

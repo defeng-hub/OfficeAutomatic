@@ -90,9 +90,9 @@ jwt:
   buffer-time: 1d
   issuer: qmPlus
 local:
-  path: uploads/file
+  path: api/uploads/file
   store-path: uploads/file
-  excel-http-path: uploads/excel
+  excel-http-path: api/uploads/excel
   excel-path: uploads/excel
 mssql:
   path: ""
@@ -107,20 +107,6 @@ mssql:
   max-idle-conns: 10
   max-open-conns: 100
   log-mode: ""
-  log-zap: false
-mysql2:
-  path: 159.75.37.58
-  port: "3306"
-  config: charset=utf8mb4&parseTime=True&loc=Local
-  db-name: gin-vue-admin
-  username: gin-vue-admin
-  password: gin-vue-admin
-  prefix: ""
-  singular: false
-  engine: ""
-  max-idle-conns: 10
-  max-open-conns: 100
-  log-mode: error
   log-zap: false
 mysql:
   path: 101.35.245.54
@@ -178,15 +164,15 @@ redis:
   password: ""
 system:
   env: public
-  addr: 8888
+  addr: 9999
   db-type: mysql
   oss-type: local
   use-multipoint: false
   use-redis: false
   iplimit-count: 15000
   iplimit-time: 3600
-  router-prefix: ""
-  base-url: "http://127.0.0.1:8888"
+  router-prefix: "/api"
+  base-url: "http://byoa.bythedu.com"
 tencent-cos:
   bucket: xxxxx-10005608
   region: ap-shanghai

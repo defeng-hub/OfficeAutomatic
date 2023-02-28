@@ -178,6 +178,12 @@ definitions:
     type: object
   config.Local:
     properties:
+      excel-http-path:
+        description: 本地文件存储路径
+        type: string
+      excel-path:
+        description: 本地文件存储路径
+        type: string
       path:
         description: 本地文件访问路径
         type: string
@@ -498,6 +504,8 @@ definitions:
       addr:
         description: 端口值
         type: integer
+      base-url:
+        type: string
       db-type:
         description: 数据库类型:mysql(默认)|sqlite|sqlserver|postgresql
         type: string
@@ -583,7 +591,10 @@ definitions:
     type: object
   example.ExaCustomer:
     properties:
-      createdAt:
+      ID:
+        description: 主键ID
+        type: integer
+      created_at:
         description: 创建时间
         type: string
       customerName:
@@ -592,9 +603,6 @@ definitions:
       customerPhoneData:
         description: 客户手机号
         type: string
-      id:
-        description: 主键ID
-        type: integer
       sysUser:
         $ref: '#/definitions/system.SysUser'
         description: 管理详情
@@ -604,15 +612,18 @@ definitions:
       sysUserId:
         description: 管理ID
         type: integer
-      updatedAt:
+      updated_at:
         description: 更新时间
         type: string
     type: object
   example.ExaFile:
     properties:
+      ID:
+        description: 主键ID
+        type: integer
       chunkTotal:
         type: integer
-      createdAt:
+      created_at:
         description: 创建时间
         type: string
       exaFileChunk:
@@ -625,18 +636,18 @@ definitions:
         type: string
       filePath:
         type: string
-      id:
-        description: 主键ID
-        type: integer
       isFinish:
         type: boolean
-      updatedAt:
+      updated_at:
         description: 更新时间
         type: string
     type: object
   example.ExaFileChunk:
     properties:
-      createdAt:
+      ID:
+        description: 主键ID
+        type: integer
+      created_at:
         description: 创建时间
         type: string
       exaFileID:
@@ -645,21 +656,18 @@ definitions:
         type: integer
       fileChunkPath:
         type: string
-      id:
-        description: 主键ID
-        type: integer
-      updatedAt:
+      updated_at:
         description: 更新时间
         type: string
     type: object
   example.ExaFileUploadAndDownload:
     properties:
-      createdAt:
-        description: 创建时间
-        type: string
-      id:
+      ID:
         description: 主键ID
         type: integer
+      created_at:
+        description: 创建时间
+        type: string
       key:
         description: 编号
         type: string
@@ -669,7 +677,7 @@ definitions:
       tag:
         description: 文件标签
         type: string
-      updatedAt:
+      updated_at:
         description: 更新时间
         type: string
       url:
@@ -782,7 +790,7 @@ definitions:
       page:
         description: 页码
         type: integer
-      page_size:
+      pageSize:
         description: 每页大小
         type: integer
     type: object
@@ -827,10 +835,13 @@ definitions:
     type: object
   request.SearchApiParams:
     properties:
+      ID:
+        description: 主键ID
+        type: integer
       apiGroup:
         description: api组
         type: string
-      createdAt:
+      created_at:
         description: 创建时间
         type: string
       desc:
@@ -839,9 +850,6 @@ definitions:
       description:
         description: api中文描述
         type: string
-      id:
-        description: 主键ID
-        type: integer
       keyword:
         description: 关键字
         type: string
@@ -854,13 +862,13 @@ definitions:
       page:
         description: 页码
         type: integer
-      page_size:
+      pageSize:
         description: 每页大小
         type: integer
       path:
         description: api路径
         type: string
-      updatedAt:
+      updated_at:
         description: 更新时间
         type: string
     type: object
@@ -899,7 +907,7 @@ definitions:
       page:
         description: 页码
         type: integer
-      page_size:
+      pageSize:
         description: 每页大小
         type: integer
     type: object
@@ -1098,7 +1106,7 @@ definitions:
       page:
         description: 页码
         type: integer
-      page_size:
+      pageSize:
         description: 每页大小
         type: integer
     type: object
@@ -1187,25 +1195,25 @@ definitions:
     type: object
   system.SysApi:
     properties:
+      ID:
+        description: 主键ID
+        type: integer
       apiGroup:
         description: api组
         type: string
-      createdAt:
+      created_at:
         description: 创建时间
         type: string
       description:
         description: api中文描述
         type: string
-      id:
-        description: 主键ID
-        type: integer
       method:
         description: 方法:创建POST(默认)|查看GET|更新PUT|删除DELETE
         type: string
       path:
         description: api路径
         type: string
-      updatedAt:
+      updated_at:
         description: 更新时间
         type: string
     type: object
@@ -1246,24 +1254,27 @@ definitions:
     type: object
   system.SysAutoCode:
     properties:
-      createdAt:
+      ID:
+        description: 主键ID
+        type: integer
+      created_at:
         description: 创建时间
         type: string
       desc:
         type: string
-      id:
-        description: 主键ID
-        type: integer
       label:
         type: string
       packageName:
         type: string
-      updatedAt:
+      updated_at:
         description: 更新时间
         type: string
     type: object
   system.SysBaseMenu:
     properties:
+      ID:
+        description: 主键ID
+        type: integer
       activeName:
         type: string
       authoritys:
@@ -1280,7 +1291,7 @@ definitions:
       component:
         description: 对应前端文件路径
         type: string
-      createdAt:
+      created_at:
         description: 创建时间
         type: string
       defaultMenu:
@@ -1292,9 +1303,6 @@ definitions:
       icon:
         description: 菜单图标
         type: string
-      id:
-        description: 主键ID
-        type: integer
       keepAlive:
         description: 是否缓存
         type: boolean
@@ -1321,36 +1329,36 @@ definitions:
       title:
         description: 菜单名
         type: string
-      updatedAt:
+      updated_at:
         description: 更新时间
         type: string
     type: object
   system.SysBaseMenuBtn:
     properties:
-      createdAt:
+      ID:
+        description: 主键ID
+        type: integer
+      created_at:
         description: 创建时间
         type: string
       desc:
         type: string
-      id:
-        description: 主键ID
-        type: integer
       name:
         type: string
       sysBaseMenuID:
         type: integer
-      updatedAt:
+      updated_at:
         description: 更新时间
         type: string
     type: object
   system.SysBaseMenuParameter:
     properties:
-      createdAt:
-        description: 创建时间
-        type: string
-      id:
+      ID:
         description: 主键ID
         type: integer
+      created_at:
+        description: 创建时间
+        type: string
       key:
         description: 地址栏携带参数的key
         type: string
@@ -1359,7 +1367,7 @@ definitions:
       type:
         description: 地址栏携带参数为params还是query
         type: string
-      updatedAt:
+      updated_at:
         description: 更新时间
         type: string
       value:
@@ -1368,15 +1376,15 @@ definitions:
     type: object
   system.SysDictionary:
     properties:
-      createdAt:
+      ID:
+        description: 主键ID
+        type: integer
+      created_at:
         description: 创建时间
         type: string
       desc:
         description: 描述
         type: string
-      id:
-        description: 主键ID
-        type: integer
       name:
         description: 字典名（中）
         type: string
@@ -1390,18 +1398,18 @@ definitions:
       type:
         description: 字典名（英）
         type: string
-      updatedAt:
+      updated_at:
         description: 更新时间
         type: string
     type: object
   system.SysDictionaryDetail:
     properties:
-      createdAt:
-        description: 创建时间
-        type: string
-      id:
+      ID:
         description: 主键ID
         type: integer
+      created_at:
+        description: 创建时间
+        type: string
       label:
         description: 展示值
         type: string
@@ -1414,7 +1422,7 @@ definitions:
       sysDictionaryID:
         description: 关联标记
         type: integer
-      updatedAt:
+      updated_at:
         description: 更新时间
         type: string
       value:
@@ -1423,6 +1431,9 @@ definitions:
     type: object
   system.SysMenu:
     properties:
+      ID:
+        description: 主键ID
+        type: integer
       activeName:
         type: string
       authoritys:
@@ -1443,7 +1454,7 @@ definitions:
       component:
         description: 对应前端文件路径
         type: string
-      createdAt:
+      created_at:
         description: 创建时间
         type: string
       defaultMenu:
@@ -1455,9 +1466,6 @@ definitions:
       icon:
         description: 菜单图标
         type: string
-      id:
-        description: 主键ID
-        type: integer
       keepAlive:
         description: 是否缓存
         type: boolean
@@ -1486,27 +1494,27 @@ definitions:
       title:
         description: 菜单名
         type: string
-      updatedAt:
+      updated_at:
         description: 更新时间
         type: string
     type: object
   system.SysOperationRecord:
     properties:
+      ID:
+        description: 主键ID
+        type: integer
       agent:
         description: 代理
         type: string
       body:
         description: 请求Body
         type: string
-      createdAt:
+      created_at:
         description: 创建时间
         type: string
       error_message:
         description: 错误信息
         type: string
-      id:
-        description: 主键ID
-        type: integer
       ip:
         description: 请求ip
         type: string
@@ -1525,7 +1533,7 @@ definitions:
       status:
         description: 请求状态
         type: integer
-      updatedAt:
+      updated_at:
         description: 更新时间
         type: string
       user:
@@ -1536,6 +1544,9 @@ definitions:
     type: object
   system.SysUser:
     properties:
+      ID:
+        description: 主键ID
+        type: integer
       activeColor:
         description: 活跃颜色
         type: string
@@ -1551,7 +1562,7 @@ definitions:
       baseColor:
         description: 基础颜色
         type: string
-      createdAt:
+      created_at:
         description: 创建时间
         type: string
       email:
@@ -1563,9 +1574,6 @@ definitions:
       headerImg:
         description: 用户头像
         type: string
-      id:
-        description: 主键ID
-        type: integer
       nickName:
         description: 用户昵称
         type: string
@@ -1575,7 +1583,7 @@ definitions:
       sideMode:
         description: 用户侧边主题
         type: string
-      updatedAt:
+      updated_at:
         description: 更新时间
         type: string
       userName:
@@ -2543,9 +2551,13 @@ paths:
       consumes:
       - application/json
       parameters:
+      - description: 主键ID
+        in: query
+        name: ID
+        type: integer
       - description: 创建时间
         in: query
-        name: createdAt
+        name: created_at
         type: string
       - description: 客户名
         in: query
@@ -2555,10 +2567,6 @@ paths:
         in: query
         name: customerPhoneData
         type: string
-      - description: 主键ID
-        in: query
-        name: id
-        type: integer
       - description: 管理角色ID
         in: query
         name: sysUserAuthorityID
@@ -2569,7 +2577,7 @@ paths:
         type: integer
       - description: 更新时间
         in: query
-        name: updatedAt
+        name: updated_at
         type: string
       produces:
       - application/json
@@ -2659,7 +2667,7 @@ paths:
         type: integer
       - description: 每页大小
         in: query
-        name: page_size
+        name: pageSize
         type: integer
       produces:
       - application/json
@@ -3268,18 +3276,18 @@ paths:
       consumes:
       - application/json
       parameters:
+      - description: 主键ID
+        in: query
+        name: ID
+        type: integer
       - description: 创建时间
         in: query
-        name: createdAt
+        name: created_at
         type: string
       - description: 描述
         in: query
         name: desc
         type: string
-      - description: 主键ID
-        in: query
-        name: id
-        type: integer
       - description: 字典名（中）
         in: query
         name: name
@@ -3294,7 +3302,7 @@ paths:
         type: string
       - description: 更新时间
         in: query
-        name: updatedAt
+        name: updated_at
         type: string
       produces:
       - application/json
@@ -3321,18 +3329,18 @@ paths:
       consumes:
       - application/json
       parameters:
+      - description: 主键ID
+        in: query
+        name: ID
+        type: integer
       - description: 创建时间
         in: query
-        name: createdAt
+        name: created_at
         type: string
       - description: 描述
         in: query
         name: desc
         type: string
-      - description: 主键ID
-        in: query
-        name: id
-        type: integer
       - description: 关键字
         in: query
         name: keyword
@@ -3347,7 +3355,7 @@ paths:
         type: integer
       - description: 每页大小
         in: query
-        name: page_size
+        name: pageSize
         type: integer
       - description: 状态
         in: query
@@ -3359,7 +3367,7 @@ paths:
         type: string
       - description: 更新时间
         in: query
-        name: updatedAt
+        name: updated_at
         type: string
       produces:
       - application/json
@@ -3469,14 +3477,14 @@ paths:
       consumes:
       - application/json
       parameters:
-      - description: 创建时间
-        in: query
-        name: createdAt
-        type: string
       - description: 主键ID
         in: query
-        name: id
+        name: ID
         type: integer
+      - description: 创建时间
+        in: query
+        name: created_at
+        type: string
       - description: 展示值
         in: query
         name: label
@@ -3495,7 +3503,7 @@ paths:
         type: integer
       - description: 更新时间
         in: query
-        name: updatedAt
+        name: updated_at
         type: string
       - description: 字典值
         in: query
@@ -3526,14 +3534,14 @@ paths:
       consumes:
       - application/json
       parameters:
-      - description: 创建时间
-        in: query
-        name: createdAt
-        type: string
       - description: 主键ID
         in: query
-        name: id
+        name: ID
         type: integer
+      - description: 创建时间
+        in: query
+        name: created_at
+        type: string
       - description: 关键字
         in: query
         name: keyword
@@ -3548,7 +3556,7 @@ paths:
         type: integer
       - description: 每页大小
         in: query
-        name: page_size
+        name: pageSize
         type: integer
       - description: 排序标记
         in: query
@@ -3564,7 +3572,7 @@ paths:
         type: integer
       - description: 更新时间
         in: query
-        name: updatedAt
+        name: updated_at
         type: string
       - description: 字典值
         in: query
@@ -3706,6 +3714,10 @@ paths:
       consumes:
       - application/json
       parameters:
+      - description: 主键ID
+        in: query
+        name: ID
+        type: integer
       - description: 代理
         in: query
         name: agent
@@ -3716,16 +3728,12 @@ paths:
         type: string
       - description: 创建时间
         in: query
-        name: createdAt
+        name: created_at
         type: string
       - description: 错误信息
         in: query
         name: error_message
         type: string
-      - description: 主键ID
-        in: query
-        name: id
-        type: integer
       - description: 请求ip
         in: query
         name: ip
@@ -3752,7 +3760,7 @@ paths:
         type: integer
       - description: 更新时间
         in: query
-        name: updatedAt
+        name: updated_at
         type: string
       - description: 用户id
         in: query
@@ -3783,6 +3791,10 @@ paths:
       consumes:
       - application/json
       parameters:
+      - description: 主键ID
+        in: query
+        name: ID
+        type: integer
       - description: 代理
         in: query
         name: agent
@@ -3793,16 +3805,12 @@ paths:
         type: string
       - description: 创建时间
         in: query
-        name: createdAt
+        name: created_at
         type: string
       - description: 错误信息
         in: query
         name: error_message
         type: string
-      - description: 主键ID
-        in: query
-        name: id
-        type: integer
       - description: 请求ip
         in: query
         name: ip
@@ -3825,7 +3833,7 @@ paths:
         type: integer
       - description: 每页大小
         in: query
-        name: page_size
+        name: pageSize
         type: integer
       - description: 请求路径
         in: query
@@ -3841,7 +3849,7 @@ paths:
         type: integer
       - description: 更新时间
         in: query
-        name: updatedAt
+        name: updated_at
         type: string
       - description: 用户id
         in: query
@@ -4068,12 +4076,12 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.GetById'
+          $ref: '#/definitions/request.IdsReq'
       produces:
       - application/json
       responses:
         "200":
-          description: 删除sms项目成员
+          description: 响应内容
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
@@ -4085,7 +4093,37 @@ paths:
               type: object
       security:
       - ApiKeyAuth: []
-      summary: 删除sms项目成员
+      summary: 批量删除sms项目成员
+      tags:
+      - Txyun
+  /txyun/sms/ExportExcelSmsRows:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 请求参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.IdsReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 响应内容
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  type: object
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 导出excel信息
       tags:
       - Txyun
   /txyun/sms/GetAllSmsProject:
@@ -4126,7 +4164,7 @@ paths:
         type: integer
       - description: 每页大小
         in: query
-        name: page_size
+        name: pageSize
         type: integer
       produces:
       - application/json
@@ -4175,6 +4213,36 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: 发送短信
+      tags:
+      - Txyun
+  /txyun/sms/SendSmsByRows:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 请求参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.IdsReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 响应内容
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  type: object
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 批量发送信息
       tags:
       - Txyun
   /txyun/sms/SmsProjectRows:
