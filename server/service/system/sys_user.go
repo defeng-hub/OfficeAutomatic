@@ -177,8 +177,10 @@ func (userService *UserService) SetUserInfo(req system.SysUser) error {
 			"enable":     req.Enable,
 			// 自主添加
 			"sex":                    req.Sex,
+			"birthdate":              req.Birthdate,
 			"address":                req.Address,
 			"wno":                    req.Wno,
+			"zhiwu":                  req.Zhiwu,
 			"user_teaching_grade_id": req.UserTeachingGradeID,
 			"join_company_time":      req.JoinCompanyTime,
 			"join_work_time":         req.JoinWorkTime,

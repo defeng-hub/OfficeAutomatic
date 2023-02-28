@@ -17,8 +17,10 @@ type Register struct {
 	Email        string `json:"email" example:"电子邮箱"`
 	// 自主添加的
 	Sex                 int    `json:"sex" example:"性别 0未选择 1男 2女"`
+	Birthdate           string `json:"birthdate" gorm:"commit:出生日期"`
 	Address             string `json:"address" example:"通信地址"`
 	Wno                 string `json:"wno" example:"职工号"`
+	Zhiwu               string `json:"zhiwu" gorm:"commit:职务"`
 	UserTeachingGradeID uint   `json:"userTeachingGradeID" example:"教学等级ID"`
 	JoinCompanyTime     string `json:"joinCompanyTime" example:"加入公司时间"`
 	JoinWorkTime        string `json:"joinWorkTime" example:"参加工作时间"`
@@ -67,8 +69,10 @@ type ChangeUserInfo struct {
 
 	// 自主添加的
 	Sex                 int    `json:"sex" example:"性别 0未选择 1男 2女"`
+	Birthdate           string `json:"birthdate" gorm:"commit:出生日期"`
 	Address             string `json:"address" example:"通信地址"`
 	Wno                 string `json:"wno" example:"职工号"`
+	Zhiwu               string `json:"zhiwu" gorm:"commit:职务"`
 	UserTeachingGradeID uint   `json:"userTeachingGradeID" example:"教学等级ID"`
 	JoinCompanyTime     string `json:"joinCompanyTime" example:"加入公司时间"`
 	JoinWorkTime        string `json:"joinWorkTime" example:"参加工作时间"`

@@ -24,9 +24,9 @@ yarn-error.log*
 
 # server
 /server/log/
-/server/gva
 /server/latest_log
 /server/server.exe
+/server/server
 /server/*.exe
 /server/pro.yaml
 /server/service/txyun/sms/secretkey.go

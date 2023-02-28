@@ -177,6 +177,7 @@ func (b *BaseApi) Register(c *gin.Context) {
 		Sex: r.Sex, Address: r.Address, Wno: r.Wno, UserTeachingGradeID: r.UserTeachingGradeID,
 		JoinWorkTime: r.JoinWorkTime, JoinCompanyTime: r.JoinCompanyTime,
 		Desc0: r.Desc0, Resume: r.Resume, Desc1: r.Desc1, Desc2: r.Desc2,
+		Birthdate: r.Birthdate, Zhiwu: r.Zhiwu,
 	}
 	userReturn, err := userService.Register(*user)
 	if err != nil {
@@ -396,8 +397,10 @@ func (b *BaseApi) SetUserInfo(c *gin.Context) {
 		Enable:    user.Enable,
 		// 自主添加
 		Sex:                 user.Sex,
+		Birthdate:           user.Birthdate,
 		Address:             user.Address,
 		Wno:                 user.Wno,
+		Zhiwu:               user.Zhiwu,
 		UserTeachingGradeID: user.UserTeachingGradeID,
 		JoinCompanyTime:     user.JoinCompanyTime,
 		JoinWorkTime:        user.JoinWorkTime,
@@ -441,6 +444,8 @@ func (b *BaseApi) SetSelfInfo(c *gin.Context) {
 		Email:     user.Email,
 		SideMode:  user.SideMode,
 		Enable:    user.Enable,
+		Sex:       user.Sex,
+		Address:   user.Address,
 	})
 	if err != nil {
 		global.GVA_LOG.Error("设置失败!", zap.Error(err))
