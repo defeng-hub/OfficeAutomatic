@@ -45,9 +45,10 @@
           </template>
         </el-table-column> -->
 
-        <el-table-column label="操作" min-width="150" fixed="right">
+        <el-table-column label="操作" min-width="200" fixed="right">
           <template #default="scope">
             <el-button type="primary" link icon="edit" @click="openEdit(scope.row)">编辑</el-button>
+            <el-button type="primary" link icon="edit" @click="openCatUserDialog(scope.row)">查看</el-button>
 
             <el-popover v-model="scope.row.visible" placement="top" width="160">
               <p>确定要删除此用户吗</p>
@@ -76,7 +77,7 @@
       </div>
     </div>
 
-    <!-- 用户信息弹框 -->
+    <!-- (新增/修改)用户信息弹框 -->
     <el-dialog
       v-model="addUserDialog"
       custom-class="user-dialog"
@@ -118,11 +119,17 @@
               />
             </el-select>
           </el-form-item>
+          <el-form-item label="出生日期" prop="birthdate">
+            <el-input v-model="userInfo.birthdate" />
+          </el-form-item>
           <el-form-item label="通信地址" prop="address">
             <el-input v-model="userInfo.address" />
           </el-form-item>
           <el-form-item label="职工号" prop="wno">
             <el-input v-model="userInfo.wno" />
+          </el-form-item>
+          <el-form-item label="职务" prop="zhiwu">
+            <el-input v-model="userInfo.zhiwu" />
           </el-form-item>
           <el-form-item label="教学等级" prop="userTeachingGradeID">
             <el-select v-model="userInfo.userTeachingGradeID" class="m-2" placeholder="Select">
@@ -195,6 +202,69 @@
       </template>
     </el-dialog>
     <ChooseImg ref="chooseImg" :target="userInfo" :target-key="`headerImg`" />
+
+    <el-dialog v-model="catUserDialog" custom-class="user-dialog"
+      :close-on-press-escape="false"
+      width="70%" draggable>
+      <el-descriptions border :column="3">
+        <el-descriptions-item label="姓名" width="120">
+          {{ win.winuser.nickName }}
+        </el-descriptions-item>
+
+        <el-descriptions-item label="性别" width="120">
+          {{ win.winuser.sex }}
+        </el-descriptions-item>
+        
+        <el-descriptions-item label="出生日期" width="120">
+          {{ win.winuser.birthdate }}
+        </el-descriptions-item>
+
+        <el-descriptions-item label="联系电话">
+          {{ win.winuser.phone }}
+        </el-descriptions-item>
+        
+        <el-descriptions-item label="通信地址">
+          {{ win.winuser.address }}
+        </el-descriptions-item>
+
+        <el-descriptions-item label="邮箱">
+          {{ win.winuser.email }}
+        </el-descriptions-item>
+
+        <el-descriptions-item label="部门">
+
+        </el-descriptions-item>
+
+        <el-descriptions-item label="职务">{{ win.winuser.zhiwu }}</el-descriptions-item>
+
+        <el-descriptions-item label="工号">{{ win.winuser.wno }}</el-descriptions-item>
+
+        <el-descriptions-item label="教学技能等级">{{ win.winuser.userTeachingGrade.title }}</el-descriptions-item>
+        <el-descriptions-item label="进入公司时间">{{ win.winuser.joinCompanyTime }}</el-descriptions-item>
+        <el-descriptions-item label="参加工作时间">{{ win.winuser.joinWorkTime }}</el-descriptions-item>
+        <el-descriptions-item label="个人简历"  span="3">
+          <el-input v-model="win.winuser.resume" :autosize="{ minRows: 3, maxRows: 5 }"
+            type="textarea" readonly placeholder="无" />
+        </el-descriptions-item>
+
+        <el-descriptions-item label="教师技能等级 / 职务变动情况记录"  span="3">
+          <el-input v-model="win.winuser.desc1" :autosize="{ minRows: 3, maxRows: 5 }"
+            type="textarea" readonly placeholder="无" />
+        </el-descriptions-item>
+        
+        <el-descriptions-item label="本职工作变动情况记录"  span="3">
+          <el-input  readonly true v-model="win.winuser.desc2" :autosize="{ minRows: 3, maxRows: 5 }"
+            type="textarea" placeholder="无" />
+        </el-descriptions-item>
+
+      </el-descriptions>
+      <template #footer>
+          <div class="dialog-footer">
+            <el-button size="large" type="primary" @click="print(1)">打 印</el-button>
+            <el-button size="large" type="primary" @click="print(2)">导出Excel</el-button>
+          </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -210,7 +280,8 @@ import {
   getUserList,
   setUserAuthorities,
   register,
-  deleteUser
+  deleteUser,
+  ExportUserExcel
 } from '@/api/user'
 
 import { getAuthorityList } from '@/api/authority'
@@ -243,11 +314,24 @@ const setAuthorityOptions = (AuthorityData, optionsData) => {
           }
         })
 }
+const print = async (parame)=>{
+  if(parame == 1){
+    window.print();
+
+  }else if(parame == 2){
+    let res = await ExportUserExcel({...win.value.winuser})
+    if(res.code === 0){
+      window.open(res.data.url)
+    }
+  }
+}
 
 const page = ref(1)
 const total = ref(0)
 const pageSize = ref(10)
 const tableData = ref([])
+const catUserDialog = ref(false)
+const win = ref({})
 const sexoptions = ref([
   {value: 0,label: '未选择',},
   {value: 1,label: '男',},
@@ -273,7 +357,7 @@ const handleCurrentChange = (val) => {
 const getTableData = async() => {
   const table = await getUserList({ page: page.value, pageSize: pageSize.value })
   if (table.code === 0) {
-    console.log("userlist",table)
+    // console.log("userlist",table)
     tableData.value = table.data.list
     total.value = table.data.total
     page.value = table.data.page
@@ -465,6 +549,11 @@ const openEdit = (row) => {
   dialogFlag.value = 'edit'
   userInfo.value = JSON.parse(JSON.stringify(row))
   addUserDialog.value = true
+}
+const openCatUserDialog = (row)=>{
+  catUserDialog.value = true;
+  // console.log(row)
+  win.value.winuser = row;
 }
 
 const switchEnable = async(row) => {

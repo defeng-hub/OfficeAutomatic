@@ -30,6 +30,7 @@ yarn-error.log*
 /server/*.exe
 /server/pro.yaml
 /server/service/txyun/sms/secretkey.go
+/server/uploads/
 
 *.iml
 web/.pnpm-debug.log

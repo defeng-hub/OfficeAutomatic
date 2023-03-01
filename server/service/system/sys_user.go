@@ -3,6 +3,7 @@ package system
 import (
 	"errors"
 	"fmt"
+	"github.com/xuri/excelize/v2"
 	"time"
 
 	"github.com/defeng-hub/ByOfficeAutomatic/server/global"
@@ -91,7 +92,7 @@ func (userService *UserService) GetUserInfoList(info request.PageInfo) (list int
 	if err != nil {
 		return
 	}
-	err = db.Limit(limit).Offset(offset).Preload("Authorities").Preload("Authority").Find(&userList).Error
+	err = db.Limit(limit).Offset(offset).Preload("Authorities").Preload("Authority").Preload("UserTeachingGrade").Find(&userList).Error
 	return userList, total, err
 }
 
@@ -255,4 +256,40 @@ func (userService *UserService) FindUserByUuid(uuid string) (user *system.SysUse
 func (userService *UserService) ResetPassword(ID uint) (err error) {
 	err = global.GVA_DB.Model(&system.SysUser{}).Where("id = ?", ID).Update("password", utils.BcryptHash("123456")).Error
 	return err
+}
+
+func (userService *UserService) ExportUserExcel(user system.SysUser) (url string, err error) {
+	f, err := excelize.OpenFile("./model/excel/user.xlsx")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	f.SetCellValue("基本信息", "B1", user.NickName)
+	f.SetCellValue("基本信息", "D1", user.Sex)
+	f.SetCellValue("基本信息", "F1", user.Birthdate)
+	f.SetCellValue("基本信息", "B2", user.Phone)
+	f.SetCellValue("基本信息", "D2", user.Address)
+	f.SetCellValue("基本信息", "F2", user.Email)
+	f.SetCellValue("基本信息", "B3", "部门")
+	f.SetCellValue("基本信息", "D3", user.Zhiwu)
+	f.SetCellValue("基本信息", "F3", user.Wno)
+
+	f.SetCellValue("基本信息", "B4", user.UserTeachingGradeID)
+	f.SetCellValue("基本信息", "D4", user.JoinCompanyTime)
+	f.SetCellValue("基本信息", "F4", user.JoinWorkTime)
+
+	f.SetCellValue("基本信息", "D5", user.Desc0)
+	f.SetCellValue("基本信息", "A8", user.Resume)
+	f.SetCellValue("基本信息", "A19", user.Desc1)
+	f.SetCellValue("基本信息", "A24", user.Desc2)
+
+	filepath, url, err := utils.ExportFile(".xlsx")
+	if err != nil {
+		return "", err
+	}
+	err = f.SaveAs(filepath)
+	if err != nil {
+		return "", err
+	}
+	return url, err
 }

@@ -164,3 +164,11 @@ export const resetPassword = (data) => {
     data: data
   })
 }
+
+export const ExportUserExcel = (data) => {
+  return service({
+    url: '/user/ExportUserExcel',
+    method: 'post',
+    data: data
+  })
+}

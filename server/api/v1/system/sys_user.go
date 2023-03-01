@@ -497,3 +497,28 @@ func (b *BaseApi) ResetPassword(c *gin.Context) {
 	}
 	response.OkWithMessage("重置成功", c)
 }
+
+// ExportUserExcel
+// @Tags      SysUser
+// @Summary   导出用户Excel
+// @Security  ApiKeyAuth
+// @Produce   application/json
+// @Param     data  body      system.SysUser                 true  "ID"
+// @Success   200   {object}  response.Response{msg=string}  "响应内容"
+// @Router    /user/ExportUserExcel [post]
+func (b *BaseApi) ExportUserExcel(c *gin.Context) {
+	var user system.SysUser
+	err := c.ShouldBindJSON(&user)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	url, err := userService.ExportUserExcel(user)
+	if err != nil {
+		response.FailWithMessage("导出失败:"+err.Error(), c)
+		return
+	}
+	response.OkWithDetailed(gin.H{
+		"url": url,
+	}, "导出成功", c)
+}
