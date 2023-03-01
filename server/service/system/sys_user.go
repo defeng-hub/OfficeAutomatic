@@ -77,13 +77,23 @@ func (userService *UserService) ChangePassword(u *system.SysUser, newPassword st
 
 }
 
+// 是否包含
+func IsContain(items []uint, item uint) bool {
+	for _, eachItem := range items {
+		if eachItem == item {
+			return true
+		}
+	}
+	return false
+}
+
 //@author: [piexlmax](https://github.com/piexlmax)
 //@function: GetUserInfoList
 //@description: 分页获取数据
 //@param: info request.PageInfo
 //@return: err error, list interface{}, total int64
 
-func (userService *UserService) GetUserInfoList(info request.PageInfo) (list interface{}, total int64, err error) {
+func (userService *UserService) GetUserInfoList(info request.PageInfo, authorityIds []uint) (list interface{}, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	db := global.GVA_DB.Model(&system.SysUser{})
@@ -92,8 +102,27 @@ func (userService *UserService) GetUserInfoList(info request.PageInfo) (list int
 	if err != nil {
 		return
 	}
-	err = db.Limit(limit).Offset(offset).Preload("Authorities").Preload("Authority").Preload("UserTeachingGrade").Find(&userList).Error
-	return userList, total, err
+	err = db.
+		Where("nick_name like ? or phone like ? or email like ?", "%"+info.Keyword+"%", "%"+info.Keyword+"%", "%"+info.Keyword+"%").
+		Limit(limit).Offset(offset).
+		Preload("Authorities").
+		Preload("Authority").Preload("UserTeachingGrade").Find(&userList).Error
+
+	// 傻逼写法
+	var withAuthorityUser []system.SysUser
+	if len(authorityIds) >= 1 {
+		for _, user := range userList {
+			for _, win := range user.Authorities {
+				if IsContain(authorityIds, win.AuthorityId) {
+					withAuthorityUser = append(withAuthorityUser, user)
+					break
+				}
+			}
+		}
+		return withAuthorityUser, total, err
+	} else {
+		return userList, total, err
+	}
 }
 
 //@author: [piexlmax](https://github.com/piexlmax)

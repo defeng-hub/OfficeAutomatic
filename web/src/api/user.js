@@ -63,6 +63,15 @@ export const getUserList = (data) => {
   })
 }
 
+// 获取部门列表
+export const getAuthorityList = () => {
+  return service({
+    url: '/authority/getAuthorityList',
+    method: 'post',
+    data: {page:1,pageSize: 999}
+  })
+}
+
 // @Tags User
 // @Summary 设置用户权限
 // @Security ApiKeyAuth

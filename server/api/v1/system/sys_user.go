@@ -229,18 +229,29 @@ func (b *BaseApi) ChangePassword(c *gin.Context) {
 // @Success   200   {object}  response.Response{data=response.PageResult,msg=string}  "分页获取用户列表,返回包括列表,总数,页码,每页数量"
 // @Router    /user/getUserList [post]
 func (b *BaseApi) GetUserList(c *gin.Context) {
-	var pageInfo request.PageInfo
-	err := c.ShouldBindJSON(&pageInfo)
+	type ls struct {
+		Page         int    `json:"page" form:"page"`         // 页码
+		PageSize     int    `json:"pageSize" form:"pageSize"` // 每页大小
+		Keyword      string `json:"keyword" form:"keyword"`   //关键字
+		AuthorityIds []uint `json:"authorityIds"`             // 角色ID
+	}
+	var jgt ls
+	err := c.ShouldBindJSON(&jgt)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
+	}
+	pageInfo := request.PageInfo{
+		Page:     jgt.Page,
+		PageSize: jgt.PageSize,
+		Keyword:  jgt.Keyword,
 	}
 	err = utils.Verify(pageInfo, utils.PageInfoVerify)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	list, total, err := userService.GetUserInfoList(pageInfo)
+	list, total, err := userService.GetUserInfoList(pageInfo, jgt.AuthorityIds)
 	if err != nil {
 		global.GVA_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)

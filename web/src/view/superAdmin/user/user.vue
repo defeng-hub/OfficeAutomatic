@@ -1,6 +1,36 @@
 <template>
   <div>
     <warning-bar title="注：右上角头像下拉可切换角色" />
+    <div class="gva-search-box">
+      <el-form :inline="true" :model="searchInfo">
+        <el-form-item label="搜索">
+          <el-input v-model="searchInfo.keyword" placeholder="名称,手机号,邮箱" />
+        </el-form-item>
+        <el-form-item label="部门" prop="status">
+          <el-cascader
+              v-model="searchInfo.authorityIds"
+              :options="authOptions"
+              :show-all-levels="false"
+              collapse-tags
+              :props="{ multiple:true,checkStrictly: true,label:'authorityName',value:'authorityId',disabled:'disabled',emitPath:false}"
+              :clearable="false"
+            />
+        </el-form-item>
+
+        <el-form-item>
+          <el-button
+            type="primary"
+            icon="search"
+            @click="onSubmit"
+          >查询</el-button>
+          <el-button
+            icon="refresh"
+            @click="onReset"
+          >重置</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+    
     <div class="gva-table-box">
       <div class="gva-btn-list">
         <el-button type="primary" icon="plus" @click="addUser">新增用户</el-button>
@@ -278,6 +308,7 @@ export default {
 
 import {
   getUserList,
+
   setUserAuthorities,
   register,
   deleteUser,
@@ -325,7 +356,10 @@ const print = async (parame)=>{
     }
   }
 }
-
+const searchInfo = ref({
+  keyword:"",
+  authorityIds:null,
+})
 const page = ref(1)
 const total = ref(0)
 const pageSize = ref(10)
@@ -353,9 +387,19 @@ const handleCurrentChange = (val) => {
   getTableData()
 }
 
+
+
+// 
+
 // 查询
 const getTableData = async() => {
-  const table = await getUserList({ page: page.value, pageSize: pageSize.value })
+  const table = await getUserList({ 
+    page: page.value,
+    pageSize: pageSize.value,
+    keyword:searchInfo.value.keyword,
+    authorityIds:searchInfo.value.authorityIds,
+  })
+
   if (table.code === 0) {
     // console.log("userlist",table)
     tableData.value = table.data.list
@@ -364,6 +408,15 @@ const getTableData = async() => {
     pageSize.value = table.data.pageSize
   }
 }
+const onSubmit = async()=>{
+  console.log(searchInfo.value)
+  getTableData()
+}
+const onReset = async()=>{
+  searchInfo.value.keyword = ''
+  getTableData()
+}
+
 
 watch(() => tableData.value, () => {
   setAuthorityIds()
@@ -419,7 +472,9 @@ const openHeaderChange = () => {
 const authOptions = ref([])
 const setOptions = (authData) => {
   authOptions.value = []
+  
   setAuthorityOptions(authData, authOptions.value)
+  console.log("权限",authOptions.value)
 }
 
 const deleteUserFunc = async(row) => {
