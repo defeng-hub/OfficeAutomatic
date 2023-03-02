@@ -230,10 +230,11 @@ func (b *BaseApi) ChangePassword(c *gin.Context) {
 // @Router    /user/getUserList [post]
 func (b *BaseApi) GetUserList(c *gin.Context) {
 	type ls struct {
-		Page         int    `json:"page" form:"page"`         // 页码
-		PageSize     int    `json:"pageSize" form:"pageSize"` // 每页大小
-		Keyword      string `json:"keyword" form:"keyword"`   //关键字
-		AuthorityIds []uint `json:"authorityIds"`             // 角色ID
+		Page                int    `json:"page" form:"page"`         // 页码
+		PageSize            int    `json:"pageSize" form:"pageSize"` // 每页大小
+		Keyword             string `json:"keyword" form:"keyword"`   //关键字
+		AuthorityIds        []uint `json:"authorityIds"`             // 角色ID
+		UserTeachingGradeID uint   `json:"userTeachingGradeID"`      // 教学等级ID
 	}
 	var jgt ls
 	err := c.ShouldBindJSON(&jgt)
@@ -251,7 +252,7 @@ func (b *BaseApi) GetUserList(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	list, total, err := userService.GetUserInfoList(pageInfo, jgt.AuthorityIds)
+	list, total, err := userService.GetUserInfoList(pageInfo, jgt.AuthorityIds, jgt.UserTeachingGradeID)
 	if err != nil {
 		global.GVA_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
@@ -353,9 +354,15 @@ func (b *BaseApi) DeleteUser(c *gin.Context) {
 	}
 	jwtId := utils.GetUserID(c)
 	if jwtId == uint(reqId.ID) {
-		response.FailWithMessage("删除失败, 自杀失败", c)
+		response.FailWithMessage("删除失败, 禁止自杀", c)
 		return
 	}
+	// 保留账户
+	if jwtId == uint(1) || jwtId == uint(6) {
+		response.FailWithMessage("保留账户, 禁止删除", c)
+		return
+	}
+
 	err = userService.DeleteUser(reqId.ID)
 	if err != nil {
 		global.GVA_LOG.Error("删除失败!", zap.Error(err))

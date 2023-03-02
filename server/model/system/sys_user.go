@@ -44,8 +44,9 @@ func (SysUser) TableName() string {
 // UserTeachingGrade 教学等级表
 type UserTeachingGrade struct {
 	global.GVA_MODEL
-	Name string  `json:"title" gorm:"commit:教学等级"`
-	Wage float64 `json:"wage" gorm:"commit:时薪"`
+	Name   string  `json:"title" gorm:"commit:教学等级"`
+	Shunxv int     `json:"shunxv" gorm:"default:1;commit:教学等级"`
+	Wage   float64 `json:"wage" gorm:"commit:时薪"`
 }
 
 func (UserTeachingGrade) TableName() string {

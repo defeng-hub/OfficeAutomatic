@@ -16,6 +16,16 @@
               :clearable="false"
             />
         </el-form-item>
+        <el-form-item>
+          <el-select v-model="searchInfo.userTeachingGradeID" clearable  class="m-2" placeholder="Select">
+              <el-option
+                v-for="item in teachingoptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
+        </el-form-item>
 
         <el-form-item>
           <el-button
@@ -308,7 +318,7 @@ export default {
 
 import {
   getUserList,
-
+  GetAllUserTeachingGrade,
   setUserAuthorities,
   register,
   deleteUser,
@@ -359,6 +369,7 @@ const print = async (parame)=>{
 const searchInfo = ref({
   keyword:"",
   authorityIds:null,
+  userTeachingGradeID:null,
 })
 const page = ref(1)
 const total = ref(0)
@@ -372,10 +383,23 @@ const sexoptions = ref([
   {value: 2,label: '女',},
 ])
 const teachingoptions = ref([
-  {value: 1,label: '等级1',},
-  {value: 2,label: '等级2',},
-  {value: 3,label: '等级3',},
+  {value: 1,label: '获取失败',},
 ])
+
+const getTeachingoptions = async () => {
+  const table = await GetAllUserTeachingGrade()
+  // console.log("ccc",table)
+  if (table.code === 0) {
+    teachingoptions.value = []
+    table.data.forEach(element => {
+      teachingoptions.value.push(
+        {value: element.ID,label: element.title,}
+      )
+    });
+  }
+}
+getTeachingoptions()
+
 // 分页
 const handleSizeChange = (val) => {
   pageSize.value = val
@@ -387,19 +411,21 @@ const handleCurrentChange = (val) => {
   getTableData()
 }
 
-
-
-// 
-
 // 查询
 const getTableData = async() => {
-  const table = await getUserList({ 
+  let req = { 
     page: page.value,
     pageSize: pageSize.value,
     keyword:searchInfo.value.keyword,
-    authorityIds:searchInfo.value.authorityIds,
-  })
-
+  }
+  if(searchInfo.value.authorityIds){
+    req.authorityIds = searchInfo.value.authorityIds
+  }
+  if(searchInfo.value.userTeachingGradeID){
+    req.userTeachingGradeID = searchInfo.value.userTeachingGradeID
+  }
+  console.log(req)
+  const table = await getUserList(req)
   if (table.code === 0) {
     // console.log("userlist",table)
     tableData.value = table.data.list
@@ -409,11 +435,13 @@ const getTableData = async() => {
   }
 }
 const onSubmit = async()=>{
-  console.log(searchInfo.value)
+  // console.log(searchInfo.value)
   getTableData()
 }
 const onReset = async()=>{
   searchInfo.value.keyword = ''
+  searchInfo.value.authorityIds = []
+  searchInfo.value.userTeachingGradeID = null;
   getTableData()
 }
 
@@ -474,7 +502,7 @@ const setOptions = (authData) => {
   authOptions.value = []
   
   setAuthorityOptions(authData, authOptions.value)
-  console.log("权限",authOptions.value)
+  // console.log("权限",authOptions.value)
 }
 
 const deleteUserFunc = async(row) => {

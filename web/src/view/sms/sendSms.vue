@@ -283,7 +283,7 @@
 <script>
 import { GetSmsList } from '@/api/txyun/sms'
 export default {
-  name: 'Customer',
+  name: 'SendSms',
   data() {
     return {
       activeName:"", // tabs 选中

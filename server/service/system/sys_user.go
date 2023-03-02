@@ -93,7 +93,7 @@ func IsContain(items []uint, item uint) bool {
 //@param: info request.PageInfo
 //@return: err error, list interface{}, total int64
 
-func (userService *UserService) GetUserInfoList(info request.PageInfo, authorityIds []uint) (list interface{}, total int64, err error) {
+func (userService *UserService) GetUserInfoList(info request.PageInfo, authorityIds []uint, UserTeachingGradeID uint) (list interface{}, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	db := global.GVA_DB.Model(&system.SysUser{})
@@ -102,11 +102,22 @@ func (userService *UserService) GetUserInfoList(info request.PageInfo, authority
 	if err != nil {
 		return
 	}
-	err = db.
-		Where("nick_name like ? or phone like ? or email like ?", "%"+info.Keyword+"%", "%"+info.Keyword+"%", "%"+info.Keyword+"%").
-		Limit(limit).Offset(offset).
-		Preload("Authorities").
-		Preload("Authority").Preload("UserTeachingGrade").Find(&userList).Error
+
+	if UserTeachingGradeID == 0 {
+		// 说明 未选择 教学等级
+		err = db.
+			Where("nick_name like ? or phone like ? or email like ?", "%"+info.Keyword+"%", "%"+info.Keyword+"%", "%"+info.Keyword+"%").
+			Limit(limit).Offset(offset).
+			Preload("Authorities").
+			Preload("Authority").Preload("UserTeachingGrade").Find(&userList).Error
+	} else {
+		err = db.
+			Where("user_teaching_grade_id = ?", UserTeachingGradeID).
+			Where("nick_name like ? or phone like ? or email like ?", "%"+info.Keyword+"%", "%"+info.Keyword+"%", "%"+info.Keyword+"%").
+			Limit(limit).Offset(offset).
+			Preload("Authorities").
+			Preload("Authority").Preload("UserTeachingGrade").Find(&userList).Error
+	}
 
 	// 傻逼写法
 	var withAuthorityUser []system.SysUser

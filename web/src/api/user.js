@@ -63,14 +63,7 @@ export const getUserList = (data) => {
   })
 }
 
-// 获取部门列表
-export const getAuthorityList = () => {
-  return service({
-    url: '/authority/getAuthorityList',
-    method: 'post',
-    data: {page:1,pageSize: 999}
-  })
-}
+
 
 // @Tags User
 // @Summary 设置用户权限
@@ -177,6 +170,37 @@ export const resetPassword = (data) => {
 export const ExportUserExcel = (data) => {
   return service({
     url: '/user/ExportUserExcel',
+    method: 'post',
+    data: data
+  })
+}
+
+
+// GetAllUserTeachingGrade
+// @Tags     Base
+// @Summary  获取全部 教学技能等级
+// @Produce  application/json
+// @Success  200   {object}  response.Response{data=map[string]interface{},msg=string}  "返回全部 教学技能等级"
+// @Router   /user/GetAllUserTeachingGrade [get]
+export const GetAllUserTeachingGrade = (data) => {
+  return service({
+    url: '/user/GetAllUserTeachingGrade',
+    method: 'get',
+    data: data
+  })
+}
+
+export const DeleteUserTeachingGrade = (data) => {
+  return service({
+    url: '/user/DeleteUserTeachingGrade',
+    method: 'post',
+    data: data
+  })
+}
+
+export const ChangeUserTeachingGrade = (data) => {
+  return service({
+    url: '/user/ChangeUserTeachingGrade',
     method: 'post',
     data: data
   })
