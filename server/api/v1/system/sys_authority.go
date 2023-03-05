@@ -106,7 +106,7 @@ func (a *AuthorityApi) DeleteAuthority(c *gin.Context) {
 	err = authorityService.DeleteAuthority(&authority)
 	if err != nil { // 删除角色之前需要判断是否有用户正在使用此角色
 		global.GVA_LOG.Error("删除失败!", zap.Error(err))
-		response.FailWithMessage("删除失败"+err.Error(), c)
+		response.FailWithMessage("删除失败, "+err.Error(), c)
 		return
 	}
 	response.OkWithMessage("删除成功", c)

@@ -49,17 +49,19 @@
         :data="tableData"
         row-key="ID"
       >
-        <el-table-column align="left" label="头像" min-width="75">
+        <el-table-column align="center" label="头像" min-width="75">
           <template #default="scope">
             <CustomPic style="margin-top:8px" :pic-src="scope.row.headerImg" />
           </template>
         </el-table-column>
         <!-- <el-table-column align="left" label="ID" min-width="50" prop="ID" /> -->
-        <el-table-column align="left" label="用户名" min-width="150" prop="userName" />
-        <el-table-column align="left" label="昵称" min-width="150" prop="nickName" />
-        <el-table-column align="left" label="手机号" min-width="180" prop="phone" />
-        <el-table-column align="left" label="邮箱" min-width="180" prop="email" />
-        <el-table-column align="left" label="用户角色" min-width="200">
+        <el-table-column align="center" label="用户名" min-width="150" prop="userName" />
+        <el-table-column align="center" label="姓名" min-width="100" prop="nickName" />
+        <el-table-column align="center" label="手机号" min-width="140" prop="phone" />
+        <el-table-column align="center" label="邮箱" min-width="180" prop="email" />
+        <el-table-column align="center" label="本职工作单位/职务" min-width="180" prop="desc0" />
+        <el-table-column align="center" label="加入公司时间" min-width="140" prop="joinCompanyTime" />
+        <el-table-column align="center" label="用户角色" min-width="200">
           <template #default="scope">
             <el-cascader
               v-model="scope.row.authorityIds"
@@ -120,7 +122,7 @@
     <!-- (新增/修改)用户信息弹框 -->
     <el-dialog
       v-model="addUserDialog"
-      custom-class="user-dialog"
+      class="user-dialog"
       title="用户"
       :show-close="false"
       :close-on-press-escape="false"
@@ -138,7 +140,7 @@
             <el-input v-model="userInfo.password" />
           </el-form-item>
 
-          <el-form-item label="昵称" prop="nickName">
+          <el-form-item label="姓名" prop="nickName">
             <el-input v-model="userInfo.nickName" />
           </el-form-item>
           <el-form-item label="手机号" prop="phone">
@@ -243,7 +245,7 @@
     </el-dialog>
     <ChooseImg ref="chooseImg" :target="userInfo" :target-key="`headerImg`" />
 
-    <el-dialog v-model="catUserDialog" custom-class="user-dialog"
+    <el-dialog v-model="catUserDialog" class="user-dialog"
       :close-on-press-escape="false"
       width="70%" draggable>
       <el-descriptions border :column="3">
@@ -560,9 +562,10 @@ const rules = ref({
 })
 const userForm = ref(null)
 const enterAddUserDialog = async() => {
-  userInfo.value.authorityId = userInfo.value.authorityIds[0]
+  
   userForm.value.validate(async valid => {
     if (valid) {
+      userInfo.value.authorityId = userInfo.value.authorityIds[0]
       const req = {
         ...userInfo.value
       }
@@ -601,6 +604,7 @@ const dialogFlag = ref('add')
 const addUser = () => {
   dialogFlag.value = 'add'
   addUserDialog.value = true
+  userInfo.value = {}
 }
 
 const tempAuth = {}

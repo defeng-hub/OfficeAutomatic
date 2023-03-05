@@ -310,7 +310,7 @@ func (userService *UserService) ExportUserExcel(user system.SysUser) (url string
 	f.SetCellValue("基本信息", "B2", user.Phone)
 	f.SetCellValue("基本信息", "D2", user.Address)
 	f.SetCellValue("基本信息", "F2", user.Email)
-	f.SetCellValue("基本信息", "B3", "部门")
+	f.SetCellValue("基本信息", "B3", "")
 	f.SetCellValue("基本信息", "D3", user.Zhiwu)
 	f.SetCellValue("基本信息", "F3", user.Wno)
 
