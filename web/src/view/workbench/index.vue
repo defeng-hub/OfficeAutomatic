@@ -119,30 +119,7 @@
       </el-card>
     </div>
 
-    <el-dialog v-model="visible" title="请假流程">
-      <!-- 时间线 -->
-      <el-timeline>
-        <el-timeline-item
-          v-for="(activity, index) in leaveline"
-          :key="index"
-          :icon="activity.icon"
-          :type="activity.type"
-          :color="activity.color"
-          :size="activity.size"
-          :hollow="activity.hollow"
-          :timestamp="activity.timestamp"
-        >
-          {{ activity.content }}
-        </el-timeline-item>
-      </el-timeline>
 
-      <!-- 按钮区域 -->
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="visible = false">去填写表单</el-button>
-        </span>
-    </template>
-    </el-dialog>
   </div>
 </template>
 
@@ -151,12 +128,12 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import 'element-plus/theme-chalk/display.css'
-const visible = ref(false)
+
 const toolCards = ref([
 {
     label: '请假',
     icon: 'clock',
-    name: 'qingjia',
+    name: 'enteringLeave',
     color: 'rgba(50, 150, 250,1)',
     bg: 'rgba(50, 150, 250,0.3)'
   },
@@ -182,19 +159,12 @@ const router = useRouter()
 
 const toTarget = (name) => {
   if(name == "qingjia"){
-    visible.value = true;
     return
   }
   router.push({ name })
 }
 
-// leave 请假时间线
-const leaveline = [
-  {content: '填写请假表单',timestamp: '2018-04-12 20:46',size: 'large',type: 'primary'},
-  {content: '部门主管领导审批',timestamp: '2018-04-03 20:46',size: 'large',hollow: true,},
-  {content: '若请假天数超过3天, 再转孙老师审批',timestamp: '2018-04-03 20:46',size: 'large',hollow: true,},
-  {content: '查看审核结果',timestamp: '2018-04-03 20:46',hollow: true,size: 'large',}
-]
+
 </script>
 
 <script>

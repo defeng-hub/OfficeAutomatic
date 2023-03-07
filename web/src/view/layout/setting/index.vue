@@ -33,6 +33,19 @@
                   商务黑
                 </p>
               </div>
+
+              <div class="item" @click="changeMode('xiangyabai')">
+                <div class="item-top">
+                  <el-icon v-if="userStore.mode === 'xiangyabai'" class="check">
+                    <check />
+                  </el-icon>
+                  <img src="https://gw.alipayobjects.com/zos/antfincdn/XwFOFbLkSM/LCkqqYNmvBEbokSDscrm.svg">
+                </div>
+                <p>
+                  象牙白
+                </p>
+              </div>
+
             </div>
           </div>
         </div>

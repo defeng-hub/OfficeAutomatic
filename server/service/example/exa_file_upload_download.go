@@ -1,7 +1,6 @@
 package example
 
 import (
-	"errors"
 	"mime/multipart"
 	"strings"
 
@@ -42,13 +41,8 @@ func (e *FileUploadAndDownloadService) FindFile(id uint) (example.ExaFileUploadA
 func (e *FileUploadAndDownloadService) DeleteFile(file example.ExaFileUploadAndDownload) (err error) {
 	var fileFromDb example.ExaFileUploadAndDownload
 	fileFromDb, err = e.FindFile(file.ID)
-	if err != nil {
-		return
-	}
 	oss := upload.NewOss()
-	if err = oss.DeleteFile(fileFromDb.Key); err != nil {
-		return errors.New("文件删除失败")
-	}
+	oss.DeleteFile(fileFromDb.Key)
 	err = global.GVA_DB.Where("id = ?", file.ID).Unscoped().Delete(&file).Error
 	return err
 }
@@ -103,6 +97,15 @@ func (e *FileUploadAndDownloadService) UploadFile(header *multipart.FileHeader, 
 			Key:  key,
 		}
 		return f, e.Upload(f)
+	} else {
+		s := strings.Split(header.Filename, ".")
+		f := example.ExaFileUploadAndDownload{
+			Url:  filePath,
+			Name: header.Filename,
+			Tag:  s[len(s)-1],
+			Key:  key,
+		}
+		return f, nil
 	}
 	return
 }

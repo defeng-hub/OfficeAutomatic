@@ -29,7 +29,7 @@ const (
 	LeaveType_burujia           //哺乳假
 )
 
-type LeaveFrom struct {
+type LeaveForm struct {
 	global.GVA_MODEL
 	UserId       uint           `json:"userId" gorm:"commit:请假人ID"`
 	User         system.SysUser `gorm:"foreignKey:UserId"`
@@ -53,6 +53,6 @@ type LeaveFrom struct {
 	ShenpiUser2   system.SysUser `gorm:"foreignKey:ShenpiUser2ID"`
 }
 
-func (LeaveFrom) TableName() string {
-	return "renshi_leave_from"
+func (LeaveForm) TableName() string {
+	return "renshi_leave_form"
 }

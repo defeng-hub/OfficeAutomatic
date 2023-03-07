@@ -1,7 +1,7 @@
 package initialize
 
 import (
-	"github.com/defeng-hub/ByOfficeAutomatic/server/model/renshiguanli"
+	renshiguanli "github.com/defeng-hub/ByOfficeAutomatic/server/model/renshiguanli"
 	"os"
 
 	"github.com/defeng-hub/ByOfficeAutomatic/server/global"
@@ -62,7 +62,7 @@ func RegisterTables(db *gorm.DB) {
 		sms.SmsProjectRow{},
 
 		// 请假表
-		renshiguanli.LeaveFrom{},
+		renshiguanli.LeaveForm{},
 	)
 	if err != nil {
 		global.GVA_LOG.Error("register table failed", zap.Error(err))

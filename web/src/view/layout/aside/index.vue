@@ -75,6 +75,18 @@ const getTheme = () => {
         hoverText: '#fff',
       }
       break
+    case '#edf0f5': //象牙白
+      // 象牙白 #edf0f5
+      // 字体颜色  蓝色#0971ff  黑色#333333
+      theme.value = {
+        background: '#edf0f5',
+        activeBackground: '#ffffff',
+        activeText: '#0971ff',
+        normalText: '#333333',
+        hoverBackground: '#ffffff',
+        hoverText: '#0971ff',
+      }
+      break
   }
 }
 
@@ -148,4 +160,5 @@ const selectMenuItem = (index, _, ele, aaa) => {
     vertical-align: middle;
   }
 }
+
 </style>

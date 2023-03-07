@@ -110,15 +110,20 @@ export const useUserStore = defineStore('user', () => {
       return '#191a23'
     } else if (userInfo.value.sideMode === 'light') {
       return '#fff'
+    } else if (userInfo.value.sideMode === 'xiangyabai') {
+      return '#edf0f5'
     } else {
       return userInfo.value.sideMode
     }
   })
+  
   const baseColor = computed(() => {
     if (userInfo.value.sideMode === 'dark') {
       return '#fff'
     } else if (userInfo.value.sideMode === 'light') {
       return '#191a23'
+    } else if (userInfo.value.sideMode === 'xiangyabai') {
+      return '#0971ff'
     } else {
       return userInfo.value.baseColor
     }
