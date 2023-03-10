@@ -120,7 +120,7 @@
 import { ref } from 'vue';
 import { useUserStore } from '@/pinia/modules/user'
 import { ElMessage } from 'element-plus'
-
+import {CreateLeaveForm} from '@/api/renshiguanli/leave.js'
 const userStore = useUserStore()
 
 
@@ -133,8 +133,8 @@ const Leaveform = ref({
 	beginTime: null,//请假时间
 	endTime: null,//结束时间
 	image: "",//附加图片
-	approval: "",//审核状态
-	shenpiUserID: 0, //审批人ID
+	approval: 0,//审核状态
+	shenpiUserID: 1, //审批人ID
 	hournum: 100, //小时数
 
 })
@@ -193,6 +193,8 @@ const submit = async () => {
 	Leaveform.value.beginTime = Leaveform.value.selectTime[0]
 	Leaveform.value.endTime = Leaveform.value.selectTime[1]
 	console.log(Leaveform.value)
+	let res = await CreateLeaveForm(Leaveform.value)
+	console.log(res)
 }
 
 </script>

@@ -16,5 +16,5 @@ var (
 	OldAuthorityVerify      = Rules{"OldAuthorityId": {NotEmpty()}}
 	ChangePasswordVerify    = Rules{"Password": {NotEmpty()}, "NewPassword": {NotEmpty()}}
 	SetUserAuthorityVerify  = Rules{"AuthorityId": {NotEmpty()}}
-	EnteringLeaveFormVerify = Rules{"UserId": {NotEmpty()}, "LeaveType": {NotEmpty()}, "EndTime": {NotEmpty()}, "ShenpiUserID": {NotEmpty()}} // 录入请假表单
+	EnteringLeaveFormVerify = Rules{"UserId": {NotEmpty()}, "BeginTime": {NotEmpty()}, "EndTime": {NotEmpty()}, "ShenpiUserID": {NotEmpty()}} // 录入请假表单
 )

@@ -22,21 +22,33 @@ type LeaveApi struct{}
 // @Success   200   {object}  response.Response{msg=string}  "响应内容"
 // @Router    /renshi/CreateLeaveForm [post]
 func (e *LeaveApi) CreateLeaveForm(c *gin.Context) {
-	var leaveform renshiguanli.LeaveForm
+	var leaveform renshiguanli.SubmitLeaveForm
 	err := c.ShouldBindJSON(&leaveform)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-	err = utils.Verify(leaveform, utils.EnteringLeaveFormVerify)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
 	leaveform.UserId = utils.GetUserID(c)
 
+	err = utils.Verify(leaveform, utils.EnteringLeaveFormVerify)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+
 	//err = LeaveService.CreateExaCustomer(customer)
-	err = leaveService.EnteringLeaveForm(&leaveform)
+	err = leaveService.EnteringLeaveForm(&renshiguanli.LeaveForm{
+		GVA_MODEL:     leaveform.GVA_MODEL,
+		UserId:        leaveform.UserId,
+		LeaveType:     renshiguanli.LeaveType(leaveform.LeaveType),
+		LeaveContent:  leaveform.LeaveContent,
+		BeginTime:     leaveform.BeginTime,
+		EndTime:       leaveform.EndTime,
+		Image:         leaveform.Image,
+		Approval:      0,
+		ShenpiUserID:  leaveform.ShenpiUserID,
+		ShenpiUser2ID: leaveform.ShenpiUser2ID,
+	})
 	if err != nil {
 		global.GVA_LOG.Error("创建失败!", zap.Error(err))
 		response.FailWithMessage("创建失败", c)

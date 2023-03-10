@@ -95,7 +95,7 @@ const handleCurrentChange = (val) => {
 // 查询
 const getTableData = async () => {
   const table = await GetAllUserTeachingGrade()
-  console.log("ccc",table)
+  // console.log("ccc",table)
   if (table.code === 0) {
     tableData.value = table.data
   }
