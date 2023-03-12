@@ -31,7 +31,26 @@ func (e *LeaveService) ChangeLeaveApproval(leaveform *LeaveForm) error {
 		Select("approval").Updates(map[string]interface{}{"approval": leaveform.Approval}).Error
 }
 
-func (e *LeaveService) SelectUserLeaves(userId uint) (res []*LeaveForm, err error) {
+func (e *LeaveService) SelectAllUserLeaves(userId uint) (res []*LeaveForm, err error) {
 	err = global.GVA_DB.Where("user_id = ?", userId).Find(&res).Error
 	return res, err
+}
+
+// 分页模板
+func (e *LeaveService) SelectUserLeaves(userId uint, info request.PageInfo) (res []*LeaveForm, total int64, err error) {
+	limit := info.PageSize
+	offset := info.PageSize * (info.Page - 1)
+	err = global.GVA_DB.Model(&res).Where("user_id = ?", userId).Count(&total).Error
+	err = global.GVA_DB.Where("user_id = ?", userId).Limit(limit).Offset(offset).Find(&res).Error
+
+	return res, total, err
+}
+
+func (e *LeaveService) SelectDaichuliLeaves(userId uint, info request.PageInfo) (res []*LeaveForm, total int64, err error) {
+	limit := info.PageSize
+	offset := info.PageSize * (info.Page - 1)
+	err = global.GVA_DB.Model(&res).Where("shenpi_user_id = ? or shenpi_user2_id = ?", userId, userId).Where("approval = ?", 0).Count(&total).Error
+	err = global.GVA_DB.Where("shenpi_user_id = ? or shenpi_user2_id = ?", userId, userId).Where("approval = ?", 0).Limit(limit).Offset(offset).Find(&res).Error
+
+	return res, total, err
 }

@@ -97,7 +97,7 @@
       <el-card class="gva-card quick-entrance">
         <template #header>
           <div class="card-header">
-            <span>快捷操作</span>
+            <span>请假事务</span>
           </div>
         </template>
         <el-row :gutter="50">
@@ -131,16 +131,16 @@ import 'element-plus/theme-chalk/display.css'
 
 const toolCards = ref([
 {
-    label: '请假',
+    label: '发起请假',
     icon: 'clock',
     name: 'enteringLeave',
     color: 'rgba(50, 150, 250,1)',
     bg: 'rgba(50, 150, 250,0.3)'
   },
   {
-    label: '用户管理',
+    label: '处理请假',
     icon: 'monitor',
-    name: 'user',
+    name: 'myleave',
     color: '#ff9c6e',
     
     bg: 'rgba(255, 156, 110,.3)'
@@ -152,7 +152,6 @@ const toolCards = ref([
     color: '#69c0ff',
     bg: 'rgba(105, 192, 255,.3)'
   },
-
 ])
 
 const router = useRouter()

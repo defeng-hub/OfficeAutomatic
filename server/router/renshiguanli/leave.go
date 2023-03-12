@@ -13,5 +13,8 @@ func (LeaveRouter) Init(Router *gin.RouterGroup) {
 	Api := v1.ApiGroupApp.RenshiguanliApiGroup.LeaveApi
 	{
 		R.POST("leave/CreateLeaveForm", Api.CreateLeaveForm)
+		R.GET("leave/GetMyselfLeaves", Api.GetMyselfLeaves)
+		R.GET("leave/GetDaichuliLeaves", Api.GetDaichuliLeaves)
+		R.POST("leave/DeleteLeaveForm", Api.DeleteLeaveForm)
 	}
 }
