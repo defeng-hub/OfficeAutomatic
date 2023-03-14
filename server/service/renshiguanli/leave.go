@@ -65,6 +65,7 @@ func (e *LeaveService) SelectYichuliLeaves(userId uint, info request.PageInfo) (
 	offset := info.PageSize * (info.Page - 1)
 	err = global.GVA_DB.Model(&res).Where("shenpi_user_id = ? or shenpi_user2_id = ?", userId, userId).Where("approval <> ?", 0).Count(&total).Error
 	err = global.GVA_DB.
+		Preload("User").
 		Where("shenpi_user_id = ? or shenpi_user2_id = ?", userId, userId).Where("approval <> ?", 0).Limit(limit).Offset(offset).Find(&res).Error
 	return res, total, err
 }

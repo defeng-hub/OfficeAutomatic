@@ -156,6 +156,43 @@ func (e *LeaveApi) GetDaichuliLeaves(c *gin.Context) {
 
 }
 
+// GetYichuliLeaves
+// @Tags      Renshiguanli
+// @Summary   分页获取 已处理的请假表单
+// @Security  ApiKeyAuth
+// @accept    application/json
+// @Produce   application/json
+// @Param     data  query     request.PageInfo                                        true  "页码, 每页大小"
+// @Success   200   {object}  response.Response{data=response.PageResult,msg=string}  "分页获取列表,返回包括列表,总数,页码,每页数量"
+// @Router    /renshi/leave/GetYichuliLeaves [get]
+func (e *LeaveApi) GetYichuliLeaves(c *gin.Context) {
+	var pageInfo request.PageInfo
+	err := c.ShouldBindQuery(&pageInfo)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	// page 和 pagesize不能为空
+	err = utils.Verify(pageInfo, utils.PageInfoVerify)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+
+	leaves, total, err := leaveService.SelectYichuliLeaves(utils.GetUserID(c), pageInfo)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	response.OkWithDetailed(response.PageResult{
+		List:     leaves,
+		Total:    total,
+		Page:     pageInfo.Page,
+		PageSize: pageInfo.PageSize,
+	}, "获取成功", c)
+
+}
+
 // ChangeLeaveApproval 未完成
 // @Tags      Renshiguanli
 // @Summary   更改审核状态
