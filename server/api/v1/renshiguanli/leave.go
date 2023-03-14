@@ -164,7 +164,7 @@ func (e *LeaveApi) GetDaichuliLeaves(c *gin.Context) {
 // @Produce   application/json
 // @Param     data  body      renshiguanli.LeaveForm  true  "请求内容"
 // @Success   200   {object}  response.Response{msg=string}  "响应内容"
-// @Router    /renshi/ChangeLeaveApproval [post]
+// @Router    /renshi/leave/ChangeLeaveApproval [post]
 func (e *LeaveApi) ChangeLeaveApproval(c *gin.Context) {
 	var leaveform renshiguanli.LeaveForm
 	err := c.ShouldBindJSON(&leaveform)
@@ -172,12 +172,19 @@ func (e *LeaveApi) ChangeLeaveApproval(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
+	approval := leaveform.Approval
+	global.GVA_DB.First(&leaveform)
+
+	// 更改审核状态
+	leaveform.Approval = approval
+
 	err = utils.Verify(leaveform, utils.EnteringLeaveFormVerify)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
 	uid := utils.GetUserID(c)
+
 	// 判断审核人是否是提交者
 	if leaveform.ShenpiUserID == uid || leaveform.ShenpiUser2ID == uid {
 		err = leaveService.ChangeLeaveApproval(&leaveform)

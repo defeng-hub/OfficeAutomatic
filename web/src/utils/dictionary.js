@@ -17,3 +17,15 @@ export const showDictLabel = (dict, code) => {
   })
   return dictMap[code]
 }
+
+//  返回字典
+export const showDict = (dict) => {
+  if (!dict) {
+    return ''
+  }
+  const dictMap = {}
+  dict.forEach(item => {
+    dictMap[item.value] = item.label
+  })
+  return dictMap
+}

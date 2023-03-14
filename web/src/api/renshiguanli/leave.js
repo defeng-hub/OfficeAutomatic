@@ -40,3 +40,12 @@ export const DeleteLeaveForm = (data) => {
     data
   })
 }
+
+
+export const ChangeLeaveApproval = (data) => {
+  return service({
+    url: '/renshi/leave/ChangeLeaveApproval',
+    method: 'post',
+    data
+  })
+}

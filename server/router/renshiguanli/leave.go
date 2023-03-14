@@ -16,5 +16,6 @@ func (LeaveRouter) Init(Router *gin.RouterGroup) {
 		R.GET("leave/GetMyselfLeaves", Api.GetMyselfLeaves)
 		R.GET("leave/GetDaichuliLeaves", Api.GetDaichuliLeaves)
 		R.POST("leave/DeleteLeaveForm", Api.DeleteLeaveForm)
+		R.POST("leave/ChangeLeaveApproval", Api.ChangeLeaveApproval)
 	}
 }

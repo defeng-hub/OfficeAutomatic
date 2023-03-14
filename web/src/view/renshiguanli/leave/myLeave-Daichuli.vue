@@ -1,26 +1,35 @@
 <template>
 	<div>
-		<el-table ref="multipleTable" :height="500"
-			:data="tableData" style="width: 100%" tooltip-effect="dark" row-key="ID">
-			<el-table-column type="selection" width="55" />
+		<el-table ref="multipleTable" :height="500" :data="tableData" style="width: 100%" tooltip-effect="dark"
+			row-key="ID">
+			<el-table-column type="selection" width="30" />
 
-			<el-table-column align="left" label="请假类型" prop="leaveType" width="120" />
-			<el-table-column align="left" label="请假开始日期" width="180">
+			<el-table-column align="center" label="请假人" prop="User.nickName" width="100" />
+			<el-table-column align="center" label="手机号" prop="User.phone" width="150" />
+			<el-table-column align="center" label="职务" prop="User.zhiwu" width="150" />
+
+			<el-table-column align="center" label="请假类型" width="100">
+				<template #default="scope">
+					<span>{{ LeaveTypeOptions[scope.row.leaveType] }}</span>
+				</template>
+			</el-table-column>
+
+			<el-table-column align="center" label="请假开始日期" width="160">
 				<template #default="scope">
 					<span>{{ formatDate(scope.row.beginTime) }}</span>
 				</template>
 			</el-table-column>
-			<el-table-column align="left" label="请假结束日期" width="180">
+			<el-table-column align="center" label="请假结束日期" width="160">
 				<template #default="scope">
 					<span>{{ formatDate(scope.row.endTime) }}</span>
 				</template>
 			</el-table-column>
-			<el-table-column align="left" label="请假内容" prop="leaveContent" width="120" />
-			<el-table-column align="left" label="审核状态" prop="approval" width="120" />
+			<el-table-column align="center" label="请假内容" prop="leaveContent" width="200" />
 
-			<el-table-column align="left" label="按钮组" min-width="160">
+
+			<el-table-column align="center" label="按钮组" min-width="118" fixed="right">
 				<template #default="scope">
-					<el-button type="primary" link icon="edit" @click="update(scope.row)">审批</el-button>
+					<el-button type="primary" link icon="edit" @click="chakanxiangqing(scope.row)">审批</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
@@ -31,25 +40,46 @@
 				@size-change="handleSizeChange" />
 		</div>
 
-		<el-dialog v-model="dialogFormVisible" :before-close="closeDialog" title="客户">
-			<el-form :inline="true" :model="form" label-width="80px">
-				<el-form-item label="教学等级">
-					<el-input v-model="form.title" autocomplete="off" />
-				</el-form-item>
-				<el-form-item label="时薪" type="number">
-					<el-input v-model.number="form.wage" type="" autocomplete="off" />
-				</el-form-item>
-				<el-form-item label="顺序" type="number">
-					<el-input v-model.number="form.shunxv" autocomplete="off" />
-				</el-form-item>
-			</el-form>
-			<template #footer>
-				<div class="dialog-footer">
-					<el-button @click="closeDialog">取 消</el-button>
-					<el-button type="primary" @click="enterDialog">确 定</el-button>
-				</div>
-			</template>
-		</el-dialog>
+		<!-- 右抽屉 -->
+		<el-drawer v-if="drawershow" v-model="drawershow" class="auth-drawer" :with-header="false" size="38%" title="请假详情">
+			<el-descriptions title="" border :column="2" direction="vertical">
+				<el-descriptions-item label="申请人" :span="1">
+					{{win.row.User.nickName}}
+				</el-descriptions-item>
+
+				<el-descriptions-item label="请假类型" :span="1">
+					<el-tag size="small">{{ LeaveTypeOptions[win.row.leaveType] }}</el-tag>
+				</el-descriptions-item>
+
+				<el-descriptions-item label="申请时间" :span="2">{{ formatDate(win.row.created_at) }}</el-descriptions-item>
+
+				<el-descriptions-item label="请假内容" :span="2">
+					<el-input :value="win.row.leaveContent" :show-word-limit="true"
+					 :autosize="{ minRows: 5, maxRows: 15 }" disable 
+					 type="textarea" placeholder="请假内容" />
+				</el-descriptions-item>
+
+				<el-descriptions-item label="请假开始时间" :span="1">{{ formatDate(win.row.beginTime) }}</el-descriptions-item>
+				<el-descriptions-item label="请假结束时间" :span="1">{{ formatDate(win.row.endTime) }}</el-descriptions-item>
+				
+				<el-descriptions-item label="附加图片" :span="2">
+					<el-image v-if="win.row.image" :src="'http://localhost:8888/'+win.row.image"/>
+					<span v-else>无</span>
+				</el-descriptions-item>
+
+				<el-descriptions-item label="审核状态" :span="1">
+					{{ApprovalOptions[win.row.approval]}} 
+				</el-descriptions-item>
+			</el-descriptions>
+			
+			<div class="gva-btn-list" style="margin-top: 12px;">
+				<el-button color="#626aef" size="large" dark @click="tongguo()">通 过</el-button>
+				<el-button color="#626aef" size="large" plain>拒 绝</el-button>
+				<div style="height: 50px;"></div>
+			</div>
+
+
+		</el-drawer>
 	</div>
 </template>
 
@@ -61,33 +91,24 @@ export default {
 
 <script setup>
 import {
-	ChangeUserTeachingGrade
-} from '@/api/user'
-
-import {
-	GetMyselfLeaves,
+	GetDaichuliLeaves,
 	DeleteLeaveForm,
-	GetDaichuliLeaves
+	ChangeLeaveApproval
 } from '@/api/renshiguanli/leave'
-
+import { getDict, showDictLabel, showDict } from '@/utils/dictionary'
 import WarningBar from '@/components/warningBar/warningBar.vue'
 import { ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import { formatDate } from '@/utils/format'
 
-const form = ref({
-	ID: 0,
-	title: '',
-	shunxv: 0,
-	wage: 0,
-})
 
 const page = ref(1)
 const total = ref(0)
 const pageSize = ref(10)
 const tableData = ref([])
+const win = ref({})
 
-// 分页
+// 分页-start
 const handleSizeChange = (val) => {
 	pageSize.value = val
 	getTableData()
@@ -97,6 +118,7 @@ const handleCurrentChange = (val) => {
 	page.value = val
 	getTableData()
 }
+// 分页-end
 
 // 查询
 const getTableData = async () => {
@@ -110,59 +132,55 @@ const getTableData = async () => {
 
 getTableData()
 
-const dialogFormVisible = ref(false)
-const type = ref('')
-const update = async (row) => {
-	dialogFormVisible.value = true;
-	type.value = 'update'
-	form.value = {
-		ID: row.ID,
-		title: row.title,
-		wage: row.wage,
-		shunxv: row.shunxv,
-	}
-}
-
-
-const closeDialog = () => {
-	dialogFormVisible.value = false
-	form.value = {
-		ID: 0,
-		title: '',
-		shunxv: 0,
-		wage: 0,
-	}
-}
-const openDialog = () => {
-	type.value = 'create'
-	dialogFormVisible.value = true
-	form.value = {
-		ID: 0,
-		title: '',
-		shunxv: 0,
-		wage: 0,
-	}
-}
-const enterDialog = async () => {
-	let res
-	// console.log(form.value)
-	switch (type.value) {
-		case 'create':
-			res = await ChangeUserTeachingGrade(form.value);
-			break
-		case 'update':
-			res = await ChangeUserTeachingGrade(form.value);
-			break
-		default:
-			res = await ChangeUserTeachingGrade(form.value);
-			break
-	}
-
-	if (res.code === 0) {
-		closeDialog()
+// 通过
+const tongguo = async()=>{
+	// 	ApprovalType_daishenpi = iota //待审批0
+	// ApprovalType_tongguo          //通过1
+	// ApprovalType_jujue            //拒绝2
+	win.value.row.approval = 1
+	let res = await ChangeLeaveApproval(win.value.row);
+	// console.log(res)
+	if(res.code == 0){
+		ElMessage({ type: 'success', message: res.msg })
 		getTableData()
 	}
 }
 
 
+// 字典-start
+const ApprovalOptions = ref({}) // 审核状态
+const LeaveTypeOptions = ref({}) //请假类型
+
+const loadDict = async () => {
+	let Options = await getDict('Approval')
+	ApprovalOptions.value = await showDict(Options)
+
+	Options = await getDict('LeaveType')
+	LeaveTypeOptions.value = await showDict(Options)
+
+	// console.log("字典",ApprovalOptions.value,LeaveTypeOptions.value)
+}
+loadDict()
+// 字典-end
+
+// 右抽屉
+const drawershow = ref(false)
+const chakanxiangqing = async (row) => {
+	drawershow.value = true;
+	// console.log(row)
+	win.value.row = row;
+	console.log(win.value)
+}
+
 </script>
+
+<style lang="scss" scoped>
+.shenhetongguo {
+	color: #5cb87a;
+	font-size: 18px;
+}
+
+.shenheqita {
+	font-size: 15px;
+}
+</style>

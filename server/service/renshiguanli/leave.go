@@ -41,16 +41,30 @@ func (e *LeaveService) SelectUserLeaves(userId uint, info request.PageInfo) (res
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	err = global.GVA_DB.Model(&res).Where("user_id = ?", userId).Count(&total).Error
-	err = global.GVA_DB.Where("user_id = ?", userId).Limit(limit).Offset(offset).Find(&res).Error
+	err = global.GVA_DB.
+		Where("user_id = ?", userId).Limit(limit).Offset(offset).Find(&res).Error
 
 	return res, total, err
 }
 
+// SelectDaichuliLeaves 获取待处理的请假表单
 func (e *LeaveService) SelectDaichuliLeaves(userId uint, info request.PageInfo) (res []*LeaveForm, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	err = global.GVA_DB.Model(&res).Where("shenpi_user_id = ? or shenpi_user2_id = ?", userId, userId).Where("approval = ?", 0).Count(&total).Error
-	err = global.GVA_DB.Where("shenpi_user_id = ? or shenpi_user2_id = ?", userId, userId).Where("approval = ?", 0).Limit(limit).Offset(offset).Find(&res).Error
+	err = global.GVA_DB.
+		Preload("User").
+		Where("shenpi_user_id = ? or shenpi_user2_id = ?", userId, userId).Where("approval = ?", 0).Limit(limit).Offset(offset).Find(&res).Error
 
+	return res, total, err
+}
+
+// SelectYichuliLeaves 获取 已处理的请假表单
+func (e *LeaveService) SelectYichuliLeaves(userId uint, info request.PageInfo) (res []*LeaveForm, total int64, err error) {
+	limit := info.PageSize
+	offset := info.PageSize * (info.Page - 1)
+	err = global.GVA_DB.Model(&res).Where("shenpi_user_id = ? or shenpi_user2_id = ?", userId, userId).Where("approval <> ?", 0).Count(&total).Error
+	err = global.GVA_DB.
+		Where("shenpi_user_id = ? or shenpi_user2_id = ?", userId, userId).Where("approval <> ?", 0).Limit(limit).Offset(offset).Find(&res).Error
 	return res, total, err
 }

@@ -2,22 +2,19 @@
 	<div>
 		<div class="gva-table-box">
 			<el-tabs  v-model="activeName" tab-position="top">
-        <el-tab-pane label="我发起的请假" name="faqi" >
+        		<el-tab-pane label="我发起的请假" name="faqi" >
 					<myLeaveYifaqi/>
 				</el-tab-pane>
 
 				<el-tab-pane label="待处理的请假" name="daichuli" >
-					待处理
 					<myLeaveDaichuli/>
 				</el-tab-pane>
+
 				<el-tab-pane label="已处理的请假" name="yichuli" >
 					已处理
 				</el-tab-pane>
 			</el-tabs>
-
-
 		</div>
-
 	</div>
 </template>
 
