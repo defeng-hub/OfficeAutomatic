@@ -2,93 +2,69 @@
   <div class="zong">
     <!-- 上方栏目 -->
     <div class="top">
-      <el-row :gutter="20">
+      <el-row :gutter="40">
         <!-- 待处理 -->
         <el-col :span="6">
           <el-card shadow="hover">
-            <template #header>
-              <div>
-                <el-row>
-                  <el-col :span="20">
-                    <span class="title1">待处理</span>
-                  </el-col>
-                  <el-col :span="4">
-                    <el-icon class="icon">
-                      <Edit />
-                    </el-icon>
-                  </el-col>
-                </el-row>
+            <div class="top-element">
+              <div class="left">
+                <div class="title">待处理</div>
+                <div class="titlenum">355</div>
               </div>
-            </template>
-            <el-row>
-              <el-col :span="6">
-                <span class="title2">0</span>
-              </el-col>
-              <el-col :span="18">
-              </el-col>
-            </el-row>
-
-
+              <div class="right">
+                <img style="width: 94px; height: 94px" src="@/assets/workbench/1.jpg"/>
+              </div>
+            </div>
           </el-card>
         </el-col>
 
         <!-- 已发起 -->
         <el-col :span="6">
           <el-card shadow="hover">
-            <template #header>
-              <div>
-                <el-row>
-                  <el-col :span="20">
-                    <span class="title1">已发起</span>
-                  </el-col>
-                  <el-col :span="4">
-                    <el-icon class="icon">
-                      <Tickets />
-                    </el-icon>
-                  </el-col>
-                </el-row>
+            <div class="top-element">
+              <div class="left">
+                <div class="title">已发起</div>
+                <div class="titlenum">355</div>
               </div>
-            </template>
-            <el-row>
-              <el-col :span="20">
-                <span class="title2">0</span>
-              </el-col>
-
-            </el-row>
-
-
+              <div class="right">
+                <img style="width: 94px; height: 94px" src="@/assets/workbench/2.jpg"/>
+              </div>
+            </div>
           </el-card>
         </el-col>
 
-        <el-col :span="8">
+        <!-- 已处理 -->
+        <el-col :span="6">
           <el-card shadow="hover">
-            <template #header>
-              <div>
-                <el-row>
-                  <el-col :span="20">
-                    <span class="title1">已发起</span>
-                  </el-col>
-                  <el-col :span="4">
-                    <el-icon class="icon">
-                      <Tickets />
-                    </el-icon>
-                  </el-col>
-                </el-row>
+            <div class="top-element">
+              <div class="left">
+                <div class="title">已处理</div>
+                <div class="titlenum">355</div>
               </div>
-            </template>
-            <el-row>
-              <el-col :span="20">
-                <span class="title2">0</span>
-              </el-col>
+              <div class="right">
+                <img style="width: 94px; height: 94px" src="@/assets/workbench/3.jpg"/>
+              </div>
+            </div>
+          </el-card>
+        </el-col>
 
-            </el-row>
-
-
+        <!-- 我收到的 -->
+        <el-col :span="6">
+          <el-card shadow="hover">
+            <div class="top-element">
+              <div class="left">
+                <div class="title">我收到的</div>
+                <div class="titlenum">355</div>
+              </div>
+              <div class="right">
+                <img style="width: 94px; height: 94px" src="@/assets/bg3.png"/>
+              </div>
+            </div>
           </el-card>
         </el-col>
 
         <el-col :span="3" class="hidden-sm-and-down">
-          <img src="@/assets/bg3.png" class="right-img" alt>
+          <img src="" class="right-img" alt>
         </el-col>
       </el-row>
     </div>
@@ -184,13 +160,49 @@ export default {
   align-items: center;
 }
 
+.top-element{
+  display: flex;
+  justify-content: left;
+  height: 105px;
+  padding: 0 10px;
+  .left{
+    width: 50%;
+    margin-top: 8px;
+    .title{
+      height: 25px;
+      font-size: 18px;
+      font-weight: 500;
+      color: #999999;
+      line-height: 25px;
+    }
+    .titlenum{
+      margin-top: 14px;
+      width: 58px;
+      height: 45px;
+      font-size: 32px;
+      font-weight: 600;
+      color: #333333;
+      line-height: 45px;
+    }
+  }
+  .right{
+    img{
+      margin-top: 4px;
+      margin-left: 10px;
+    }
+    width: 50%;
+  }
+}
 
 .top {
-  padding: 24px;
+  padding: 30px;
   padding-bottom: 10px;
   padding-top: 16px;
   background-color: #fff;
   border-radius: 2px;
+  box-sizing: border-box;
+  height: auto;
+  box-shadow: 0 0 7px 1px rgba(0, 0, 0, 0.03);
 
   .title1 {
     line-height: 34px;
