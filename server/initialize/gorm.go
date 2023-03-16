@@ -5,10 +5,6 @@ import (
 	"os"
 
 	"github.com/defeng-hub/ByOfficeAutomatic/server/global"
-	"github.com/defeng-hub/ByOfficeAutomatic/server/model/example"
-	"github.com/defeng-hub/ByOfficeAutomatic/server/model/system"
-	"github.com/defeng-hub/ByOfficeAutomatic/server/model/txyun/sms"
-
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 )
@@ -34,32 +30,32 @@ func Gorm() *gorm.DB {
 // Author SliverHorn
 func RegisterTables(db *gorm.DB) {
 	err := db.AutoMigrate(
-		// 系统模块表
-		system.SysApi{},
-		system.SysUser{},
-		system.UserTeachingGrade{}, //教学等级表
-		system.SysBaseMenu{},
-		system.JwtBlacklist{},
-		system.SysAuthority{},
-		system.SysDictionary{},
-		system.SysOperationRecord{},
-		system.SysAutoCodeHistory{},
-		system.SysDictionaryDetail{},
-		system.SysBaseMenuParameter{},
-		system.SysBaseMenuBtn{},
-		system.SysAuthorityBtn{},
-		system.SysAutoCode{},
-
-		// 示例模块表
-		example.ExaFile{},
-		example.ExaCustomer{},
-		example.ExaFileChunk{},
-		example.ExaFileUploadAndDownload{},
-
-		// 腾讯云
-		sms.SmsTemplate{},
-		sms.SmsProject{},
-		sms.SmsProjectRow{},
+		//// 系统模块表
+		//system.SysApi{},
+		//system.SysUser{},
+		//system.UserTeachingGrade{}, //教学等级表
+		//system.SysBaseMenu{},
+		//system.JwtBlacklist{},
+		//system.SysAuthority{},
+		//system.SysDictionary{},
+		//system.SysOperationRecord{},
+		//system.SysAutoCodeHistory{},
+		//system.SysDictionaryDetail{},
+		//system.SysBaseMenuParameter{},
+		//system.SysBaseMenuBtn{},
+		//system.SysAuthorityBtn{},
+		//system.SysAutoCode{},
+		//
+		//// 示例模块表
+		//example.ExaFile{},
+		//example.ExaCustomer{},
+		//example.ExaFileChunk{},
+		//example.ExaFileUploadAndDownload{},
+		//
+		//// 腾讯云
+		//sms.SmsTemplate{},
+		//sms.SmsProject{},
+		//sms.SmsProjectRow{},
 
 		// 请假表
 		renshiguanli.LeaveForm{},

@@ -43,6 +43,7 @@ type LeaveForm struct {
 	EndTime   time.Time    `json:"endTime" gorm:"commit:结束时间"`
 	Image     string       `json:"image" gorm:"commit:附加图片"`
 	Approval  ApprovalType `json:"approval" gorm:"commit:审核状态"`
+	Daynum    float32      `json:"daynum" gorm:"commit:请假时长"`
 
 	//审批人
 	// 默认审批人是部门总管
