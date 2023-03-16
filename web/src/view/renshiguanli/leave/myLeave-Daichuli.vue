@@ -2,12 +2,13 @@
 	<div>
 		<el-table ref="multipleTable" :height="500" :data="tableData" style="width: 100%" tooltip-effect="dark"
 			row-key="ID">
+			<template #empty>
+				<span class="tableEmpty"></span>
+			</template>
 			<el-table-column type="selection" width="30" />
-
 			<el-table-column align="center" label="请假人" prop="User.nickName" width="100" />
 			<el-table-column align="center" label="手机号" prop="User.phone" width="150" />
 			<el-table-column align="center" label="职务" prop="User.zhiwu" width="150" />
-
 			<el-table-column align="center" label="请假类型" width="100">
 				<template #default="scope">
 					<span>{{ LeaveTypeOptions[scope.row.leaveType] }}</span>

@@ -11,7 +11,7 @@
 				</el-tab-pane>
 
 				<el-tab-pane label="已处理的请假" name="yichuli" >
-					已处理
+					<myLeaveYichuli/>
 				</el-tab-pane>
 			</el-tabs>
 		</div>
@@ -21,6 +21,7 @@
 <script setup>
 import myLeaveYifaqi from './myLeave-Yifaqi.vue'
 import myLeaveDaichuli from './myLeave-Daichuli.vue'
+import myLeaveYichuli from './myLeave-Yichuli.vue'
 
 import { ref } from 'vue'
 import { ElMessage } from 'element-plus'

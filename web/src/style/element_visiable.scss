@@ -2,6 +2,9 @@
 @import '@/style/base.scss';
 @import '@/style/mobile.scss';
 
+// 自定义全局css
+@import '@/style/common.scss';
+
 #app {
     .el-button {
         font-weight: 400;

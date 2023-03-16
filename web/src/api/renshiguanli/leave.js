@@ -23,6 +23,13 @@ export const GetDaichuliLeaves = (params) => {
     params
   })
 }
+export const GetYichuliLeaves = (params) => {
+  return service({
+    url: '/renshi/leave/GetYichuliLeaves',
+    method: 'get',
+    params
+  })
+}
 
 // DeleteLeaveForm
 // @Tags      Renshiguanli
