@@ -1,6 +1,7 @@
 package router
 
 import (
+	"github.com/defeng-hub/ByOfficeAutomatic/server/router/email"
 	"github.com/defeng-hub/ByOfficeAutomatic/server/router/example"
 	"github.com/defeng-hub/ByOfficeAutomatic/server/router/renshiguanli"
 	"github.com/defeng-hub/ByOfficeAutomatic/server/router/system"
@@ -12,6 +13,7 @@ type RouterGroup struct {
 	Example      example.RouterGroup
 	Txyun        txyun.RouterGroup
 	Renshiguanli renshiguanli.RouterGroup
+	Email        email.RouterGroup
 }
 
 var RouterGroupApp = new(RouterGroup)

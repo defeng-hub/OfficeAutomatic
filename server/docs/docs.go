@@ -1997,6 +1997,45 @@ var doc = `{
                 }
             }
         },
+        "/email/user/RegisterSuccess": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Email"
+                ],
+                "summary": "注册成功邮件",
+                "responses": {
+                    "200": {
+                        "description": "响应内容",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/fileUploadAndDownload/breakpointContinue": {
             "post": {
                 "security": [
@@ -2860,6 +2899,342 @@ var doc = `{
                                 {
                                     "type": "object",
                                     "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/renshi/leave/ChangeLeaveApproval": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Renshiguanli"
+                ],
+                "summary": "更改审核状态",
+                "parameters": [
+                    {
+                        "description": "请求内容",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/renshiguanli.LeaveForm"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "响应内容",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/renshi/leave/CreateLeaveForm": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Renshiguanli"
+                ],
+                "summary": "创建请假表单",
+                "parameters": [
+                    {
+                        "description": "请求内容",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/renshiguanli.LeaveForm"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "响应内容",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/renshi/leave/DeleteLeaveForm": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Renshiguanli"
+                ],
+                "summary": "删除请假表单",
+                "parameters": [
+                    {
+                        "description": "请求内容",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.GetById"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "响应内容",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/renshi/leave/GetDaichuliLeaves": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Renshiguanli"
+                ],
+                "summary": "分页获取 待处理的请假表单",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "关键字",
+                        "name": "keyword",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页大小",
+                        "name": "pageSize",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "分页获取列表,返回包括列表,总数,页码,每页数量",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.PageResult"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/renshi/leave/GetMyselfLeaves": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Renshiguanli"
+                ],
+                "summary": "分页获取请假表单",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "关键字",
+                        "name": "keyword",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页大小",
+                        "name": "pageSize",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "分页获取列表,返回包括列表,总数,页码,每页数量",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.PageResult"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/renshi/leave/GetYichuliLeaves": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Renshiguanli"
+                ],
+                "summary": "分页获取 已处理的请假表单",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "关键字",
+                        "name": "keyword",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页大小",
+                        "name": "pageSize",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "分页获取列表,返回包括列表,总数,页码,每页数量",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.PageResult"
+                                        },
                                         "msg": {
                                             "type": "string"
                                         }
@@ -4716,6 +5091,180 @@ var doc = `{
                 }
             }
         },
+        "/user/ChangeUserTeachingGrade": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Base"
+                ],
+                "summary": "添加教学等级",
+                "parameters": [
+                    {
+                        "description": "请求内容",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/system.UserTeachingGrade"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "响应内容",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "additionalProperties": true
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/user/DeleteUserTeachingGrade": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Base"
+                ],
+                "summary": "根据ID删除 教学技能等级",
+                "parameters": [
+                    {
+                        "description": "ID",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.GetById"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "响应内容",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "additionalProperties": true
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/user/ExportUserExcel": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SysUser"
+                ],
+                "summary": "导出用户Excel",
+                "parameters": [
+                    {
+                        "description": "ID",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/system.SysUser"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "响应内容",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/user/GetAllUserTeachingGrade": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Base"
+                ],
+                "summary": "获取全部 教学技能等级",
+                "responses": {
+                    "200": {
+                        "description": "返回全部 教学技能等级",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "additionalProperties": true
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/user/SetSelfInfo": {
             "put": {
                 "security": [
@@ -4772,6 +5321,9 @@ var doc = `{
         },
         "/user/admin_register": {
             "post": {
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -4779,17 +5331,6 @@ var doc = `{
                     "SysUser"
                 ],
                 "summary": "用户注册账号",
-                "parameters": [
-                    {
-                        "description": "用户名, 昵称, 密码, 角色ID",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.Register"
-                        }
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "用户注册账号,返回包括用户信息",
@@ -4801,9 +5342,6 @@ var doc = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "data": {
-                                            "$ref": "#/definitions/response.SysUserResponse"
-                                        },
                                         "msg": {
                                             "type": "string"
                                         }
@@ -6178,6 +6716,64 @@ var doc = `{
                 }
             }
         },
+        "renshiguanli.LeaveForm": {
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "description": "主键ID",
+                    "type": "integer"
+                },
+                "approval": {
+                    "type": "integer"
+                },
+                "beginTime": {
+                    "description": "开始时间必须小于结束时间\n请假时长必须大于等于2h\n会自动计算请假时长",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "daynum": {
+                    "type": "number"
+                },
+                "endTime": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "leaveContent": {
+                    "type": "string"
+                },
+                "leaveType": {
+                    "type": "integer"
+                },
+                "shenpiUser": {
+                    "$ref": "#/definitions/system.SysUser"
+                },
+                "shenpiUser2": {
+                    "$ref": "#/definitions/system.SysUser"
+                },
+                "shenpiUser2ID": {
+                    "type": "integer"
+                },
+                "shenpiUserID": {
+                    "description": "审批人\n默认审批人是部门总管\n第二审批人是老板",
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "description": "更新时间",
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/system.SysUser"
+                },
+                "userId": {
+                    "type": "integer"
+                }
+            }
+        },
         "request.AddMenuAuthorityInfo": {
             "type": "object",
             "properties": {
@@ -6334,47 +6930,6 @@ var doc = `{
                 "pageSize": {
                     "description": "每页大小",
                     "type": "integer"
-                }
-            }
-        },
-        "request.Register": {
-            "type": "object",
-            "properties": {
-                "authorityId": {
-                    "type": "string",
-                    "example": "int 角色id"
-                },
-                "authorityIds": {
-                    "type": "string",
-                    "example": "[]uint 角色id"
-                },
-                "email": {
-                    "type": "string",
-                    "example": "电子邮箱"
-                },
-                "enable": {
-                    "type": "string",
-                    "example": "int 是否启用"
-                },
-                "headerImg": {
-                    "type": "string",
-                    "example": "头像链接"
-                },
-                "nickName": {
-                    "type": "string",
-                    "example": "昵称"
-                },
-                "passWord": {
-                    "type": "string",
-                    "example": "密码"
-                },
-                "phone": {
-                    "type": "string",
-                    "example": "电话号码"
-                },
-                "userName": {
-                    "type": "string",
-                    "example": "用户名"
                 }
             }
         },
@@ -6709,14 +7264,6 @@ var doc = `{
                     "items": {
                         "$ref": "#/definitions/system.SysMenu"
                     }
-                }
-            }
-        },
-        "response.SysUserResponse": {
-            "type": "object",
-            "properties": {
-                "user": {
-                    "$ref": "#/definitions/system.SysUser"
                 }
             }
         },
@@ -7422,6 +7969,9 @@ var doc = `{
                     "description": "活跃颜色",
                     "type": "string"
                 },
+                "address": {
+                    "type": "string"
+                },
                 "authorities": {
                     "type": "array",
                     "items": {
@@ -7439,8 +7989,20 @@ var doc = `{
                     "description": "基础颜色",
                     "type": "string"
                 },
+                "birthdate": {
+                    "type": "string"
+                },
                 "created_at": {
                     "description": "创建时间",
+                    "type": "string"
+                },
+                "desc0": {
+                    "type": "string"
+                },
+                "desc1": {
+                    "type": "string"
+                },
+                "desc2": {
                     "type": "string"
                 },
                 "email": {
@@ -7455,6 +8017,12 @@ var doc = `{
                     "description": "用户头像",
                     "type": "string"
                 },
+                "joinCompanyTime": {
+                    "type": "string"
+                },
+                "joinWorkTime": {
+                    "type": "string"
+                },
                 "nickName": {
                     "description": "用户昵称",
                     "type": "string"
@@ -7462,6 +8030,13 @@ var doc = `{
                 "phone": {
                     "description": "用户手机号",
                     "type": "string"
+                },
+                "resume": {
+                    "type": "string"
+                },
+                "sex": {
+                    "description": "自主添加",
+                    "type": "integer"
                 },
                 "sideMode": {
                     "description": "用户侧边主题",
@@ -7475,8 +8050,20 @@ var doc = `{
                     "description": "用户登录名",
                     "type": "string"
                 },
+                "userTeachingGrade": {
+                    "$ref": "#/definitions/system.UserTeachingGrade"
+                },
+                "userTeachingGradeID": {
+                    "type": "integer"
+                },
                 "uuid": {
                     "description": "用户UUID",
+                    "type": "string"
+                },
+                "wno": {
+                    "type": "string"
+                },
+                "zhiwu": {
                     "type": "string"
                 }
             }
@@ -7486,6 +8073,32 @@ var doc = `{
             "properties": {
                 "config": {
                     "$ref": "#/definitions/config.Server"
+                }
+            }
+        },
+        "system.UserTeachingGrade": {
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "description": "主键ID",
+                    "type": "integer"
+                },
+                "created_at": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "shunxv": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "description": "更新时间",
+                    "type": "string"
+                },
+                "wage": {
+                    "type": "number"
                 }
             }
         }

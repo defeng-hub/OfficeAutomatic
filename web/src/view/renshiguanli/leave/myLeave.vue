@@ -1,17 +1,17 @@
 <template>
 	<div>
 		<div class="gva-table-box">
-			<el-tabs  v-model="activeName" tab-position="top">
-        		<el-tab-pane label="我发起的请假" name="faqi" >
-					<myLeaveYifaqi/>
+			<el-tabs v-model="activeName" tab-position="top" @tab-click="clicktag">
+				<el-tab-pane label="我发起的请假" name="faqi">
+					<myLeaveYifaqi />
 				</el-tab-pane>
 
-				<el-tab-pane label="待处理的请假" name="daichuli" >
-					<myLeaveDaichuli/>
+				<el-tab-pane label="待处理的请假" name="daichuli">
+					<myLeaveDaichuli />
 				</el-tab-pane>
 
-				<el-tab-pane label="已处理的请假" name="yichuli" >
-					<myLeaveYichuli/>
+				<el-tab-pane label="已处理的请假" name="yichuli">
+					<myLeaveYichuli />
 				</el-tab-pane>
 			</el-tabs>
 		</div>
@@ -28,6 +28,16 @@ import { ElMessage } from 'element-plus'
 
 const activeName = ref("faqi")
 
+const clicktag = async (e) => {
+	if (e.props.name == 'faqi') {
+
+	} else if (e.props.name == 'daichuli') {
+
+	} else if (e.props.name == 'yichuli') {
+
+	}
+}
+
 </script>
 
 <script>
@@ -37,6 +47,5 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style></style>
     

@@ -25,14 +25,14 @@
 					</el-form-item>
 
 					<!-- 时间勾选 -->
-					<el-form-item label="活动时间" required>
+					<el-form-item label="请假时间" required>
 						<el-date-picker v-model="Leaveform.selectTime" type="datetimerange" start-placeholder="请假开始日期"
 							end-placeholder="请假结束日期">
 						</el-date-picker>
 					</el-form-item>
 
-					<el-form-item label="时长" required>
-						<el-input v-model="Leaveform.hournum" placeholder="自动计算请假时长"></el-input>
+					<el-form-item label="请假天数" required>
+						<el-input-number v-model="Leaveform.daynum" :min="0" placeholder="自动计算请假时长" :precision="1" :step="0.5"></el-input-number>
 					</el-form-item>
 
 					<el-form-item label="请假事由" required>
@@ -145,7 +145,7 @@ const Leaveform = ref({
 	approval: 0,//审核状态
 	shenpiUserID: 1, //审批人ID
 	shenpiUser2ID: 0, //审批人ID
-	hournum: 100, //小时数
+	daynum:0,
 
 })
 

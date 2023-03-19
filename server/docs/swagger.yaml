@@ -684,6 +684,52 @@ definitions:
         description: 文件地址
         type: string
     type: object
+  renshiguanli.LeaveForm:
+    properties:
+      ID:
+        description: 主键ID
+        type: integer
+      approval:
+        type: integer
+      beginTime:
+        description: |-
+          开始时间必须小于结束时间
+          请假时长必须大于等于2h
+          会自动计算请假时长
+        type: string
+      created_at:
+        description: 创建时间
+        type: string
+      daynum:
+        type: number
+      endTime:
+        type: string
+      image:
+        type: string
+      leaveContent:
+        type: string
+      leaveType:
+        type: integer
+      shenpiUser:
+        $ref: '#/definitions/system.SysUser'
+      shenpiUser2:
+        $ref: '#/definitions/system.SysUser'
+      shenpiUser2ID:
+        type: integer
+      shenpiUserID:
+        description: |-
+          审批人
+          默认审批人是部门总管
+          第二审批人是老板
+        type: integer
+      updated_at:
+        description: 更新时间
+        type: string
+      user:
+        $ref: '#/definitions/system.SysUser'
+      userId:
+        type: integer
+    type: object
   request.AddMenuAuthorityInfo:
     properties:
       authorityId:
@@ -793,36 +839,6 @@ definitions:
       pageSize:
         description: 每页大小
         type: integer
-    type: object
-  request.Register:
-    properties:
-      authorityId:
-        example: int 角色id
-        type: string
-      authorityIds:
-        example: '[]uint 角色id'
-        type: string
-      email:
-        example: 电子邮箱
-        type: string
-      enable:
-        example: int 是否启用
-        type: string
-      headerImg:
-        example: 头像链接
-        type: string
-      nickName:
-        example: 昵称
-        type: string
-      passWord:
-        example: 密码
-        type: string
-      phone:
-        example: 电话号码
-        type: string
-      userName:
-        example: 用户名
-        type: string
     type: object
   request.RollBack:
     properties:
@@ -1045,11 +1061,6 @@ definitions:
         items:
           $ref: '#/definitions/system.SysMenu'
         type: array
-    type: object
-  response.SysUserResponse:
-    properties:
-      user:
-        $ref: '#/definitions/system.SysUser'
     type: object
   sms.AddSmsProjectReq:
     properties:
@@ -1550,6 +1561,8 @@ definitions:
       activeColor:
         description: 活跃颜色
         type: string
+      address:
+        type: string
       authorities:
         items:
           $ref: '#/definitions/system.SysAuthority'
@@ -1562,8 +1575,16 @@ definitions:
       baseColor:
         description: 基础颜色
         type: string
+      birthdate:
+        type: string
       created_at:
         description: 创建时间
+        type: string
+      desc0:
+        type: string
+      desc1:
+        type: string
+      desc2:
         type: string
       email:
         description: 用户邮箱
@@ -1574,12 +1595,21 @@ definitions:
       headerImg:
         description: 用户头像
         type: string
+      joinCompanyTime:
+        type: string
+      joinWorkTime:
+        type: string
       nickName:
         description: 用户昵称
         type: string
       phone:
         description: 用户手机号
         type: string
+      resume:
+        type: string
+      sex:
+        description: 自主添加
+        type: integer
       sideMode:
         description: 用户侧边主题
         type: string
@@ -1589,14 +1619,40 @@ definitions:
       userName:
         description: 用户登录名
         type: string
+      userTeachingGrade:
+        $ref: '#/definitions/system.UserTeachingGrade'
+      userTeachingGradeID:
+        type: integer
       uuid:
         description: 用户UUID
+        type: string
+      wno:
+        type: string
+      zhiwu:
         type: string
     type: object
   system.System:
     properties:
       config:
         $ref: '#/definitions/config.Server'
+    type: object
+  system.UserTeachingGrade:
+    properties:
+      ID:
+        description: 主键ID
+        type: integer
+      created_at:
+        description: 创建时间
+        type: string
+      shunxv:
+        type: integer
+      title:
+        type: string
+      updated_at:
+        description: 更新时间
+        type: string
+      wage:
+        type: number
     type: object
 info:
   contact: {}
@@ -2723,6 +2779,27 @@ paths:
       summary: 发送邮件
       tags:
       - System
+  /email/user/RegisterSuccess:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 响应内容
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 注册成功邮件
+      tags:
+      - Email
   /fileUploadAndDownload/breakpointContinue:
     post:
       consumes:
@@ -3215,6 +3292,198 @@ paths:
       summary: 更新菜单
       tags:
       - Menu
+  /renshi/leave/ChangeLeaveApproval:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 请求内容
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/renshiguanli.LeaveForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 响应内容
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 更改审核状态
+      tags:
+      - Renshiguanli
+  /renshi/leave/CreateLeaveForm:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 请求内容
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/renshiguanli.LeaveForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 响应内容
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 创建请假表单
+      tags:
+      - Renshiguanli
+  /renshi/leave/DeleteLeaveForm:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 请求内容
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.GetById'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 响应内容
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 删除请假表单
+      tags:
+      - Renshiguanli
+  /renshi/leave/GetDaichuliLeaves:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 关键字
+        in: query
+        name: keyword
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 每页大小
+        in: query
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 分页获取列表,返回包括列表,总数,页码,每页数量
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.PageResult'
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 分页获取 待处理的请假表单
+      tags:
+      - Renshiguanli
+  /renshi/leave/GetMyselfLeaves:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 关键字
+        in: query
+        name: keyword
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 每页大小
+        in: query
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 分页获取列表,返回包括列表,总数,页码,每页数量
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.PageResult'
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 分页获取请假表单
+      tags:
+      - Renshiguanli
+  /renshi/leave/GetYichuliLeaves:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 关键字
+        in: query
+        name: keyword
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 每页大小
+        in: query
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 分页获取列表,返回包括列表,总数,页码,每页数量
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.PageResult'
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 分页获取 已处理的请假表单
+      tags:
+      - Renshiguanli
   /sysDictionary/createSysDictionary:
     post:
       consumes:
@@ -4289,6 +4558,106 @@ paths:
       summary: 更新短信模板列表
       tags:
       - Txyun
+  /user/ChangeUserTeachingGrade:
+    post:
+      parameters:
+      - description: 请求内容
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/system.UserTeachingGrade'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 响应内容
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+                msg:
+                  type: string
+              type: object
+      summary: 添加教学等级
+      tags:
+      - Base
+  /user/DeleteUserTeachingGrade:
+    post:
+      parameters:
+      - description: ID
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.GetById'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 响应内容
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+                msg:
+                  type: string
+              type: object
+      summary: 根据ID删除 教学技能等级
+      tags:
+      - Base
+  /user/ExportUserExcel:
+    post:
+      parameters:
+      - description: ID
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/system.SysUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 响应内容
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 导出用户Excel
+      tags:
+      - SysUser
+  /user/GetAllUserTeachingGrade:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回全部 教学技能等级
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+                msg:
+                  type: string
+              type: object
+      summary: 获取全部 教学技能等级
+      tags:
+      - Base
   /user/SetSelfInfo:
     put:
       consumes:
@@ -4322,13 +4691,8 @@ paths:
       - SysUser
   /user/admin_register:
     post:
-      parameters:
-      - description: 用户名, 昵称, 密码, 角色ID
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/request.Register'
+      consumes:
+      - application/json
       produces:
       - application/json
       responses:
@@ -4338,8 +4702,6 @@ paths:
             allOf:
             - $ref: '#/definitions/response.Response'
             - properties:
-                data:
-                  $ref: '#/definitions/response.SysUserResponse'
                 msg:
                   type: string
               type: object
