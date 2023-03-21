@@ -11,6 +11,8 @@ var hermes EmailEngine.Hermes
 type ServiceGroup struct {
 	RegisterSuccess // 注册用户 发送邮件
 	ResetUser       // 重置用户密码  发送邮件
+	LeaveTongzhiShenheren
+	LeaveTongzhiShenqingren
 }
 
 func init() {

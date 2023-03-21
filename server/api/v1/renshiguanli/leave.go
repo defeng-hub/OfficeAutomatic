@@ -54,6 +54,26 @@ func (e *LeaveApi) CreateLeaveForm(c *gin.Context) {
 		response.FailWithMessage("创建失败", c)
 		return
 	}
+
+	// 通知请假审核人
+	if global.GVA_CONFIG.EmailSendSetting.LeaveInformShenheren {
+		// user 是申请人
+		user, _ := userService.FindUserById(int(leaveform.UserId))
+		if leaveform.ShenpiUserID != 0 {
+			// lsuser1 审核人1
+			lsuser1, _ := userService.FindUserById(int(leaveform.ShenpiUserID))
+			op := emailLeaveTongzhiShenheren.DefaultOption(lsuser1.NickName, user.NickName, user.Phone,
+				"http://www.baidu.com")
+			emailLeaveTongzhiShenheren.Send(op, "有人申请请假了", lsuser1.Email)
+		}
+		if leaveform.ShenpiUser2ID != 0 && leaveform.ShenpiUser2ID != leaveform.ShenpiUserID {
+			// lsuser2 审核人2
+			lsuser2, _ := userService.FindUserById(int(leaveform.ShenpiUser2ID))
+			op := emailLeaveTongzhiShenheren.DefaultOption(lsuser2.NickName, user.NickName, user.Phone,
+				"http://www.baidu.com")
+			emailLeaveTongzhiShenheren.Send(op, "有人申请请假了", lsuser2.Email)
+		}
+	}
 	response.OkWithMessage("创建成功", c)
 }
 
@@ -210,8 +230,7 @@ func (e *LeaveApi) ChangeLeaveApproval(c *gin.Context) {
 		return
 	}
 	approval := leaveform.Approval
-	global.GVA_DB.First(&leaveform)
-
+	global.GVA_DB.Preload("User").First(&leaveform)
 	// 更改审核状态
 	leaveform.Approval = approval
 
@@ -230,8 +249,28 @@ func (e *LeaveApi) ChangeLeaveApproval(c *gin.Context) {
 			response.FailWithMessage("更改审核权限失败", c)
 			return
 		}
-		response.OkWithMessage("更改审核权限成功", c)
+		//courfera
+		response.OkWithMessage("更改审核权限", c)
 	} else {
 		response.FailWithMessage("审核人不正确", c)
 	}
+	// 来个协程
+	go func() {
+		if global.GVA_CONFIG.EmailSendSetting.LeaveInformShenqingren {
+			//	ApprovalType_daishenpi = iota //待审批
+			//	ApprovalType_tongguo          //通过
+			//	ApprovalType_jujue            //拒绝
+			var state string
+			if leaveform.Approval == 1 {
+				state = "通过"
+			} else if leaveform.Approval == 2 {
+				state = "拒绝"
+			} else {
+				state = "待审批"
+			}
+			op := emailLeaveTongzhiShenqingren.DefaultOption(leaveform.User.NickName, state,
+				"http://www.baidu.com")
+			emailLeaveTongzhiShenqingren.Send(op, "请假申请已经"+state, leaveform.User.Email)
+		}
+	}()
 }

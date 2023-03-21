@@ -7,5 +7,9 @@ type ApiGroup struct {
 }
 
 var (
+	userService  = service.ServiceGroupApp.SystemServiceGroup.UserService
 	leaveService = service.ServiceGroupApp.RenshiguanliServiceGroup.LeaveService
+
+	emailLeaveTongzhiShenheren   = service.ServiceGroupApp.EmailServiceGroup.LeaveTongzhiShenheren   // 一个实例
+	emailLeaveTongzhiShenqingren = service.ServiceGroupApp.EmailServiceGroup.LeaveTongzhiShenqingren // 一个实例
 )
