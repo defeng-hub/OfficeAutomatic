@@ -185,6 +185,14 @@ func (b *BaseApi) Register(c *gin.Context) {
 		response.FailWithDetailed(systemRes.SysUserResponse{User: userReturn}, "注册失败", c)
 		return
 	}
+
+	// 1、新增用户时 发送邮件通知该用户
+	if global.GVA_CONFIG.EmailSendSetting.UserRegister {
+		// 注册成功, 发送邮件通知
+		option := emailRegisterSuccess.DefaultOption(user.NickName, user.Username,
+			user.Wno, user.Phone, "https://www.baidu.com")
+		emailRegisterSuccess.Send(option, "账户注册成功", user.Email)
+	}
 	response.OkWithDetailed(systemRes.SysUserResponse{User: userReturn}, "注册成功", c)
 }
 
@@ -358,7 +366,7 @@ func (b *BaseApi) DeleteUser(c *gin.Context) {
 		return
 	}
 	// 保留账户
-	if jwtId == uint(1) || jwtId == uint(6) {
+	if uint(reqId.ID) == uint(1) || uint(reqId.ID) == uint(6) {
 		response.FailWithMessage("保留账户, 禁止删除", c)
 		return
 	}
@@ -513,7 +521,20 @@ func (b *BaseApi) ResetPassword(c *gin.Context) {
 		response.FailWithMessage("重置失败"+err.Error(), c)
 		return
 	}
+
+	// 2.重置用户密码时 发送邮件通知该用户
+	if global.GVA_CONFIG.EmailSendSetting.UserReset {
+		// 获取用户信息， 发送邮件通知
+		lsuser, err := userService.FindUserById(int(user.ID))
+		if err != nil {
+			return
+		}
+		// 重置密码成功, 发送邮件通知
+		option := emailResetUser.DefaultOption(lsuser.NickName, lsuser.Username, "https://www.baidu.com")
+		emailResetUser.Send(option, "账户重置成功", lsuser.Email)
+	}
 	response.OkWithMessage("重置成功", c)
+
 }
 
 // ExportUserExcel

@@ -1,45 +1,37 @@
 package email
 
 import (
+	"fmt"
 	"github.com/defeng-hub/ByOfficeAutomatic/server/global"
 	EmailEngine "github.com/defeng-hub/Go-Email-Template"
 )
 
-type RegisterSuccess struct{}
-type Option struct {
+type ResetUser struct{}
+type ResetUserOption struct {
 	name     string
 	username string
-	wno      string
 	phone    string
 	url      string
 }
 
-func (w *RegisterSuccess) DefaultOption(name string, username string,
-	wno string, phone string, url string) Option {
-	return Option{
+func (w *ResetUser) DefaultOption(name string, username string, url string) ResetUserOption {
+	return ResetUserOption{
 		name:     name,
 		username: username,
-		wno:      wno,
-		phone:    phone,
 		url:      url,
 	}
 }
 
-func (w *RegisterSuccess) Email(op Option) EmailEngine.Email {
+func (w *ResetUser) Email(op ResetUserOption) EmailEngine.Email {
 	return EmailEngine.Email{
 		Body: EmailEngine.Body{
 			Name: op.name,
 			Intros: []string{
-				"欢迎来到博远天合! 我们很高兴您能加入。",
-			},
-			Dictionary: []EmailEngine.Entry{
-				{Key: "用户名", Value: op.username},
-				{Key: "职工号", Value: op.wno},
-				{Key: "手机号", Value: op.phone},
+				fmt.Sprintf("您的账户: %s 密码已经被重置, 默认为123456。请及时登录查看并修改", op.username),
 			},
 			Actions: []EmailEngine.Action{
 				{
-					Instructions: "To get started with boyuantianhe, please click here:",
+					Instructions: "点击按钮查看详情",
 					Button: EmailEngine.Button{
 						Text: "确认您的帐户",
 						Link: op.url,
@@ -47,13 +39,13 @@ func (w *RegisterSuccess) Email(op Option) EmailEngine.Email {
 				},
 			},
 			Outros: []string{
-				"需要帮助，还是有其他问题？ 只要回复这封邮件，我们很乐意帮忙。",
+				"需要帮助，或者存在其他问题? 只要回复这封邮件，我们很乐意帮忙。",
 			},
 		},
 	}
 }
 
-func (w *RegisterSuccess) Send(op Option, subject string, to string) {
+func (w *ResetUser) Send(op ResetUserOption, subject string, to string) {
 	email := w.Email(op)
 	err := EmailEngine.SetDefaultEmailValues(&email)
 	if err != nil {

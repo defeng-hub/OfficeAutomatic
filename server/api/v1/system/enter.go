@@ -35,4 +35,9 @@ var (
 	autoCodeHistoryService  = service.ServiceGroupApp.SystemServiceGroup.AutoCodeHistoryService
 	dictionaryDetailService = service.ServiceGroupApp.SystemServiceGroup.DictionaryDetailService
 	authorityBtnService     = service.ServiceGroupApp.SystemServiceGroup.AuthorityBtnService
+
+	// 邮件推送实例
+	emailRegisterSuccess = service.ServiceGroupApp.EmailServiceGroup.RegisterSuccess // 一个实例
+	emailResetUser       = service.ServiceGroupApp.EmailServiceGroup.ResetUser       // 一个实例
+
 )

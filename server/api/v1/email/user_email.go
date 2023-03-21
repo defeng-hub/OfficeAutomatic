@@ -18,6 +18,6 @@ type UserEmailApi struct{}
 func (UserEmailApi) RegisterSuccess(c *gin.Context) {
 	option := emailRegisterSuccess.DefaultOption("王德丰", "admin",
 		"wdf123", "15555150781", "http://www.baidu.com")
-	emailRegisterSuccess.Send(option, "猜测是", "15555150781@163.com")
+	emailRegisterSuccess.Send(option, "测试测试", "15555150781@163.com")
 	response.OkWithMessage("success", c)
 }

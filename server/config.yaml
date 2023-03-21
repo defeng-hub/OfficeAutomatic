@@ -75,7 +75,12 @@ email:
   host: smtp.163.com
   is-ssl: true
   secret: ZGZPCIWSRKFNQNYZ
-  nickname: test
+  nickname: 博远天合教育团队
+email-send-setting:
+  user-register: true
+  user-reset: true
+  leave-inform-shenheren: true
+  leave-inform-shenqingren: true
 excel:
   dir: ./resource/excel/
 hua-wei-obs:
@@ -92,8 +97,8 @@ jwt:
 local:
   path: uploads/file
   store-path: uploads/file
-  excel-http-path: uploads/excel
   excel-path: uploads/excel
+  excel-http-path: uploads/excel
 mssql:
   path: ""
   port: ""
@@ -123,19 +128,19 @@ mysql:
   log-mode: error
   log-zap: false
 mysql2:
-  path: 101.35.245.54
-  port: "3306"
   config: charset=utf8mb4&parseTime=True&loc=Local
   db-name: bytest
-  username: bytest
-  password: bytest123
-  prefix: ""
-  singular: false
   engine: ""
-  max-idle-conns: 10
-  max-open-conns: 100
   log-mode: error
   log-zap: false
+  max-idle-conns: 10
+  max-open-conns: 100
+  password: bytest123
+  path: 101.35.245.54
+  port: "3306"
+  prefix: ""
+  singular: false
+  username: bytest
 oracle:
   path: ""
   port: ""
@@ -186,7 +191,7 @@ system:
   iplimit-count: 15000
   iplimit-time: 3600
   router-prefix: ""
-  base-url: "http://127.0.0.1:8888"
+  base-url: http://127.0.0.1:8888
 tencent-cos:
   bucket: xxxxx-10005608
   region: ap-shanghai
