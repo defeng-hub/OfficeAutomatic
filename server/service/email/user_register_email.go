@@ -6,6 +6,7 @@ import (
 )
 
 type RegisterSuccess struct{}
+
 type Option struct {
 	name     string
 	username string
