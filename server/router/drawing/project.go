@@ -12,6 +12,9 @@ func (ProjectRouter) Init(Router *gin.RouterGroup) {
 	Api := v1.ApiGroupApp.DrawingApiGroup.ProjectApi
 	{
 		R.GET("project/GetAllProject", Api.GetAllProject)
+		R.POST("project/CreateProject", Api.CreateProject)
+		R.POST("project/CreateBranch", Api.CreateBranch)
+		R.POST("project/DeleteBranch", Api.DeleteBranch)
 		R.GET("project/GetAllBranch", Api.GetAllBranch)
 	}
 }

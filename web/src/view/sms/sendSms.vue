@@ -1,6 +1,6 @@
 <template>
   <div>
-    <warning-bar title="在资源权限中将此角色的资源权限清空 或者不包含创建者的角色 即可屏蔽此客户资源的显示" />
+    <warning-bar title="在此页面可以批量添加客户手机号, 批量发送信息" />
     <div class="gva-table-box bottom-mg-lg">
       <div class="gva-btn-list">
         <el-button type="primary" icon="plus" @click="this.dialogFormVisible = true">新建项目</el-button>

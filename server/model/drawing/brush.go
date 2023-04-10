@@ -19,9 +19,8 @@ func (Brush) TableName() string {
 // Project 项目管理
 type Project struct {
 	global.GVA_MODEL
-	Title   string `json:"title"`
-	BrushId uint   `json:"brushId"`
-	Brush   Brush  `gorm:"foreignKey:BrushId;" json:"brush"`
+	Title  string `json:"title"`
+	ImgSrc string `json:"imgSrc"`
 }
 
 func (Project) TableName() string {

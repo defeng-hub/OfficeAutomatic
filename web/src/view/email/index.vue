@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: 'SmsSuperAdmin'
+  name: 'EmailSuperAdmin'
 }
 </script>
 <script setup>

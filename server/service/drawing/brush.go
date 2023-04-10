@@ -32,7 +32,7 @@ func (e *ProjectService) AllProject() (list []*Project, err error) {
 	return
 }
 func (e *ProjectService) CreateProject(project *Project) error {
-	if project.BrushId == 0 || project.Title == "" {
+	if project.ImgSrc == "" || project.Title == "" {
 		return errors.New("新增项目入参不正确")
 	}
 	return global.GVA_DB.Create(project).Error

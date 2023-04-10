@@ -555,9 +555,6 @@ const rules = ref({
   ],
   email: [
     { pattern: /^([0-9A-Za-z\-_.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g, message: '请输入正确的邮箱', trigger: 'blur' },
-  ],
-  authorityId: [
-    { required: true, message: '请选择用户角色', trigger: 'blur' }
   ]
 })
 const userForm = ref(null)

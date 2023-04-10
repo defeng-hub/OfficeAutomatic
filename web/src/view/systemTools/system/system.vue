@@ -124,6 +124,9 @@
           <el-form-item label="secret">
             <el-input v-model="config.email.secret" />
           </el-form-item>
+          <el-form-item label="nickname">
+            <el-input v-model="config.email.nickname" />
+          </el-form-item>
           <el-form-item label="测试邮件">
             <el-button @click="email">测试邮件</el-button>
           </el-form-item>
@@ -417,6 +420,7 @@ const config = ref({
 const initForm = async() => {
   const res = await getSystemConfig()
   if (res.code === 0) {
+    // console.log("配置",res.data.config)
     config.value = res.data.config
   }
 }
