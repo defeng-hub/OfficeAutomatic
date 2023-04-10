@@ -114,6 +114,7 @@ mssql:
   log-mode: ""
   log-zap: false
 mysql:
+#  本地一直调试的数据库
   path: 159.75.37.58
   port: "3306"
   config: charset=utf8mb4&parseTime=True&loc=Local

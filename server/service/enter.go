@@ -1,6 +1,7 @@
 package service
 
 import (
+	"github.com/defeng-hub/ByOfficeAutomatic/server/service/drawing"
 	"github.com/defeng-hub/ByOfficeAutomatic/server/service/email"
 	"github.com/defeng-hub/ByOfficeAutomatic/server/service/example"
 	"github.com/defeng-hub/ByOfficeAutomatic/server/service/renshiguanli"
@@ -14,6 +15,7 @@ type ServiceGroup struct {
 	TxyunServiceGroup        txyun.ServiceGroup
 	RenshiguanliServiceGroup renshiguanli.ServiceGroup
 	EmailServiceGroup        email.ServiceGroup
+	DrawingServiceGroup      drawing.ServiceGroup
 }
 
 var ServiceGroupApp = new(ServiceGroup)

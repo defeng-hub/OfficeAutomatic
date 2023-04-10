@@ -30,6 +30,7 @@ func init() {
 	}
 }
 
+// OperationRecord 运行记录
 func OperationRecord() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var body []byte

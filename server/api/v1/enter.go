@@ -1,6 +1,7 @@
 package v1
 
 import (
+	"github.com/defeng-hub/ByOfficeAutomatic/server/api/v1/drawing"
 	"github.com/defeng-hub/ByOfficeAutomatic/server/api/v1/email"
 	"github.com/defeng-hub/ByOfficeAutomatic/server/api/v1/example"
 	"github.com/defeng-hub/ByOfficeAutomatic/server/api/v1/renshiguanli"
@@ -14,6 +15,7 @@ type ApiGroup struct {
 	TxyunApiGroup        txyun.ApiGroup
 	RenshiguanliApiGroup renshiguanli.ApiGroup
 	EmailApiGroup        email.ApiGroup
+	DrawingApiGroup      drawing.ApiGroup
 }
 
 var ApiGroupApp = new(ApiGroup)

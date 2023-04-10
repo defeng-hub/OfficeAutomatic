@@ -21,6 +21,7 @@ func Routers() *gin.Engine {
 	txyunRouter := router.RouterGroupApp.Txyun
 	renshiRouter := router.RouterGroupApp.Renshiguanli
 	emailRouter := router.RouterGroupApp.Email
+	drawingRouter := router.RouterGroupApp.Drawing
 	// 如果想要不使用nginx代理前端网页，可以修改 web/.env.production 下的
 	// VUE_APP_BASE_API = /
 	// VUE_APP_BASE_PATH = http://localhost
@@ -56,6 +57,7 @@ func Routers() *gin.Engine {
 		//邮件发送api
 		emailRouter.Init(PublicGroup)  // 用户邮件
 		emailRouter.Init2(PublicGroup) // 系统邮件
+		drawingRouter.Init(PublicGroup)
 	}
 	PrivateGroup := Router.Group(global.GVA_CONFIG.System.RouterPrefix)
 	PrivateGroup.Use(middleware.JWTAuth()).Use(middleware.CasbinHandler())
