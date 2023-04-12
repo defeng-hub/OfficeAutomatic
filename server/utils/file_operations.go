@@ -2,9 +2,12 @@ package utils
 
 import (
 	"os"
+	"path"
 	"path/filepath"
 	"reflect"
+	"strconv"
 	"strings"
+	"time"
 )
 
 //@author: [songzhibin97](https://github.com/songzhibin97)
@@ -74,4 +77,13 @@ func FileExist(path string) bool {
 		return !fi.IsDir()
 	}
 	return !os.IsNotExist(err)
+}
+
+func FileName(outpath string, name string) string {
+	//respath = "uploads/excel/"
+	yuefen := time.Now().Format("200601")
+	os.MkdirAll(outpath+yuefen, os.ModePerm)
+
+	res := path.Join(outpath+yuefen, strconv.Itoa(int(time.Now().Unix()))+name)
+	return res
 }

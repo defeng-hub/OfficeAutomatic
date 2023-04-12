@@ -24,7 +24,7 @@ func (e *ProjectService) DeleteBrush(id uint) error {
 	if id == 0 {
 		return errors.New("删除画笔入参不正确")
 	}
-	return global.GVA_DB.Delete(&Brush{}, id).Error
+	return global.GVA_DB.Unscoped().Delete(&Brush{}, id).Error
 }
 
 func (e *ProjectService) AllProject() (list []*Project, err error) {
@@ -42,4 +42,12 @@ func (e *ProjectService) DeleteProject(id uint) error {
 		return errors.New("删除项目入参不正确")
 	}
 	return global.GVA_DB.Delete(&Project{}, id).Error
+}
+
+func (e *ProjectService) GetProjectById(id uint) (obj *Project, err error) {
+	if id == 0 {
+		return nil, errors.New("删除项目入参不正确")
+	}
+	err = global.GVA_DB.First(&obj, id).Error
+	return
 }

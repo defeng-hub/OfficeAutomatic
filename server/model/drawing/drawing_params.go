@@ -8,15 +8,17 @@ import (
 // Param 项目的详细参数之一
 type Param struct {
 	global.GVA_MODEL
-	ProjectId     uint    `json:"projectId"`
-	Project       Project `gorm:"foreignKey:ProjectId" json:"project"`
-	X             int     `json:"x"`
-	Y             int     `json:"y"`
-	Text          string  `json:"text"`
-	AutoIncrement int     `json:"autoIncrement"` //是否自增  0不自增 1自增填充, 选用1就不会填充本身的Text
+	ProjectId uint `json:"projectId"`
+	//Project       Project `gorm:"foreignKey:ProjectId" json:"project"`
+	Title         string `json:"title"`
+	X             int    `json:"x"`
+	Y             int    `json:"y"`
+	Text          string `json:"text"`
+	AutoIncrement int    `json:"autoIncrement"` //是否自增  0不自增 1自增填充, 选用1就不会填充本身的Text
 	//画笔
-	BrushId uint  `json:"brushId" `
-	Brush   Brush `gorm:"foreignKey:BrushId" json:"brush"`
+	BrushId   uint      `json:"brushId"`
+	Brush     Brush     `gorm:"foreignKey:BrushId" json:"brush"`
+	Increment Increment `json:"increment"`
 }
 
 func (Param) TableName() string {
@@ -34,4 +36,23 @@ type Increment struct {
 
 func (Increment) TableName() string {
 	return "drawing_increment"
+}
+
+type ReqParam struct {
+	global.GVA_MODEL
+	ProjectId         uint   `json:"projectId"`
+	Title             string `json:"title"`
+	X                 int    `json:"x"`
+	Y                 int    `json:"y"`
+	Text              string `json:"text"`
+	WinNum            int    `json:"winNum"`
+	AutoIncrement     int    `json:"autoIncrement"`     //是否自增  0不自增 1自增填充, 选用1就不会填充本身的Text
+	AutoIncrementBool bool   `json:"autoIncrementBool"` //是否自增  0不自增 1自增填充, 选用1就不会填充本身的Text
+	//画笔
+	BrushId uint `json:"brushId"`
+}
+
+type ReqChangeParamBranch struct {
+	ParamId  uint `json:"paramId"`
+	BranchId uint `json:"branchId"`
 }
