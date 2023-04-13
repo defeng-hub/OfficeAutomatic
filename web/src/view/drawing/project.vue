@@ -31,13 +31,26 @@
 			<div class="right">
 				<div class="row_top">
 					<div class="gva-btn-list" style="line-height: 30px;font-size: 16px;">
-						画笔管理
-					</div>
-					<div class="gva-btn-list">
-						<el-button type="primary" icon="plus" @click="dialogFormVisible = true">创建画笔</el-button>
+						使用方法
 					</div>
 				</div>
 				<div class="line"></div>
+				
+				
+				<div>
+					<div class="gva-btn-list" style="line-height: 30px;font-size: 16px;">
+						一、左侧选用你要使用的模板
+					</div>
+					<div class="gva-btn-list" style="line-height: 30px;font-size: 16px;">
+						二、添加（录入图片上的）具体参数
+					</div>
+					<div class="gva-btn-list" style="line-height: 30px;font-size: 16px;">
+						注意：诸如编号、ID号等，自增值一般不需要手动控制，系统会以递增的方式自动填写
+					</div>
+				</div>
+
+				
+				<!--
 				<el-table :data="list_branch" style="width: 100%">
 					<el-table-column align="center" prop="ID" label="画笔ID" width="100" />
 					<el-table-column align="center" prop="fontSize" label="字体大小" width="100" />
@@ -52,6 +65,7 @@
 						</template>
 					</el-table-column>
 				</el-table>
+				-->
 			</div>
 		</el-col>
 
@@ -143,10 +157,11 @@ const initData = async () => {
 		list_template.value = res.data;
 	}
 
-	const res2 = await GetAllBranch()
-	if (res2.code === 0) {
-		list_branch.value = res2.data;
-	}
+	// 不再获取画笔了
+	// const res2 = await GetAllBranch()
+	// if (res2.code === 0) {
+	// 	list_branch.value = res2.data;
+	// }
 	// console.log(list_template.value)
 	// console.log(list_branch.value)
 }

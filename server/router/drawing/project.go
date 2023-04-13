@@ -16,6 +16,7 @@ func (ProjectRouter) Init(Router *gin.RouterGroup) {
 		R.POST("project/GetProjectById", Api.GetProjectById)
 		R.POST("project/CreateProject", Api.CreateProject)
 		R.POST("project/CreateBranch", Api.CreateBranch)
+		R.POST("project/ChangeBrush", Api.ChangeBrush)
 		R.POST("project/DeleteBranch", Api.DeleteBranch)
 		R.GET("project/GetAllBranch", Api.GetAllBranch)
 	}

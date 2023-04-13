@@ -8,6 +8,7 @@ import (
 type Brush struct {
 	global.GVA_MODEL
 	Path      string `json:"path"`      //画笔路径(ttf 文件路径)
+	Name      string `json:"name"`      //画笔名称
 	FontSize  uint   `json:"fontSize"`  //字体大小
 	FontColor string `json:"fontColor"` //字体颜色
 }

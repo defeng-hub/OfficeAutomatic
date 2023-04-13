@@ -84,10 +84,15 @@
 							</el-input>
 						</el-form-item>
 						<el-form-item label="填充内容" prop="text" v-if="!winParam.autoIncrementBool">
-							<el-input v-model="winParam.text" :disabled="winParam.autoIncrementBool" />
+							<el-input type="textarea" v-model="winParam.text" :disabled="winParam.autoIncrementBool" />
 						</el-form-item>
-						<el-form-item required label="(下次)自动填充值" prop="increment.winNum" v-if="winParam.autoIncrementBool">
-							<el-input-number v-model="winParam.increment.winNum" :min="0" />
+
+						<el-form-item required label="自动填充(一般不用手动控制!)" prop="increment.winNum" v-if="winParam.autoIncrementBool">
+							<el-input type="number" v-model="winParam.increment.winNum" disabled :min="0">
+								<template #prepend>
+									{{winParam.text}}
+								</template>
+							</el-input>
 						</el-form-item>
 
 					</el-form>
@@ -109,6 +114,9 @@
 			<!-- 新增画笔弹窗 -->
 			<el-dialog v-model="dialogFormVisible" title="新增画笔">
 				<el-form ref="authorityForm" :model="branchForm" label-width="100px">
+					<el-form-item label="字体名" prop="name">
+						<el-input v-model="branchForm.name" />
+					</el-form-item>
 					<el-form-item label="字体路径" prop="path">
 						<el-input v-model="branchForm.path" />
 					</el-form-item>
@@ -162,8 +170,15 @@
 			<!-- 画笔管理弹窗 -->
 			<el-dialog v-model="dialogFormVisible3" title="画笔管理">
 				<el-table :data="list_branch" style="width: 100%" border height="400">
-					<el-table-column align="center" prop="ID" label="画笔ID" width="100" />
-					<el-table-column align="center" prop="fontSize" label="字体大小" width="100" />
+					<el-table-column align="center" prop="name" label="画笔名" width="130" />
+					<!-- <el-table-column align="center" prop="fontSize" label="字体大小" width="100" /> -->
+
+					<el-table-column align="center" label="字体大小" width="100">
+						<template #default="scope">
+							<el-input type="number" v-model.number="scope.row.fontSize"  :min="0" />
+						</template>
+					</el-table-column>
+
 					<el-table-column align="center" label="字体颜色" width="100">
 						<template #default="scope">
 							<el-color-picker v-model="scope.row.fontColor" show-alpha />
@@ -171,8 +186,9 @@
 					</el-table-column>
 					<el-table-column fixed="right" label="操作">
 						<template #default="scope">
-							<el-button link type="primary" size="small" @click="deleteBranchConfirm(scope.row.ID)">删除</el-button>
-							<el-button link type="primary" size="small" @click="selectBranchConfirm(scope.row.ID)">选择</el-button>
+							<el-button link type="danger" size="small" @click="deleteBranchConfirm(scope.row.ID)">删除</el-button>
+							<el-button link type="success" size="small" @click="saveBranchConfirm(scope.row)">保存</el-button>
+							<el-button link type="primary" size="small" @click="selectBranchConfirm(scope.row.ID)">选用画笔</el-button>
 						</template>
 					</el-table-column>
 				</el-table>
@@ -194,7 +210,7 @@ export default {
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import {
-	CreateBranch, DeleteBranch, GetAllBranch, ChangeParamBranch,ChangeParam,
+	CreateBranch, DeleteBranch, GetAllBranch, ChangeParamBranch,ChangeParam,ChangeBrush,
 	GetProjectById, GetParamsByProjectId, CreateParam,DeleteParam,CreateImage
 } from '@/api/drawing/project'
 import { ElMessage } from 'element-plus'
@@ -291,11 +307,12 @@ const list_branch = ref([]) //画笔列表
 const branchForm = ref({
 	path: "uploads/file/9c5d46e22ae2db1f0d838611657c14d9_20230410213023.ttf",//画笔默认路径
 	fontSize: 24,
-	fontColor: 'rgba(255, 206, 102, 1)'
+	name:"微软雅黑",
+	fontColor: 'rgba(0, 0, 0, 1)'
 })
 // 更换画笔
 const changeBranch = async () => {
-	console.log("aaa")
+	// console.log("aaa")
 	dialogFormVisible3.value = true;
 }
 
@@ -313,6 +330,7 @@ const deleteBranchConfirm = async (id) => {
 }
 // 选择画笔
 const selectBranchConfirm = async (id) => {
+	console.log( winParam.value.ID,id)
 	const res = await ChangeParamBranch({ paramId: winParam.value.ID, branchId: id })
 	// console.log(res)
 	if (res.code === 0) {
@@ -325,6 +343,26 @@ const selectBranchConfirm = async (id) => {
 		})
 	}
 }
+// 更改画笔
+const saveBranchConfirm = async (row) => {
+	if (row.path == "" || row.fontSize == 0 || row.fontColor=="") {
+		ElMessage({
+			type: 'warning',
+			message: '参数为空'
+		})
+		return
+	}
+	const res = await ChangeBrush(row)
+	console.log(res)
+	if (res.code === 0) {
+		initData()
+		ElMessage({
+			type: 'success',
+			message: '更新成功'
+		})
+	}
+}
+
 // 新增画笔
 const branchFormConfirm = async () => {
 	if (branchForm.value.path == "") {
@@ -341,7 +379,7 @@ const branchFormConfirm = async () => {
 		initData()
 	}
 }
-
+// 保存画笔
 const saveParam = async()=>{
 	if(winParam.value.ID){}else{
 		return
@@ -356,6 +394,7 @@ const saveParam = async()=>{
 		})
 	}
 }
+
 const deleteParam = async()=>{
 	if(winParam.value.ID){}else{
 		return

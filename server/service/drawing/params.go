@@ -100,12 +100,21 @@ func (e *ParamService) CreateImage(id uint) error {
 	// 产生info参数
 	var infos []*DrawTextInfo
 
+	tx, iserror := global.GVA_DB.Begin(), true //开启事务
+	defer func() {
+		if iserror {
+			tx.Rollback()
+		}
+	}()
+
 	for _, obj := range params {
+
 		var text string
 		if obj.AutoIncrement == 0 { //0不自增 1自增填充,
 			text = obj.Text
 		} else {
-			text = strconv.Itoa(obj.Increment.WinNum)
+			text = obj.Text + strconv.Itoa(obj.Increment.WinNum)
+			tx.Model(obj.Increment).Update("win_num", obj.Increment.WinNum+1)
 		}
 		//rgba(255, 206, 102, 1)
 		//
@@ -133,11 +142,19 @@ func (e *ParamService) CreateImage(id uint) error {
 		return errors.Wrap(err, "打开项目模板图失败")
 	}
 
-	path := utils.FileName("uploads/drawing/", "上岸卡.png")
+	path := utils.FileName("uploads/drawing/", "上岸卡.jpeg")
 	err = DrawStringOnImageAndSave(bytes, infos, path)
 	if err != nil {
 		return err
 	}
+
+	// 事务提交
+	err = tx.Commit().Error
+	if err != nil {
+		return err
+	}
+
+	iserror = false // 没有任何错误, 不用Rollback
 	return nil
 }
 
@@ -148,12 +165,19 @@ func string2rgba(s string) ([]uint8, error) {
 	ls := strings.Split(s, ",")
 
 	var res []uint8
-	for _, re := range ls {
-		atoi, err := strconv.Atoi(strings.Trim(re, " "))
+	for idx, re := range ls {
+
+		score, err := strconv.ParseFloat(strings.Trim(re, " "), 64)
+
 		if err != nil {
 			return nil, err
 		}
-		res = append(res, uint8(atoi))
+		if idx == 3 {
+			res = append(res, uint8(score*255))
+		} else {
+			res = append(res, uint8(score))
+		}
 	}
+
 	return res, nil
 }

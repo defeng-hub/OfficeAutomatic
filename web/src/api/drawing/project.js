@@ -34,6 +34,15 @@ export const CreateBranch = (data) => {
       data
     })
 }
+
+export const ChangeBrush = (data) => {
+  return service({
+    url: '/drawing/project/ChangeBrush',
+    method: 'post',
+    data
+  })
+}
+
 export const DeleteBranch = (data) => {
     return service({
       url: '/drawing/project/DeleteBranch',

@@ -57,7 +57,7 @@ func (e *ProjectApi) CreateBranch(c *gin.Context) {
 		return
 	}
 	// 校验入参
-	err = utils.Verify(brush, utils.Rules{"Path": {utils.NotEmpty()}, "FontSize": {utils.NotEmpty()}, "FontColor": {utils.NotEmpty()}})
+	err = utils.Verify(brush, utils.Rules{"Name": {utils.NotEmpty()}, "Path": {utils.NotEmpty()}, "FontSize": {utils.NotEmpty()}, "FontColor": {utils.NotEmpty()}})
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
@@ -137,4 +137,25 @@ func (e *ProjectApi) DeleteBranch(c *gin.Context) {
 		return
 	}
 	response.OkWithMessage("删除成功", c)
+}
+
+func (e *ProjectApi) ChangeBrush(c *gin.Context) {
+	var brush drawing.Brush
+	err := c.ShouldBindJSON(&brush)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	// 校验入参
+	err = utils.Verify(brush, utils.Rules{"Name": {utils.NotEmpty()}, "Path": {utils.NotEmpty()}, "FontSize": {utils.NotEmpty()}, "FontColor": {utils.NotEmpty()}})
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	err = projectService.ChangeBrush(&brush)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	response.OkWithMessage("更新成功", c)
 }
