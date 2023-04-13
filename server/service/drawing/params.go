@@ -150,6 +150,7 @@ func (e *ParamService) CreateImage(id uint) error {
 		return err
 	}
 
+	//图片入库 drawing_image_db
 	tx.Create(&ImageDB{
 		ProjectId: project.ID,
 		Uuid:      uuid,
