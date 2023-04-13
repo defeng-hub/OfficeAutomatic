@@ -107,6 +107,7 @@ func (e *ParamService) CreateImage(id uint) error {
 		}
 	}()
 
+	uuid := ""
 	for _, obj := range params {
 
 		var text string
@@ -114,6 +115,7 @@ func (e *ParamService) CreateImage(id uint) error {
 			text = obj.Text
 		} else {
 			text = obj.Text + strconv.Itoa(obj.Increment.WinNum)
+			uuid = text //选用 最后一个自动递增参数 作为uuid!!!
 			tx.Model(obj.Increment).Update("win_num", obj.Increment.WinNum+1)
 		}
 		//rgba(255, 206, 102, 1)
@@ -142,12 +144,17 @@ func (e *ParamService) CreateImage(id uint) error {
 		return errors.Wrap(err, "打开项目模板图失败")
 	}
 
-	path := utils.FileName("uploads/drawing/", "上岸卡.jpeg")
+	path := utils.FileName("uploads/drawing/", project.Title+".png")
 	err = DrawStringOnImageAndSave(bytes, infos, path)
 	if err != nil {
 		return err
 	}
 
+	tx.Create(&ImageDB{
+		ProjectId: project.ID,
+		Uuid:      uuid,
+		Path:      path,
+	})
 	// 事务提交
 	err = tx.Commit().Error
 	if err != nil {

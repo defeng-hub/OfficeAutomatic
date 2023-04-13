@@ -27,3 +27,14 @@ type Project struct {
 func (Project) TableName() string {
 	return "drawing_project"
 }
+
+type ImageDB struct {
+	global.GVA_MODEL
+	ProjectId uint
+	Uuid      string
+	Path      string
+}
+
+func (ImageDB) TableName() string {
+	return "drawing_image_db"
+}

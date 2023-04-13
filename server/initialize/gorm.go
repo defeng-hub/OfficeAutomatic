@@ -62,7 +62,8 @@ func RegisterTables(db *gorm.DB) {
 
 		// 画图表
 		//drawing.Project{},
-		drawing.Brush{},
+		//drawing.Brush{},
+		drawing.ImageDB{},
 		//drawing.Param{},
 		//drawing.Increment{},
 	)
